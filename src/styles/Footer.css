@@ -1,0 +1,31 @@
+.footer{
+
+}
+
+.footerItems{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 71px;
+    width:100%
+}
+
+.footerItem{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    gap: 6px;
+}
+
+.footerItemImg{
+    width: 26px;
+    height: 26px;
+}
+
+.footerItemTxt{
+    font-size: 10px;
+    text-align: center;
+}
