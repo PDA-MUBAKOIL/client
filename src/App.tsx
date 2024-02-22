@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Route, RouteObject, Routes } from 'react-router-dom';
 import { mainRouter } from './router/main-router';
+import '@mantine/core/styles.css';
 
 
 function renderRoutes(routesObj:RouteObject[]){
