@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function NonLoginMainPage() {
   return (
-    <div>mainPage</div>
+    <div>메인페이지</div>
   )
 }
