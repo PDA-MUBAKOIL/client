@@ -6,6 +6,7 @@ import Footer from '../components/common/Footer';
 
 import DetailItem from '../components/common/Modal/DetailItem';
 import ModalContainer from '../components/common/Modal/ModalContainer';
+import Banner from '../components/common/Banner';
 
 export default function MainLayout() {
   // 전역적으로 관리해야하는 state
@@ -40,6 +41,7 @@ export default function MainLayout() {
       <Navbar />
       <Outlet />
       <button onClick={() => setIsShow(true)}>모달</button>
+      <Banner />
       <Footer/>
     </>
   )
