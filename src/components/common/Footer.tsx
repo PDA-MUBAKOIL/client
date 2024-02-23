@@ -5,6 +5,7 @@ import map from '../../assets/img/Footer/map.svg';
 import wish from '../../assets/img/Footer/wish.svg';
 import my from '../../assets/img/Footer/my.svg';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router';
 
 const FooterContainer = styled.div`
   position: fixed;
@@ -40,9 +41,11 @@ const FooterItemTxt = styled.div`
   text-align: center;
 `
 
-function FooterItemComponent(props:{src:string, txt:string}){
+function FooterItemComponent(props:{src:string, txt:string, url:string}){
+  const navigate = useNavigate();
+  
   return(
-    <FooterItem>
+    <FooterItem onClick={()=>{navigate(props.url)}}>
       <FooterItemImg src={props.src} alt={props.txt}/>
       <FooterItemTxt className='footerItemTxt'>{props.txt}</FooterItemTxt>
     </FooterItem>
@@ -53,11 +56,11 @@ export default function Footer() {
   return (
     <FooterContainer>
       <FooterItems>
-        <FooterItemComponent {...{src:`${all}`, txt:'전체'}}/>
-        <FooterItemComponent {...{src:`${search}`, txt:'검색'}}/>
-        <FooterItemComponent {...{src:`${map}`, txt:'지도'}}/>
-        <FooterItemComponent {...{src:`${wish}`, txt:'위시'}}/>
-        <FooterItemComponent {...{src:`${my}`, txt:'My'}}/>
+        <FooterItemComponent src={all} txt='전체' url='/list'/>
+        <FooterItemComponent src={search} txt='검색' url='/search'/>
+        <FooterItemComponent src={map} txt='지도' url='/map'/>
+        <FooterItemComponent src={wish} txt='위시' url='/wish'/>
+        <FooterItemComponent src={my} txt='마이' url='/my'/>
       </FooterItems>
     </FooterContainer>
   )
