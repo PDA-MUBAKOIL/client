@@ -29,6 +29,7 @@ const FooterItem = styled.div`
   align-items: center;
   width: 40px;
   gap: 6px;
+  cursor: pointer;
 `
 
 const FooterItemImg = styled.img`
