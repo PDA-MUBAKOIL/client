@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, Text, Group, rem } from '@mantine/core';
 import styled from 'styled-components';
 import TagButton from '../TagButton';
 import FillHeart from '../../../assets/img/Modal/fill-heart.svg';
+import EmptyHeart from '../../../assets/img/Modal/empty-heart.svg';
 
 export type DetailType = {
   name: String,
@@ -72,6 +73,8 @@ const TagDiv = styled(Group)`
 export default function DetailItem({ detail }: DetailProps) {
   const { name, materials, percent, volume, description } = detail;
 
+  const [isLike, setIsLike] = useState<boolean>(false);
+
   return (
     <>
       <ImageDiv src='https://thesool.com/common/imageView.do?targetId=PR00001219&targetNm=PRODUCT' />
@@ -128,7 +131,21 @@ export default function DetailItem({ detail }: DetailProps) {
         </TagDiv>
 
       </Content>
-      <img src={FillHeart} alt="" style={{ width: '24px' }} />
+      {isLike ? (
+        <img 
+          src={FillHeart} 
+          alt="" 
+          style={{ width: '24px' }}
+          onClick={() => setIsLike(false)}
+        />
+      ) : (
+        <img 
+          src={EmptyHeart} 
+          alt="" 
+          style={{ width: '24px' }} 
+          onClick={() => setIsLike(true)}
+        />
+      )}
     </>
   )
 }

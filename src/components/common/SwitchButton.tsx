@@ -102,7 +102,7 @@ const ButtonLabel = styled.label<ToggleType>`
 `;
 
 export default function SwitchButton({ setIsCity }: ShowType) {
-  const [cityShow, setCityShow] = useState(false);
+  const [cityShow, setCityShow] = useState<boolean>(false);
 
   const toggleHandler = () => {
     setCityShow(prev => !prev);

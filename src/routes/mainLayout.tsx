@@ -9,7 +9,8 @@ import ModalContainer from '../components/common/Modal/ModalContainer';
 
 export default function MainLayout() {
   // 전역적으로 관리해야하는 state
-  const [isDetail, setIsDetail] = useState(true);
+  const [isDetail, setIsDetail] = useState<boolean>(true);
+  const [isShow, setIsShow] = useState<boolean>(false);
 
   // 임시 데이터
   const detail = {
@@ -22,14 +23,22 @@ export default function MainLayout() {
 
   return (
     <>
-      {isDetail ? (
-        <ModalContainer content={<DetailItem detail={detail} />} />
-      ) : (
-        // 특정 지역 눌렀을 때 나오는 술 이미지 리스트 컴포넌트 만들어서 넣기
-        <ModalContainer content={<div>카드리스트</div>} />
+      {isShow && (
+        isDetail ? (
+          <ModalContainer 
+            content={<DetailItem detail={detail} />} 
+            setIsShow={setIsShow} 
+          />
+        ) : (
+          <ModalContainer 
+            content={<div>카드리스트</div>} 
+            setIsShow={setIsShow} 
+          />
+        )
       )}
       <Navbar />
       <Outlet />
+      <button onClick={() => setIsShow(true)}>모달</button>
       <Footer/>
     </>
   )
