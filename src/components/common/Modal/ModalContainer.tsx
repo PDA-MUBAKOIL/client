@@ -9,11 +9,11 @@ const OutOverlay = styled.div`
   background-color: rgba(0, 0, 0, 0.4);
 `
 
-export default function ModalContainer({ content }: ModalProps) {
+export default function ModalContainer({ content, setIsShow }: ModalProps) {
   return (
     <>
       <OutOverlay />
-      <ModalCard content={content} />
+      <ModalCard content={content} setIsShow={setIsShow} />
     </>
   )
 }
