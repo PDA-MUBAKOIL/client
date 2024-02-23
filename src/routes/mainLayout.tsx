@@ -1,16 +1,20 @@
 import React, { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 import Navbar from '../components/common/Navbar'
 import Footer from '../components/common/Footer';
 
 import DetailItem from '../components/common/Modal/DetailItem';
 import ModalContainer from '../components/common/Modal/ModalContainer';
+import CardList from '../components/common/Modal/CardList';
+
+
 
 export default function MainLayout() {
   // 전역적으로 관리해야하는 state
   const [isDetail, setIsDetail] = useState<boolean>(true);
   const [isShow, setIsShow] = useState<boolean>(false);
+
 
   // 임시 데이터
   const detail = {
@@ -32,7 +36,7 @@ export default function MainLayout() {
           />
         ) : (
           <ModalContainer 
-            content={<div>카드리스트</div>} 
+            content={<CardList />} 
             setIsShow={setIsShow} 
           />
         )
