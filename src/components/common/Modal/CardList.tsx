@@ -1,7 +1,10 @@
 import React from 'react'
 
-export default function CardList() {
+export default function CardList(cardList:{title: string, list: never[]}) {
   return (
-    <div>CardList</div>
+    <div>
+      <div>{cardList.title}</div>
+      <div></div>
+    </div>
   )
 }
