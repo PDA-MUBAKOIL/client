@@ -3,7 +3,7 @@ import { Card } from '@mantine/core';
 import styled from 'styled-components';
 import Quit from '../../../assets/img/Modal/quit.svg';
 
-type ModalProps = {
+export type ModalProps = {
   content: ReactElement;
 }
 

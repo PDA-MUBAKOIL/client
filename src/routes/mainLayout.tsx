@@ -3,8 +3,7 @@ import { Outlet } from 'react-router-dom';
 
 import Navbar from '../components/common/Navbar'
 import Footer from '../components/common/Footer';
-import styled from 'styled-components';
-import ModalCard from '../components/common/Modal/ModalCard';
+
 import DetailItem from '../components/common/Modal/DetailItem';
 import ModalContainer from '../components/common/Modal/ModalContainer';
 
