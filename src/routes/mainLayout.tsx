@@ -14,6 +14,7 @@ export default function MainLayout() {
 
   // 임시 데이터
   const detail = {
+    img: 'https://thesool.com/common/imageView.do?targetId=PR00001219&targetNm=PRODUCT',
     name: '이천미 예술',
     materials: '백미(국산), 밀누룩(국산), 정제수 밀(누룩)함유',
     percent: '14%',
