@@ -22,12 +22,12 @@ export default function MainLayout() {
 
   return (
     <>
-      {isDetail ? (
+      {/* {isDetail ? (
         <ModalContainer content={<DetailItem detail={detail} />} />
       ) : (
         // 특정 지역 눌렀을 때 나오는 술 이미지 리스트 컴포넌트 만들어서 넣기
         <ModalContainer content={<div>카드리스트</div>} />
-      )}
+      )} */}
       <Navbar />
       <Outlet />
       <Footer/>
