@@ -1,0 +1,16 @@
+.input {
+    border: none !important;
+    background-color: transparent !important;
+    height:50px !important;
+}
+
+
+.wrapper{
+    width: 349px;
+    border:solid 1px rgb(193, 120, 120, 30%);
+    border-radius: 10px;
+}
+
+.section{
+    margin: 0 10px;
+}
