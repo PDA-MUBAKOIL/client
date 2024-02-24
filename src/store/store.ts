@@ -1,10 +1,15 @@
 import {combineReducers} from 'redux';
 import {configureStore} from '@reduxjs/toolkit';
 
+import cardListReducer from "./reducers/cardList";
+import userReducer from "./reducers/user";
+
+
 
 
 export const rooterReducer = combineReducers({
-
+    cardList: cardListReducer,
+    user: userReducer
 });
 
 export const store = configureStore({

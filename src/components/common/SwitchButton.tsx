@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import '../../styles/Button.css';
 import styled from 'styled-components';
 
 type ToggleType = {
   cityshow: string;
 }
 
-type ShowType = {
+export type ShowType = {
   setIsCity: (state:boolean) => void;
 }
 

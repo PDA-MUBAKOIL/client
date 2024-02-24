@@ -10,6 +10,9 @@ const NavBarContainer = styled.div`
   background-color: #EBDCDC;
   width: 100%;
   height: 62px;
+  position: fixed;
+  top: 0;
+
 `
 const NavLogo = styled.img`
   width: 45px;
