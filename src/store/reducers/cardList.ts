@@ -4,8 +4,14 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState={
     title:'',
-    list:[],
-}
+    list:[{
+        _id: 'id',
+        drinkId: 'id',
+        userId: 'id',
+        review: 'id',
+        imgUrl: 'id',
+        isPublic: true}]
+    }
 
 const cardListSlice = createSlice({
     name: "cardList",
