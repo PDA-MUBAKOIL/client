@@ -30,6 +30,7 @@ const FooterItem = styled.div`
   width: 40px;
   gap: 6px;
   cursor: pointer;
+  -webkit-tap-highlight-color:  rgba(255, 255, 255, 0); 
 `
 
 const FooterItemImg = styled.img`
