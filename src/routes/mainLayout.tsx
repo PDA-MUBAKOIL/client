@@ -17,8 +17,7 @@ export default function MainLayout() {
   // 전역적으로 관리해야하는 state
   const [isDetail, setIsDetail] = useState<boolean>(false);
   const [isShow, setIsShow] = useState<boolean>(false);
-  
-  
+
   // 임시 데이터
   const detail = {
     img: 'https://thesool.com/common/imageView.do?targetId=PR00001219&targetNm=PRODUCT',
@@ -56,7 +55,6 @@ export default function MainLayout() {
         )
 
       }
-     
       <Navbar />
       <Outlet />
       <button onClick={() => setIsShow(true)}>모달</button>
