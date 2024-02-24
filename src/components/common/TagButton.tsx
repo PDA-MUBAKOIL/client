@@ -15,6 +15,7 @@ export default function TagButton({ text, onClick }: TagProp) {
         backgroundColor: '#DFBBBB',
         color: '#000',
         fontSize: rem('12px'),
+        fontWeight: rem(400),
         borderRadius: rem('10px'),
         border: 'solid 1px #C17878'
       }}
