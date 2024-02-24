@@ -5,13 +5,15 @@ const instance = axios.create({
     baseURL:BASE_URL,
 });
 
-export async function sendEmailAuthNumber(email:string){
+export async function sendEmailAuthNumber(mail:string){
     return await instance.post('/send',{
-        mail: email
+        mail
     });
 }
 
-export async function confirmAuthNumber(){
-    return await instance.get('/cert');
+export async function confirmAuthNumber(authCode:string){
+    return await instance.post('/cert',{
+        authCode: authCode
+    });
 }
 

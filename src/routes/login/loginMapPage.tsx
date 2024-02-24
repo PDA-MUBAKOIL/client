@@ -6,6 +6,7 @@ import map from '../../assets/img/Map/무박오일map 시도.png'
 import marker from '../../assets/img/Map/marker.png'
 import { useAppDispatch, useAppSelector } from '../../lib/hooks/reduxHooks';
 import { setCardList } from '../../store/reducers/cardList';
+import { getMyRegionWishCnt, getMyWishes } from '../../lib/api/wish';
 
 type PinType ={
   top: number,
@@ -71,18 +72,22 @@ const MarkerCount = styled.div`
 
 function MarkerComponent(props:{region:string, fullName:string, left:number, top:number, cnt:number}){
   const dispatch = useAppDispatch();
-  const cardList = useAppSelector(state => state.cardList);
+  const user = useAppSelector(state=>state.user);
+
   const onClickMarker = () => {
-    //axios.get(`/api/wish/${userId}`,{params:{region:region}})
-    console.log(cardList);
+    getMyWishes(user.id, props.region).then(data=>{
+      const action = setCardList({
+        title: props.fullName,
+        list: data.data
+      })
+      dispatch(action);
+      console.log(props.fullName)
+    })
+
   }
 
   useEffect(()=>{
-    const action = setCardList({
-      title:'경상북도',
-      list: [12,3,4]
-    })
-    dispatch(action);
+
   
   },[])
 
@@ -99,38 +104,29 @@ function MarkerComponent(props:{region:string, fullName:string, left:number, top
 
 export default function LoginMapPage() {
   const [isCity, setIsCity] = useState(false)
-  const [name,setName] = useState('진언')
+  const user = useAppSelector(state=>state.user);
+
   const [cnt, setCnt] = useState(
     {
-      "서울": 0,
-      "인천": 1,
-      "대전": 2,
-      "세종": 10,
-      "광주": 200,
-      "울산": 30,
-      "부산":	0,
-      "대구":	50,
-      "경기":	60,
-      "충북":	70,
-      "충남":	1,
-      "강원":	2,
-      "전북":	0,
-      "전남":	100,
-      "경북":	300,
-      "경남":	0,
-      "제주":30
+      "서울": 0, "인천": 0, "대전": 0, "세종": 0,
+      "광주": 0, "울산": 0, "부산":	0, "대구": 0,
+      "경기":	0, "충북": 0, "충남":	0, "강원": 0,
+      "전북":	0, "전남": 0, "경북":	0, "경남": 0, "제주": 0
     })
 
 
-  const cardList = useAppSelector(state => state.cardList);
 
   useEffect(()=>{
-    
+    getMyRegionWishCnt(user.id).then((data)=>{
+      setCnt(data.data)
+    })
+
   },[])
+
   return (
       <Flex h='100vh' direction="column" justify="center" align="center" gap="20">
         <Flex  direction="column" justify="center" align="center" gap="25" >
-          <Title><b >{name}님</b>의 무박오일 여행</Title>
+          <Title><b >{user.name}님</b>의 무박오일 여행</Title>
           <SwitchButton setIsCity={setIsCity}/>
         </Flex>
          <Map>
