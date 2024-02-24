@@ -6,6 +6,7 @@ import Footer from '../components/common/Footer';
 import DetailItem from '../components/common/Modal/DetailItem';
 import ModalContainer from '../components/common/Modal/ModalContainer';
 import CardList from '../components/common/Modal/CardList';
+
 import {useAppSelector } from '../lib/hooks/reduxHooks';
 
 
@@ -51,10 +52,14 @@ export default function MainLayout() {
             content={<CardList />} 
             setIsShow={setIsShow} 
           />
+
+        )
+
       )}
      
       <Navbar />
       <Outlet />
+      <button onClick={() => setIsShow(true)}>모달</button>
       <Footer/>
     </>
   )
