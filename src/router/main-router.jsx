@@ -5,7 +5,7 @@ import NonLoginLogIn from '../routes/nonLogin/nonLoginLogIn';
 import NonLoginSignUp from '../routes/nonLogin/nonLoginSignUp';
 import NonLoginMainPage from '../routes/nonLogin/nonLoginMainPage';
 import MainLayout from '../routes/mainLayout';
-import LoginMainPage from '../routes/login/loginMainPage';
+import LoginMapPage from '../routes/login/loginMapPage';
 import LoginListPage from '../routes/login/loginListPage';
 import LoginWishPage from '../routes/login/loginWishPage';
 import LoginSearchPage from '../routes/login/loginSearchPage';
@@ -32,8 +32,8 @@ export const mainRouter= ([
 
             },
             {
-                path: '/main',
-                element: <LoginMainPage />,
+                path: '/map',
+                element: <LoginMapPage />,
                 index: true,
             },
             {

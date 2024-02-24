@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 
 import Navbar from "../components/common/Navbar";
@@ -6,16 +6,21 @@ import Footer from "../components/common/Footer";
 
 import DetailItem from "../components/common/Modal/DetailItem";
 import ModalContainer from "../components/common/Modal/ModalContainer";
-import { Container } from "@mantine/core";
+
 import styled from "styled-components";
+import CardList from "../components/common/Modal/CardList";
+
+import { useAppSelector } from "../lib/hooks/reduxHooks";
 
 const OutletContainer = styled.div`
   padding: 62px 0 80px 0;
 `;
 
 export default function MainLayout() {
+  const cardList = useAppSelector((state: any) => state.cardList);
+
   // 전역적으로 관리해야하는 state
-  const [isDetail, setIsDetail] = useState<boolean>(true);
+  const [isDetail, setIsDetail] = useState<boolean>(false);
   const [isShow, setIsShow] = useState<boolean>(false);
 
   // 임시 데이터
@@ -29,6 +34,16 @@ export default function MainLayout() {
       "국내산 이천 쌀과 500년 전통 누룩으로 빚어 전통 누룩의 깊은 향과 쌀 고유의 자연스러운 단 맛, 부드러운 목 넘김이 좋습니다.",
   };
 
+  useEffect(() => {
+    if (!isShow && cardList.title) {
+      setIsDetail(false);
+      setIsShow(true);
+    } else {
+      setIsDetail(true);
+      setIsShow(false);
+    }
+  }, [cardList]);
+
   return (
     <>
       {isShow &&
@@ -38,10 +53,7 @@ export default function MainLayout() {
             setIsShow={setIsShow}
           />
         ) : (
-          <ModalContainer
-            content={<div>카드리스트</div>}
-            setIsShow={setIsShow}
-          />
+          <ModalContainer content={<CardList />} setIsShow={setIsShow} />
         ))}
       <Navbar />
       <OutletContainer>

@@ -1,6 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Route, RouteObject, Routes } from 'react-router-dom';
 import { mainRouter } from './router/main-router';
+import { Provider } from 'react-redux';
+import { store } from './store/store'
 import '@mantine/core/styles.css';
 
 
@@ -20,11 +22,13 @@ function renderRoutes(routesObj:RouteObject[]){
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {renderRoutes(mainRouter)}
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          {renderRoutes(mainRouter)}
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
