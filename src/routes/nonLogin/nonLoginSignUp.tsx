@@ -11,12 +11,14 @@ import { setIsEmail } from "../../store/reducers/Auth/email";
 
 const SignupBody = styled.div`
   background-color: #ebdcdc;
-  height: 100vh;
+  // footer 없애고 디자인 수정하기
+  height: calc(100vh - 134px);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 48px;
   padding-top: 90px;
+  overflow-y: hidden;
 `;
 
 const MainFont = styled(Text)`
@@ -92,7 +94,7 @@ export default function NonLoginSignUp() {
           <ButtonBox>
             <CommonButton
               text="회원가입"
-              onClick={() => console.log("회원가입 클릭")}
+              onClick={() => dispatch(setIsEmail(false))}
             />
             <ToLogin to={"/login"}>로그인</ToLogin>
           </ButtonBox>

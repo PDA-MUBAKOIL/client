@@ -13,7 +13,7 @@ import CardList from "../components/common/Modal/CardList";
 import { useAppSelector } from "../lib/hooks/reduxHooks";
 
 const OutletContainer = styled.div`
-  padding: 62px 0 80px 0;
+  padding: 62px 0 72px 0;
 `;
 
 export default function MainLayout() {
