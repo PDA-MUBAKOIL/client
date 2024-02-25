@@ -43,14 +43,12 @@ const NameFont = styled(Text)`
   font-size: 14px;
 `;
 
-
 export default function DrinkCard({ id, url, name }: DrinkProp) {
   const dispatch = useAppDispatch();
 
-  function onDrinkDetailClick(){
-    const action = setDrinkDetail({drinkId:id})
+  function onDrinkDetailClick() {
+    const action = setDrinkDetail({ drinkId: id });
     dispatch(action);
-
 
     dispatch(setIsDetail(true));
     dispatch(setIsShow(true));
