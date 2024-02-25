@@ -54,7 +54,7 @@ function FooterItemComponent(props: { src: string; txt: string; url: string }) {
   return (
     <FooterItem
       onClick={() => {
-        dispatch(setSearch(''));
+        dispatch(setSearch(""));
         navigate(props.url);
       }}
     >
@@ -72,7 +72,7 @@ export default function Footer() {
         <FooterItemComponent src={search} txt="검색" url="/search" />
         <FooterItemComponent src={map} txt="지도" url="/map" />
         <FooterItemComponent src={wish} txt="위시" url="/wish" />
-        <FooterItemComponent src={my} txt="마이" url="/my" />
+        <FooterItemComponent src={my} txt="마이" url="/mypage" />
       </FooterItems>
     </FooterContainer>
   );
