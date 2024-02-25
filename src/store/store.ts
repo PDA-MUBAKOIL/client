@@ -7,6 +7,7 @@ import showModalReducer from "./reducers/Drink/showModal";
 import searchReducer from "./reducers/Drink/search";
 import userReducer from "./reducers/user";
 import emailReducer from "./reducers/Auth/email";
+import drinkListReducer from "./reducers/Drink/allDrink";
 
 import storage from "redux-persist/lib/storage";
 import {
@@ -38,6 +39,7 @@ export const rootReducer = persistReducer(
     showModal: showModalReducer,
     user: userReducer,
     email: emailReducer,
+    drinkList: drinkListReducer,
   })
 );
 
