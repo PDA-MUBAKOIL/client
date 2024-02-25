@@ -4,6 +4,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import cardListReducer from "./reducers/Drink/cardList";
 import drinkDetailReducer from "./reducers/Drink/drinkDetail";
 import showModalReducer from "./reducers/Drink/showModal";
+import searchReducer from "./reducers/Drink/search";
 import userReducer from "./reducers/user";
 import emailReducer from "./reducers/Auth/email";
 import drinkListReducer from "./reducers/Drink/allDrink";
@@ -24,7 +25,7 @@ import logger from "redux-logger";
 const rootPersistConfig = {
   key: "root",
   storage: storage,
-  whiteList: [],
+  whitelist: [],
 };
 
 const myMiddlewares = [logger];
@@ -34,6 +35,7 @@ export const rootReducer = persistReducer(
   combineReducers({
     cardList: cardListReducer,
     drinkDetail: drinkDetailReducer,
+    search: searchReducer,
     showModal: showModalReducer,
     user: userReducer,
     email: emailReducer,
