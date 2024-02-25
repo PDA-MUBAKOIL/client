@@ -22,42 +22,42 @@ export default function NonLoginMainPage() {
     {
       url: "https://thesool.com/common/imageView.do?targetId=PR00001095&targetNm=PRODUCT",
       name: "이천미 예술",
-      id:''
+      id: "",
     },
     {
       url: "https://thesool.com/common/imageView.do?targetId=PR00001220&targetNm=PRODUCT",
       name: "우곡소주",
-      id:''
+      id: "",
     },
     {
       url: "https://thesool.com/common/imageView.do?targetId=PR00001218&targetNm=PRODUCT",
       name: "맵시 막걸리 블랙라벨",
-      id:''
+      id: "",
     },
     {
       url: "https://thesool.com/common/imageView.do?targetId=PR00001212&targetNm=PRODUCT",
       name: "조오탁",
-      id:''
+      id: "",
     },
     {
       url: "https://thesool.com/common/imageView.do?targetId=PR00001197&targetNm=PRODUCT",
       name: "무박이일",
-      id:''
+      id: "",
     },
     {
       url: "https://thesool.com/common/imageView.do?targetId=PR00001190&targetNm=PRODUCT",
       name: "탱자C",
-      id:''
+      id: "",
     },
     {
       url: "https://thesool.com/common/imageView.do?targetId=PR00001187&targetNm=PRODUCT",
       name: "BURNT 번트",
-      id:''
+      id: "",
     },
     {
       url: "https://thesool.com/common/imageView.do?targetId=PR00001218&targetNm=PRODUCT",
       name: "맵시 막걸리 블랙라벨",
-      id:''
+      id: "",
     },
   ];
 
