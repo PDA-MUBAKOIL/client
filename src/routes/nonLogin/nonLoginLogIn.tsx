@@ -1,17 +1,23 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import CommonButton from "../../components/common/CommonButton";
 import { Text } from "@mantine/core";
 
 import Logo from "../../assets/img/Nav/logo.svg";
 import styled from "styled-components";
 import InputContainer from "../../components/common/InputContainer";
-import { Link } from "react-router-dom";
-import { setIsEmail } from "../../store/reducers/Auth/email";
+import { Link, useNavigate } from "react-router-dom";
+import { userLogin } from "../../store/reducers/user";
+import { useAppDispatch } from "../../lib/hooks/reduxHooks";
+
+export type User = {
+  email: String;
+  password: String;
+};
 
 const SignupBody = styled.div`
   background-color: #ebdcdc;
   // footer 없애고 디자인 수정하기
-  height: calc(100vh - 134px);
+  height: calc(100vh - 62px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -49,20 +55,78 @@ const ToLogin = styled(Link)`
   color: #717171;
 `;
 
+// const ErrorFont = styled.span`
+//   font-size: 13px;
+//   color: #871806;
+//   text-align: center;
+// `;
+
 export default function NonLoginLogIn() {
+  const [email, setEmail] = useState<String>("");
+  const [password, setPassword] = useState<String>("");
+  const [isActive, setIsActive] = useState<Boolean>(false);
+  // const [isError, setIsError] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const onInputChange = useCallback(
+    (
+      inputText: String,
+      setFn: React.Dispatch<React.SetStateAction<String>>
+    ) => {
+      setFn(inputText);
+    },
+    []
+  );
+
+  const onSubmitLogin = useCallback(() => {
+    const data = { email, password };
+    dispatch(userLogin(data)).then((res: any) => {
+      if (res.type === "auth/userLogin/rejected") {
+        navigate("/login");
+      } else {
+        navigate("/map");
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (email && password) {
+      setIsActive(true);
+    }
+    if (!email || !password) {
+      setIsActive(false);
+    }
+  }, [email, password]);
+
   return (
     <SignupBody>
       <HelloBox>
-        <MainFont>함께 하실래요?</MainFont>
+        <MainFont>함께 하기</MainFont>
         <img src={Logo} alt="" style={{ width: "105px" }} />
       </HelloBox>
       <InputBox>
-        <InputContainer placeholder="이메일" />
-        <InputContainer placeholder="비밀번호" />
+        <InputContainer
+          placeholder="이메일"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            onInputChange(e.target.value, setEmail);
+          }}
+        />
+        <InputContainer
+          placeholder="비밀번호"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            onInputChange(e.target.value, setPassword);
+          }}
+        />
+        {/* {isError && <ErrorFont>이메일/비밀번호가 일치하지 않습니다.</ErrorFont>} */}
       </InputBox>
       <ButtonBox>
         <Link to={"/map"}>
-          <CommonButton text="로그인" onClick={() => console.log("로그인")} />
+          <CommonButton
+            text="로그인"
+            onClick={() => onSubmitLogin()}
+            status={isActive ? "active" : "disabled"}
+          />
         </Link>
         <ToLogin to={"/signup"}>회원가입</ToLogin>
       </ButtonBox>
