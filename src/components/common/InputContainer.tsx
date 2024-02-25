@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 type InputProp = {
   placeholder: string;
+  onChange: any;
 };
 
 const InputDiv = styled.input`
@@ -19,6 +20,6 @@ const InputDiv = styled.input`
   }
 `;
 
-export default function InputContainer({ placeholder }: InputProp) {
-  return <InputDiv placeholder={placeholder} />;
+export default function InputContainer({ placeholder, onChange }: InputProp) {
+  return <InputDiv placeholder={placeholder} onChange={onChange} />;
 }

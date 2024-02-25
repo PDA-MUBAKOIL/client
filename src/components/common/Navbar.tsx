@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "../../assets/img/Nav/logo.svg";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const NavBarContainer = styled.div`
   position: fixed;
@@ -13,7 +14,7 @@ const NavBarContainer = styled.div`
   background-color: #ebdcdc;
   width: 100%;
   height: 62px;
-  z-index: 99;
+  z-index: 1;
 `;
 const NavLogo = styled.img`
   width: 45px;
@@ -22,7 +23,9 @@ const NavLogo = styled.img`
 export default function Navbar() {
   return (
     <NavBarContainer>
-      <NavLogo src={Logo} alt="navLogo"></NavLogo>
+      <Link to={"/"}>
+        <NavLogo src={Logo} alt="navLogo"></NavLogo>
+      </Link>
     </NavBarContainer>
   );
 }

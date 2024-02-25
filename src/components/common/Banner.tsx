@@ -4,14 +4,14 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const BannerContainer = styled.div`
-  background-color: #ebdcdc;
+  // background-color: #ebdcdc;
+  background: linear-gradient(180deg, rgba(235, 220, 220, 0) 0%, #ebdcdc 47.5%);
   width: 100%;
   height: 260px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
 `;
 
 const BannerFont = styled(Text)`
@@ -36,7 +36,7 @@ export default function Banner() {
     <BannerContainer>
       <BannerFont>로그인을 하고</BannerFont>
       <BannerFont>나만의 컬렉션을 만들어보세요!</BannerFont>
-      <LinkButton to={"/signup"}>
+      <LinkButton to={"/login"}>
         <LoginButton onClick={() => console.log("로그인 페이지로 이동")}>
           로그인
         </LoginButton>

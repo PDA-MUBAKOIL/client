@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import CommonButton from "../../components/common/CommonButton";
 import { Text } from "@mantine/core";
 
@@ -8,11 +8,12 @@ import InputContainer from "../../components/common/InputContainer";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsEmail } from "../../store/reducers/Auth/email";
+import { useAppDispatch } from "../../lib/hooks/reduxHooks";
 
 const SignupBody = styled.div`
   background-color: #ebdcdc;
   // footer 없애고 디자인 수정하기
-  height: calc(100vh - 134px);
+  height: calc(100vh - 62px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,7 +53,23 @@ const ToLogin = styled(Link)`
 
 export default function NonLoginSignUp() {
   const isEmail = useSelector((state: any) => state.email.isEmail);
-  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState<String>("");
+  const [authNum, setAuthNum] = useState<String>("");
+  const [nickname, setNickname] = useState<String>("");
+  const [password, setPassword] = useState<String>("");
+  const [isActive, setIsActive] = useState<boolean>(false);
+  const dispatch = useAppDispatch();
+
+  const onInputChange = useCallback(
+    (
+      inputText: String,
+      setFn: React.Dispatch<React.SetStateAction<String>>
+    ) => {
+      setFn(inputText);
+    },
+    []
+  );
 
   const [isClick, setIsClick] = useState<boolean>(false);
 
@@ -66,19 +83,33 @@ export default function NonLoginSignUp() {
       {!isEmail ? (
         <>
           <InputBox>
-            <InputContainer placeholder="이메일" />
-            {isClick && <InputContainer placeholder="인증 번호" />}
+            <InputContainer
+              placeholder="이메일"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputChange(e.target.value, setEmail);
+              }}
+            />
+            {isClick && (
+              <InputContainer
+                placeholder="인증 번호"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputChange(e.target.value, setAuthNum);
+                }}
+              />
+            )}
           </InputBox>
           <ButtonBox>
             {!isClick ? (
               <CommonButton
                 text="인증번호 요청"
                 onClick={() => setIsClick(true)}
+                status="active"
               />
             ) : (
               <CommonButton
                 text="이메일 인증"
                 onClick={() => dispatch(setIsEmail(true))}
+                status="active"
               />
             )}
             <ToLogin to={"/login"}>로그인</ToLogin>
@@ -87,14 +118,34 @@ export default function NonLoginSignUp() {
       ) : (
         <>
           <InputBox>
-            <InputContainer placeholder="닉네임" />
-            <InputContainer placeholder="비밀번호" />
-            <InputContainer placeholder="비밀번호 확인" />
+            <InputContainer
+              placeholder="닉네임"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputChange(e.target.value, setNickname);
+              }}
+            />
+            <InputContainer
+              placeholder="비밀번호"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputChange(e.target.value, setPassword);
+              }}
+            />
+            <InputContainer
+              placeholder="비밀번호 확인"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                if (e.target.value !== password) {
+                  setIsActive(false);
+                } else {
+                  setIsActive(true);
+                }
+              }}
+            />
           </InputBox>
           <ButtonBox>
             <CommonButton
               text="회원가입"
               onClick={() => dispatch(setIsEmail(false))}
+              status={isActive ? "active" : "disabled"}
             />
             <ToLogin to={"/login"}>로그인</ToLogin>
           </ButtonBox>
