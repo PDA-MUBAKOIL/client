@@ -13,6 +13,7 @@ const NavBarContainer = styled.div`
   background-color: #ebdcdc;
   width: 100%;
   height: 62px;
+  z-index: 99;
 `;
 const NavLogo = styled.img`
   width: 45px;

@@ -54,9 +54,11 @@
     "@types/react-router-dom": "^5.3.3",
     "@types/redux-logger": "^3.0.13",
     "@types/redux-persist": "^4.3.1",
+    "@types/redux-thunk": "^2.1.0",
     "postcss": "^8.4.35",
     "postcss-preset-mantine": "^1.13.0",
     "postcss-simple-vars": "^7.0.1",
-    "redux-logger": "^3.0.6"
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^3.1.0"
   }
 }
