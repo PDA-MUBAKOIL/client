@@ -6,6 +6,8 @@ import wish from "../../assets/img/Footer/wish.svg";
 import my from "../../assets/img/Footer/my.svg";
 import styled from "styled-components";
 import { useNavigate } from "react-router";
+import { useAppDispatch } from "../../lib/hooks/reduxHooks";
+import { setSearch } from "../../store/reducers/Drink/search";
 
 const FooterContainer = styled.div`
   position: fixed;
@@ -47,10 +49,12 @@ const FooterItemTxt = styled.div`
 
 function FooterItemComponent(props: { src: string; txt: string; url: string }) {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   return (
     <FooterItem
       onClick={() => {
+        dispatch(setSearch(''));
         navigate(props.url);
       }}
     >

@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Input,MantineThemeProvider, createTheme} from '@mantine/core';
 import classes from '../../styles/Navbar.module.css';
 import search from '../../assets/img/SearchBar/search.png';
 import styled from 'styled-components';
 import { useInputState } from '@mantine/hooks';
 import { listUp } from '../../lib/api/drinks';
+import { useAppDispatch, useAppSelector } from '../../lib/hooks/reduxHooks';
+import { setSearch } from '../../store/reducers/Drink/search';
+import { useLocation } from 'react-router';
 
 export type TSearchResult ={
   _id: string,
@@ -18,10 +21,10 @@ export type TSearchResult ={
   material: string,
   __v: number,
   id: string,
+  percent: string
 }
 
 type TSearch = {
-  setValue:React.Dispatch<React.SetStateAction<string>>,
   setResult:React.Dispatch<React.SetStateAction<TSearchResult[]>>
 }
 
@@ -45,13 +48,13 @@ const theme = createTheme({
 });
 
 
-export default function SearchBar({setValue, setResult}:TSearch) {   
+export default function SearchBar({setResult}:TSearch) {   
     const [searchValue,setSearchValue] = useInputState('');
-    
-    
+    const searchWord = useAppSelector(state=>state.search.search);
+    const dispatch = useAppDispatch();
+
     const onSubmitSearch = (e:React.FormEvent<HTMLFormElement>)=>{
       e.preventDefault();
-      setValue(searchValue);
       listUp().then(data=>{
         setResult(data.data);
       })
@@ -59,10 +62,15 @@ export default function SearchBar({setValue, setResult}:TSearch) {
 
     const onChangeSearch = (e:React.ChangeEvent<HTMLInputElement>)=>{
       setSearchValue(e.target.value);
-      setValue(e.target.value);
+      dispatch(setSearch(e.target.value));
+      listUp().then(data=>{
+        setResult(data.data);
+      })
     }
 
-
+  useEffect(()=>{
+    dispatch(setSearch(''))
+  },[])
   return (
     <MantineThemeProvider theme={theme}>
       <Box maw={350} mx="auto">
@@ -73,7 +81,7 @@ export default function SearchBar({setValue, setResult}:TSearch) {
                   rightSection={
                       <SearchButton> <img src={search} alt='search' /> </SearchButton>
                     }
-                  value={searchValue}
+                  value={searchWord}
                   onChange={onChangeSearch}
               />
         </form>
