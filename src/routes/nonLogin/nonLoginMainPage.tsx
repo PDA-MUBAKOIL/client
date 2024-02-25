@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Banner from "../../components/common/Banner";
 import DrinkCard from "../../components/common/DrinkCard";
 import { Text } from "@mantine/core";
