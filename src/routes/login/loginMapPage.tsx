@@ -79,7 +79,7 @@ function MarkerComponent(props:{region:string, fullName:string, left:number, top
     getMyWishes(user.id, props.region).then(data=>{
       const action = setCardList({
         title: props.fullName,
-        list: data.data
+        list: data.data.map((v,idx)=>{return{...v,drinkId:`drinkId${idx}`}})
       })
       dispatch(action);
       dispatch(setIsDetail(false));
