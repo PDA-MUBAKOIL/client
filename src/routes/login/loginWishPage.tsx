@@ -18,22 +18,22 @@ export default function LoginWishPage() {
     overflow-y: scroll;
   `;
 
-  // useEffect(()=>{
-  //   getMyWishes(user.id,null).then(data=>{
-  //     setResult(data.data.map((v)=>{
-  //       return v.drinkId
-  //     }));
-  //   })
-  // },[])
+  useEffect(()=>{
+    getMyWishes(user.id,null).then(data=>{
+      setResult(data.data.map((v)=>{
+        return v['drinkId']
+      }));
+    })
+  },[])
   return (
     <Flex h="calc(100vh - 134px)" gap="25px" direction="column" align="center">
       <div style={{ width: "321px", paddingTop: "30px", fontSize: "20px" }}>
         <b>{user.name}</b>님의 무박오일 여행
       </div>
       <ListItems>
-        {/* {result.map((item, idx) => (
+        {result.map((item, idx) => (
           <DrinkDetailCard key={idx} {...item} />
-        ))} */}
+        ))}
       </ListItems>
     </Flex>
   );
