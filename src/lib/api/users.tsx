@@ -10,8 +10,8 @@ export async function login(data: User) {
   return await instance.post("/login", data);
 }
 
-export async function logout() {
-  return await instance.post("/logout");
+export async function logout(id: string) {
+  return await instance.post("/logout", id);
 }
 
 export async function setPassWord() {
