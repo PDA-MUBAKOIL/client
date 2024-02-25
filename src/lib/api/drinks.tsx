@@ -9,7 +9,7 @@ const instance = axios.create({
 export async function listUp(){
     // return await instance.get('/');
 
-    return {data:[1,2,3,4,5,6,7,8].map(() => {return{
+    return {data:[11,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1].map(() => {return{
         _id: "65d8413288669a99299535ed",
         name: "포엠 드라이",
         imgUrl: "https://thesool.com/common/imageView.do?targetId=PR00001206&targetNm=PRODUCT",
@@ -29,6 +29,20 @@ export async function listUp(){
 }
 
 export async function getDrinkDetail(drinkId: string){
-    return await instance.post(`/${drinkId}`);
+    // return await instance.post(`/${drinkId}`);
+    return {data:{
+        _id:"",
+        tags: ['dd','dd'],
+        brewerId: 'd',
+        region: '울산',
+        capacity: 'dd',
+        imgUrl: "https://thesool.com/common/imageView.do?targetId=PR00001219&targetNm=PRODUCT",
+        name: "이천미 예술",
+        materials: "백미(국산), 밀누룩(국산), 정제수 밀(누룩)함유",
+        percent: "14%",
+        volume: "750ml",
+        description:
+          "국내산 이천 쌀과 500년 전통 누룩으로 빚어 전통 누룩의 깊은 향과 쌀 고유의 자연스러운 단 맛, 부드러운 목 넘김이 좋습니다.",
+      }}
 }
 

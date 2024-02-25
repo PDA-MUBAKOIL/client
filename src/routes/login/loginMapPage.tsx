@@ -5,8 +5,9 @@ import { Flex } from '@mantine/core';
 import map from '../../assets/img/Map/무박오일map 시도.png'
 import marker from '../../assets/img/Map/marker.png'
 import { useAppDispatch, useAppSelector } from '../../lib/hooks/reduxHooks';
-import { setCardList } from '../../store/reducers/cardList';
+import { setCardList } from '../../store/reducers/Drink/cardList';
 import { getMyRegionWishCnt, getMyWishes } from '../../lib/api/wish';
+import { setIsDetail, setIsShow } from '../../store/reducers/Drink/showModal';
 
 type PinType ={
   top: number,
@@ -81,7 +82,8 @@ function MarkerComponent(props:{region:string, fullName:string, left:number, top
         list: data.data
       })
       dispatch(action);
-      console.log(props.fullName)
+      dispatch(setIsDetail(false));
+      dispatch(setIsShow(true));
     })
 
   }
@@ -124,7 +126,7 @@ export default function LoginMapPage() {
   },[])
 
   return (
-      <Flex h='100vh' direction="column" justify="center" align="center" gap="20">
+      <Flex h='calc(100vh - 134px)' direction="column" justify="center" align="center" gap="20">
         <Flex  direction="column" justify="center" align="center" gap="25" >
           <Title><b >{user.name}님</b>의 무박오일 여행</Title>
           <SwitchButton setIsCity={setIsCity}/>

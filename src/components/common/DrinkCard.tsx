@@ -1,8 +1,12 @@
 import React from "react";
 import { Container, Text } from "@mantine/core";
 import styled from "styled-components";
+import { useAppDispatch } from "../../lib/hooks/reduxHooks";
+import { setIsDetail, setIsShow } from "../../store/reducers/Drink/showModal";
+import { setDrinkDetail } from "../../store/reducers/Drink/drinkDetail";
 
 export type DrinkProp = {
+  id: string;
   url: string;
   name: string;
 };
@@ -39,9 +43,21 @@ const NameFont = styled(Text)`
   font-size: 14px;
 `;
 
-export default function DrinkCard({ url, name }: DrinkProp) {
+
+export default function DrinkCard({ id, url, name }: DrinkProp) {
+  const dispatch = useAppDispatch();
+
+  function onDrinkDetailClick(){
+    const action = setDrinkDetail({drinkId:id})
+    dispatch(action);
+
+
+    dispatch(setIsDetail(true));
+    dispatch(setIsShow(true));
+  }
+
   return (
-    <DrinkContainer>
+    <DrinkContainer onClick={onDrinkDetailClick}>
       <ImageContainer>
         <Image src={url} alt="" />
       </ImageContainer>
