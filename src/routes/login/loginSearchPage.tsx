@@ -3,7 +3,7 @@ import SearchBar from '../../components/common/SearchBar';
 import { TSearchResult } from '../../components/common/SearchBar';
 import { Flex} from '@mantine/core';
 import styled from 'styled-components';
-import DrinkCard from "../../components/common/DrinkCard";
+
 import { Text } from "@mantine/core";
 import TagButton from '../../components/common/TagButton';
 import DrinkDetailCard from '../../components/common/DrinkDetailCard';
@@ -28,10 +28,6 @@ const ListItems = styled.div`
   overflow-y:scroll;
 `;
 
-const MainText = styled(Text)`
-  font-size: 20px;
-  padding: 0px 20px;
-`;
 
 export default function LoginSearchPage() {
   const TagContent =['육류','한식','분식','해산물','중식', '기름진 음식', '양식','과일/디저트'
