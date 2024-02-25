@@ -1,21 +1,34 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { login } from "../../lib/api/users";
+import { User } from "../../routes/nonLogin/nonLoginLogIn";
 
-const initialState={
-    name: '진언',
-    id: '',
-}
+const initialState = {
+  id: "",
+  name: "진언",
+  email: "",
+  isUser: false,
+};
+
+export const userLogin = createAsyncThunk(
+  "auth/userLogin",
+  async (data: User, thunkAPI) => {
+    const response = await login(data);
+    return response.data;
+  }
+);
 
 const userSlice = createSlice({
-    name: "user",
-    initialState: initialState,
-    reducers:{
-        setUser(state,action){
-            state.name = action.payload.name;
-            state.id = action.payload.id;
-        }
-    }
-})
+  name: "user",
+  initialState: initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(userLogin.fulfilled, (state, action) => {
+      state.id = action.payload.id;
+      state.name = action.payload.name;
+      state.email = action.payload.email;
+      state.isUser = true;
+    });
+  },
+});
 
-const {setUser} = userSlice.actions;
-export {setUser};
 export default userSlice.reducer;
