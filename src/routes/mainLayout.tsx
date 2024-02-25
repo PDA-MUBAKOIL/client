@@ -12,37 +12,40 @@ import CardList from "../components/common/Modal/CardList";
 
 import { useAppSelector } from "../lib/hooks/reduxHooks";
 
-const OutletContainer = styled.div`
-  padding: 62px 0 72px 0;
+const OutletContainer = styled.div<{ isuser: string }>`
+  ${(props) =>
+    props.isuser === "true"
+      ? `
+      padding: 62px 0 72px 0;
+    `
+      : `
+      padding: 62px 0 0 0;
+    `}
 `;
 
 export default function MainLayout() {
-
   // 전역적으로 관리해야하는 state
-  const isDetail = useAppSelector(state=>state.showModal.isDetail);
-  const isShow = useAppSelector(state=>state.showModal.isShow);
-  const detail = useAppSelector(state=>state.drinkDetail.detail)
+  const isDetail = useAppSelector((state) => state.showModal.isDetail);
+  const isShow = useAppSelector((state) => state.showModal.isShow);
+  const detail = useAppSelector((state) => state.drinkDetail.detail);
+  const isUser = useAppSelector((state) => state.user.isUser);
 
-
-  useEffect(() => {
-
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>
       {isShow &&
         (isDetail ? (
-          <ModalContainer
-            content={<DetailItem detail={detail} />}/>
+          <ModalContainer content={<DetailItem detail={detail} />} />
         ) : (
           <ModalContainer content={<CardList />} />
         ))}
       <Navbar />
-      <OutletContainer>
+      <OutletContainer isuser={isUser ? "true" : "false"}>
         <Outlet />
       </OutletContainer>
       {/* <button onClick={() => setIsShow(true)}>모달</button> */}
-      <Footer />
+      {isUser && <Footer />}
     </>
   );
 }
