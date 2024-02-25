@@ -23,7 +23,8 @@ export async function listUp(){
         capacity: "750ml",
         material: "머루, 포도, 백설탕, 효모, 메타중아황산칼륨, 아황산함유",
         __v: 0,
-        id: "65d8413288669a99299535ed"
+        id: "65d8413288669a99299535ed",
+        percent:"14.5%"
     } as TSearchResult
     })}
 }

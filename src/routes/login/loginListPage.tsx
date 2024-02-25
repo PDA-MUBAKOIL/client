@@ -5,6 +5,7 @@ import { Flex} from '@mantine/core';
 import styled from 'styled-components';
 import DrinkCard from "../../components/common/DrinkCard";
 import { Text } from "@mantine/core";
+import { useLocation } from 'react-router';
 
 const LoginSearchPageContainer = styled.div`
   display:flex;
@@ -42,7 +43,9 @@ export default function LoginListPage() {
   capacity: "750ml",
   material: "머루, 포도, 백설탕, 효모, 메타중아황산칼륨, 아황산함유",
   __v: 0,
-  id: "65d8413288669a99299535ed"}
+  id: "65d8413288669a99299535ed",
+  percent:'15%'
+}
 
   const data:Array<TSearchResult> = [
     {
@@ -87,14 +90,14 @@ export default function LoginListPage() {
     },
   ];
 
-  const [value, setValue] = useState('');
+
   const [result, setResult] = useState(data.concat(data));
 
 
   return (
     <LoginSearchPageContainer>
       <Flex h='110px' align='center' justify='center'>
-        <SearchBar setValue={setValue} setResult={setResult}/>
+        <SearchBar setResult={setResult}/>
       </Flex>
       <MainText>술 리스트</MainText>
       <ListItems>
