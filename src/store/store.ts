@@ -1,7 +1,9 @@
 import { combineReducers } from "redux";
 import { configureStore } from "@reduxjs/toolkit";
 
-import cardListReducer from "./reducers/cardList";
+import cardListReducer from "./reducers/Drink/cardList";
+import drinkDetailReducer from "./reducers/Drink/drinkDetail";
+import showModalReducer from "./reducers/Drink/showModal";
 import userReducer from "./reducers/user";
 import emailReducer from "./reducers/Auth/email";
 
@@ -30,6 +32,8 @@ export const rootReducer = persistReducer(
   rootPersistConfig,
   combineReducers({
     cardList: cardListReducer,
+    drinkDetail: drinkDetailReducer,
+    showModal: showModalReducer,
     user: userReducer,
     email: emailReducer,
   })

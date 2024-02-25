@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card, Text, Group, rem } from '@mantine/core';
 import styled from 'styled-components';
 import TagButton from '../TagButton';
@@ -6,7 +6,12 @@ import FillHeart from '../../../assets/img/Modal/fill-heart.svg';
 import EmptyHeart from '../../../assets/img/Modal/empty-heart.svg';
 
 export type DetailType = {
-  img: string,
+  _id:string,
+  tags: Array<string>,
+  brewerId: string,
+  region: string,
+  capacity: string,
+  imgUrl: string,
   name: string,
   materials: string,
   percent: string,
@@ -72,13 +77,13 @@ const TagDiv = styled(Group)`
 `
 
 export default function DetailItem({ detail }: DetailProps) {
-  const { img, name, materials, percent, volume, description } = detail;
+  const { imgUrl, name, materials, percent, volume, description } = detail;
 
   const [isLike, setIsLike] = useState<boolean>(false);
 
   return (
     <>
-      <ImageDiv src={img} />
+      <ImageDiv src={imgUrl} />
       <Content>
         <MainFont>{name}</MainFont>
 
