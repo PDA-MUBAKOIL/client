@@ -3,6 +3,7 @@ import { confirmAuthNumber, sendEmailAuthNumber } from "../../../lib/api/mail";
 
 const initialState = {
   isEmail: false,
+  email: "",
 };
 
 export const sendEmail = createAsyncThunk(
@@ -30,7 +31,8 @@ const emailSlice = createSlice({
       // state.isEmail = action.payload.result;
     });
     builder.addCase(checkEmail.fulfilled, (state, action) => {
-      state.isEmail = action.payload.result;
+      state.isEmail = true;
+      state.email = action.payload;
     });
   },
 });

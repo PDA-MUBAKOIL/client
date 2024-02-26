@@ -5,15 +5,16 @@ import { Text } from "@mantine/core";
 import Logo from "../../assets/img/Nav/logo.svg";
 import styled from "styled-components";
 import InputContainer from "../../components/common/InputContainer";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useAppDispatch } from "../../lib/hooks/reduxHooks";
 import Drinks from '../../assets/img/Nav/drinks-icon.svg';
 import { checkEmail, sendEmail } from "../../store/reducers/Auth/email";
+import { RootState } from "../../store/store";
+import { userSignup } from "../../store/reducers/Auth/user";
 
 const SignupBody = styled.div`
   background-color: #ebdcdc;
-  // footer 없애고 디자인 수정하기
   height: calc(100vh - 62px);
   display: flex;
   flex-direction: column;
@@ -53,7 +54,8 @@ const ToLogin = styled(Link)`
 `;
 
 export default function NonLoginSignUp() {
-  const isEmail = useSelector((state: any) => state.email.isEmail);
+  const isEmail = useSelector((state: RootState) => state.email.isEmail);
+  const userEmail = useSelector((state: RootState) => state.email.email);
 
   const [email, setEmail] = useState<string>("");
   const [authNum, setAuthNum] = useState<string>("");
@@ -61,6 +63,7 @@ export default function NonLoginSignUp() {
   const [password, setPassword] = useState<string>("");
   const [isActive, setIsActive] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onInputChange = useCallback(
     (
@@ -74,7 +77,18 @@ export default function NonLoginSignUp() {
 
   const [isClick, setIsClick] = useState<boolean>(false);
 
-  console.log(isEmail);
+  const onSubmitSignup = useCallback(() => {
+    console.log('회원가입')
+    const data = { 
+      "email": userEmail, 
+      password,
+      "name": nickname
+    };
+    dispatch(userSignup(data)).then((res: any) => {
+      navigate('/login');
+    });
+  }, []);
+  
   return (
     <SignupBody>
       <HelloBox>
@@ -109,13 +123,15 @@ export default function NonLoginSignUp() {
                   setIsClick(true)
                   dispatch(sendEmail(email))
                 }}
-                status="active"
+                status={email ? "active" : "disabled"}
               />
             ) : (
               <CommonButton
                 text="이메일 인증"
-                onClick={() => dispatch(checkEmail(authNum))}
-                status="active"
+                onClick={() => {
+                  dispatch(checkEmail(authNum))
+                }}
+                status={authNum ? "active" : "disabled"}
               />
             )}
             <ToLogin to={"/login"}>로그인</ToLogin>
@@ -153,7 +169,7 @@ export default function NonLoginSignUp() {
           <ButtonBox>
             <CommonButton
               text="회원가입"
-              onClick={() => console.log('회원가입 api 필요해')}
+              onClick={() => onSubmitSignup()}
               status={isActive ? "active" : "disabled"}
             />
             <ToLogin to={"/login"}>로그인</ToLogin>

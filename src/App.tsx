@@ -37,7 +37,7 @@ function App() {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <Routes>s{renderRoutes(mainRouter)}</Routes>
+          <Routes>{renderRoutes(mainRouter)}</Routes>
         </BrowserRouter>
       </PersistGate>
     </Provider>

@@ -6,6 +6,10 @@ const instance = axios.create({
   baseURL: BASE_URL,
 });
 
+export async function signup(data: User) {
+  return await instance.post("/signup", data);
+}
+
 export async function login(data: User) {
   return await instance.post("/login", data);
 }

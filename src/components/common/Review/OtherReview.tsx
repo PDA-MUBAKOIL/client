@@ -11,6 +11,17 @@ const ReviewDiv = styled.div`
   border-radius: 10px;
 `
 
+const ImgDiv = styled.div<{ url: string }>`
+  width: 230px;
+  height: 280px;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  margin-top: 10px;
+  background-image: url(${props => props.url});
+  background-size: 100%;
+  background-position: center center;
+`
+
 export default function OtherReview({ item }: ReviewProp) {
   const { _id, drinkId, userId, review, imgUrl, isPublic } = item;
 
@@ -20,6 +31,9 @@ export default function OtherReview({ item }: ReviewProp) {
       <Content>
         <MainFont>{userId}</MainFont>
         <SubFont>{review}</SubFont>
+        {imgUrl && (
+          <ImgDiv url={imgUrl} />
+        )}
       </Content>
     </ReviewDiv>
   )

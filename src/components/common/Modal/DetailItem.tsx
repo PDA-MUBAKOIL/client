@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Text, Group, rem } from "@mantine/core";
 import styled from "styled-components";
 import TagButton from "../TagButton";
@@ -10,6 +10,8 @@ import { RootState } from "../../../store/store";
 import MyReviewContainer from "../Review/MyReviewContainer";
 import { getAllWish } from "../../../store/reducers/Review/allReview";
 import OtherReview from "../Review/OtherReview";
+import SubmitButton from '../../../assets/img/Modal/submit.svg';
+import { updateWish } from "../../../store/reducers/Review/myReview";
 
 export type DetailType = {
   _id: string;
@@ -83,7 +85,7 @@ const TagDiv = styled(Group)`
   margin: 20px 0;
 `;
 
-const ReviewInput = styled.textarea`
+const ReviewInput = styled.textarea<{ state: string }>`
   border: none;
   background-color: #ebdcdc;
   width: 80%;
@@ -95,6 +97,13 @@ const ReviewInput = styled.textarea`
 
   &:focus {
     outline: none;
+  }
+
+  ${(props) => 
+    props.state === 'disabled' &&
+    `
+      background-color: rgba(0, 0, 0, 0.1)
+    `
   }
 `;
 
@@ -121,7 +130,7 @@ const ReviewInputContainer = styled.div`
   padding-top: 10px;
 `
 
-const ClickButton = styled.div<{ state: string }>`
+const ClickButton = styled.button<{ state: string }>`
   background-color: #c17878;
   padding: 5px 10px;
   width: 70px;
@@ -131,13 +140,15 @@ const ClickButton = styled.div<{ state: string }>`
   color: #fff;
   text-align: center;
   font-size: 12px;
+  border: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   ${(props) =>
     props.state === "disabled" &&
     `
-      background-color: #747474
-    `}
+      background-color: rgba(0, 0, 0, 0.2)
+    `
+  }
 `;
 
 export default function DetailItem({ detail }: DetailProps) {
@@ -151,6 +162,15 @@ export default function DetailItem({ detail }: DetailProps) {
 
   const detailId = useAppSelector((state: RootState) => state.drinkDetail.detail._id);
   const reviewList = useAppSelector((state: RootState) => state.allReview.allReview);
+  const userId = useAppSelector((state: RootState) => state.user.id);
+
+  const [review, setReview] = useState<string>("");
+
+  const onInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setReview(e.target.value);
+    }, []
+  )
 
   useEffect(() => {
     dispatch(getAllWish(detailId))
@@ -237,10 +257,32 @@ export default function DetailItem({ detail }: DetailProps) {
             )}
           </ReviewList>
           <ReviewInputContainer>
-            <ReviewInput placeholder="리뷰를 남겨보세요!" />
-            <ClickButton state="active" onClick={() => {
-              
-            }}>남기기</ClickButton>
+            <ReviewInput 
+              disabled={!isLike && true} 
+              state={isLike ? "active" : "disabled"} 
+              placeholder={isLike ? "리뷰를 남겨보세요!" : "좋아요를 눌러 리뷰를 남겨보세요!"} 
+              onChange={(e) => onInputChange(e)}
+              value={review}
+            />
+            <ClickButton 
+              disabled={!isLike && true} 
+              state={isLike ? "active" : "disabled"} 
+              onClick={() => {
+                const data = {
+                  "drinkId": detailId,
+                  "userId": userId,
+                  "item": { 
+                    review,
+                    "imgUrl": "",
+                    "isPublic": true,
+                  }
+                }
+                dispatch(updateWish(data))
+                  .then((res) => {
+                    setReview('');
+                  })
+              }}
+            ><img src={SubmitButton} alt="" /></ClickButton>
           </ReviewInputContainer>
         </>
       )}

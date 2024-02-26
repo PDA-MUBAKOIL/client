@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { login, logout } from "../../../lib/api/users";
+import { login, logout, signup } from "../../../lib/api/users";
 import { User } from "../../../routes/nonLogin/nonLoginLogIn";
 
 const initialState = {
@@ -8,6 +8,20 @@ const initialState = {
   email: "example@naver.com",
   isUser: false,
 };
+
+type SignupType = {
+  email: string;
+  password: string;
+  name: string;
+}
+
+export const userSignup = createAsyncThunk(
+  "auth/userSignup",
+  async (data: SignupType, thunkAPI) => {
+    const response = await signup(data);
+    return response.data;
+  }
+);
 
 export const userLogin = createAsyncThunk(
   "auth/userLogin",
