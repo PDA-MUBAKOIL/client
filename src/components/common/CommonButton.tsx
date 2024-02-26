@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, rem } from "@mantine/core";
-import styled from "styled-components";
 
 type ButtonProp = {
   text: String;
@@ -19,8 +18,8 @@ export default function CommonButton({ text, onClick, status }: ButtonProp) {
           paddingRight: rem("107px"),
           height: rem("47px"),
           backgroundColor: status === "disabled" ? "#CFB5B5" : "#C17878",
-          // maxWidth: "fit-content",
-          width: rem("273px"),
+          maxWidth: "fit-content",
+          minWidth: rem("273px"),
         },
       }}
       onClick={onClick}
