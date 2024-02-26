@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import { Text, Group, rem, Input } from "@mantine/core";
+import React, { useEffect, useState } from "react";
+import { Text, Group, rem } from "@mantine/core";
 import styled from "styled-components";
 import TagButton from "../TagButton";
 import FillHeart from "../../../assets/img/Modal/fill-heart.svg";
 import EmptyHeart from "../../../assets/img/Modal/empty-heart.svg";
-import InputContainer from "../InputContainer";
-import CommonButton from "../CommonButton";
 import ToggleButton from "./ToggleButton";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks/reduxHooks";
 import { RootState } from "../../../store/store";
-import { setPage } from "../../../store/reducers/Modal/page";
+import MyReviewContainer from "../Review/MyReviewContainer";
+import { getAllWish } from "../../../store/reducers/Review/allReview";
+import OtherReview from "../Review/OtherReview";
 
 export type DetailType = {
   _id: string;
@@ -102,10 +102,23 @@ const ReviewFont = styled.h3`
   width: 100%;
   text-align: start;
   padding: 0 5px;
+  margin: 10px 0;
 `;
 
 const ReviewList = styled.div`
   height: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: scroll;
+  padding: 0 0 20px 0;
+`
+
+const ReviewInputContainer = styled.div`
+  display: flex;
+  width: 100%;
+  padding-top: 10px;
 `
 
 const ClickButton = styled.div<{ state: string }>`
@@ -134,6 +147,14 @@ export default function DetailItem({ detail }: DetailProps) {
   
   const dispatch = useAppDispatch();
   const [isReview, setIsReview] = useState<boolean>(false);
+  const myReview = useAppSelector((state: RootState) => state.myReview);
+
+  const detailId = useAppSelector((state: RootState) => state.drinkDetail.detail._id);
+  const reviewList = useAppSelector((state: RootState) => state.allReview.allReview);
+
+  useEffect(() => {
+    dispatch(getAllWish(detailId))
+  }, [])
 
   return (
     <>
@@ -199,26 +220,28 @@ export default function DetailItem({ detail }: DetailProps) {
               </TagDiv>
             </Content>
           </div>
-            {/* <CommonButton
-              text="리뷰 남기기"
-              onClick={() => setPage(1)}
-              status="active"
-            /> */}
-            <img
-              src={isLike ? FillHeart : EmptyHeart}
-              alt=""
-              style={{ width: "24px", marginTop: '10px' }}
-              onClick={() => setIsLike((prev) => !prev)}
-            />
+          <img
+            src={isLike ? FillHeart : EmptyHeart}
+            alt=""
+            style={{ width: "24px", marginTop: '10px' }}
+            onClick={() => setIsLike((prev) => !prev)}
+          />
         </>
       ) : (
         <>
           <ReviewFont>"{name}"은 어떠셨나요?</ReviewFont>
-          <ReviewList>리뷰</ReviewList>
-          <div style={{ display: 'flex', width: '100%' }}>
+          <ReviewList>
+            <MyReviewContainer item={myReview}></MyReviewContainer>
+            {reviewList.map((review, idx) => 
+              <OtherReview key={idx} item={review} />
+            )}
+          </ReviewList>
+          <ReviewInputContainer>
             <ReviewInput placeholder="리뷰를 남겨보세요!" />
-            <ClickButton state="active">남기기</ClickButton>
-          </div>
+            <ClickButton state="active" onClick={() => {
+              
+            }}>남기기</ClickButton>
+          </ReviewInputContainer>
         </>
       )}
     </>
