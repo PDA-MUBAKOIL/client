@@ -4,7 +4,7 @@ import styled from "styled-components";
 import FillHeart from "../../assets/img/Modal/fill-heart.svg";
 import CommonButton from "../../components/common/CommonButton";
 import { logout } from "../../lib/api/users";
-import { userLogout } from "../../store/reducers/user";
+import { userLogout } from "../../store/reducers/Auth/user";
 import { useNavigate } from "react-router";
 
 const MyContainer = styled.div`

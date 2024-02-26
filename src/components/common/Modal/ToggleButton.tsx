@@ -26,6 +26,7 @@ const ToggleBtn1 = styled.div<{ isreview: string }>`
     props.isreview === 'true' ?
     `
       background-color: #C17878;
+      color: #fff;
       
     ` :
     `
@@ -48,6 +49,7 @@ const ToggleBtn2 = styled.div<{ isreview: string }>`
     props.isreview === 'true' ?
     `
       background-color: #C17878;
+      color: #fff;
     ` :
     `
       border: solid 1px #C17878;

@@ -14,8 +14,8 @@ export default function CommonButton({ text, onClick, status }: ButtonProp) {
       size="md"
       styles={{
         root: {
-          paddingLeft: rem("107px"),
-          paddingRight: rem("107px"),
+          // paddingLeft: rem("107px"),
+          // paddingRight: rem("107px"),
           height: rem("47px"),
           backgroundColor: status === "disabled" ? "#CFB5B5" : "#C17878",
           maxWidth: "fit-content",
