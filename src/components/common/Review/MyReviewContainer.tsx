@@ -17,8 +17,7 @@ export type ReviewProp = {
 const ReviewDiv = styled.div`
   width: 98%;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.1);
-  // background-color: rgba(235, 220, 220);
-  background-color: #C17878;
+  background-color: rgba(193, 120, 120, 0.8);
   color: #fff;
   display: flex;
   padding: 10px;
@@ -33,11 +32,10 @@ export const Content = styled.div`
 
 export const MainFont = styled.span`
   font-weight: bold;
-  font-size: 15px;
 `
 
 export const SubFont = styled.span`
-  font-size: 14px;
+  font-size: 15px;
 `
 
 export default function MyReviewContainer({ item }: ReviewProp) {

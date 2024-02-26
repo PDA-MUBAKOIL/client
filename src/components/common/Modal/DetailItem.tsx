@@ -110,7 +110,7 @@ const ReviewList = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
   overflow-y: scroll;
   padding: 0 0 20px 0;
 `
