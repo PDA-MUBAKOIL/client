@@ -7,9 +7,9 @@ import styled from "styled-components";
 import InputContainer from "../../components/common/InputContainer";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsEmail } from "../../store/reducers/Auth/email";
 import { useAppDispatch } from "../../lib/hooks/reduxHooks";
 import Drinks from '../../assets/img/Nav/drinks-icon.svg';
+import { checkEmail, sendEmail } from "../../store/reducers/Auth/email";
 
 const SignupBody = styled.div`
   background-color: #ebdcdc;
@@ -55,17 +55,17 @@ const ToLogin = styled(Link)`
 export default function NonLoginSignUp() {
   const isEmail = useSelector((state: any) => state.email.isEmail);
 
-  const [email, setEmail] = useState<String>("");
-  const [authNum, setAuthNum] = useState<String>("");
-  const [nickname, setNickname] = useState<String>("");
-  const [password, setPassword] = useState<String>("");
+  const [email, setEmail] = useState<string>("");
+  const [authNum, setAuthNum] = useState<string>("");
+  const [nickname, setNickname] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
   const [isActive, setIsActive] = useState<boolean>(false);
   const dispatch = useAppDispatch();
 
   const onInputChange = useCallback(
     (
-      inputText: String,
-      setFn: React.Dispatch<React.SetStateAction<String>>
+      inputText: string,
+      setFn: React.Dispatch<React.SetStateAction<string>>
     ) => {
       setFn(inputText);
     },
@@ -105,13 +105,16 @@ export default function NonLoginSignUp() {
             {!isClick ? (
               <CommonButton
                 text="인증번호 요청"
-                onClick={() => setIsClick(true)}
+                onClick={() => {
+                  setIsClick(true)
+                  dispatch(sendEmail(email))
+                }}
                 status="active"
               />
             ) : (
               <CommonButton
                 text="이메일 인증"
-                onClick={() => dispatch(setIsEmail(true))}
+                onClick={() => dispatch(checkEmail(authNum))}
                 status="active"
               />
             )}
@@ -150,7 +153,7 @@ export default function NonLoginSignUp() {
           <ButtonBox>
             <CommonButton
               text="회원가입"
-              onClick={() => dispatch(setIsEmail(false))}
+              onClick={() => console.log('회원가입 api 필요해')}
               status={isActive ? "active" : "disabled"}
             />
             <ToLogin to={"/login"}>로그인</ToLogin>

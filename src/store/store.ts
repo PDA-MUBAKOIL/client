@@ -5,7 +5,7 @@ import cardListReducer from "./reducers/Drink/cardList";
 import drinkDetailReducer from "./reducers/Drink/drinkDetail";
 import showModalReducer from "./reducers/Drink/showModal";
 import searchReducer from "./reducers/Drink/search";
-import userReducer from "./reducers/user";
+import userReducer from "./reducers/Auth/user";
 import emailReducer from "./reducers/Auth/email";
 import drinkListReducer from "./reducers/Drink/allDrink";
 import modalReducer from './reducers/Modal/page';

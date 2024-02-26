@@ -6,7 +6,7 @@ import Logo from "../../assets/img/Nav/logo.svg";
 import styled from "styled-components";
 import InputContainer from "../../components/common/InputContainer";
 import { Link, useNavigate } from "react-router-dom";
-import { userLogin } from "../../store/reducers/user";
+import { userLogin } from "../../store/reducers/Auth/user";
 import { useAppDispatch } from "../../lib/hooks/reduxHooks";
 import Drinks from '../../assets/img/Nav/drinks-icon.svg';
 

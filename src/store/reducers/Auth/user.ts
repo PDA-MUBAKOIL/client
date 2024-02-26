@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { login, logout } from "../../lib/api/users";
-import { User } from "../../routes/nonLogin/nonLoginLogIn";
+import { login, logout } from "../../../lib/api/users";
+import { User } from "../../../routes/nonLogin/nonLoginLogIn";
 
 const initialState = {
   id: "",
