@@ -77,7 +77,6 @@ export default function NonLoginSignUp() {
   console.log(isEmail);
   return (
     <>
-      {isUser} ? <Navigate to= '/map' /> :
       <SignupBody>
         <HelloBox>
           <MainFont>함께 하실래요?</MainFont>
