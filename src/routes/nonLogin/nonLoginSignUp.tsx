@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsEmail } from "../../store/reducers/Auth/email";
 import { useAppDispatch } from "../../lib/hooks/reduxHooks";
+import Drinks from '../../assets/img/Nav/drinks-icon.svg';
 
 const SignupBody = styled.div`
   background-color: #ebdcdc;
@@ -151,6 +152,7 @@ export default function NonLoginSignUp() {
           </ButtonBox>
         </>
       )}
+      <img src={Drinks} alt="" style={{ position: 'fixed', bottom: '0' }} />
     </SignupBody>
   );
 }
