@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const BannerContainer = styled.div`
   // background-color: #ebdcdc;
-  background: linear-gradient(180deg, rgba(235, 220, 220, 0) 0%, #ebdcdc 47.5%);
+  background: radial-gradient(#EBDCDC 30%, #FFFFFF 70%);
   width: 100%;
   height: 260px;
   display: flex;

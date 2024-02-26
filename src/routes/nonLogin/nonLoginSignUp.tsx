@@ -110,7 +110,7 @@ export default function NonLoginSignUp() {
                 type="text"
                 placeholder="인증 번호"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  onInputChange(e.target.value, setAuthNum);
+                  onInputChange(e.target.value, setEmail);
                 }}
               />
             )}
