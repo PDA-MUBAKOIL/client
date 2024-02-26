@@ -34,6 +34,10 @@ const emailSlice = createSlice({
       state.isEmail = true;
       state.email = action.payload;
     });
+    builder.addCase(checkEmail.rejected, (state, action) => {
+      state.isEmail = true;
+      // state.email = action.payload;
+    });
   },
 });
 

@@ -61,6 +61,7 @@ export default function NonLoginSignUp() {
   const [authNum, setAuthNum] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [password2, setPassword2] = useState<string>("");
   const [isActive, setIsActive] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -99,6 +100,7 @@ export default function NonLoginSignUp() {
         <>
           <InputBox>
             <InputContainer
+              value={email}
               type="email"
               placeholder="이메일"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -107,10 +109,11 @@ export default function NonLoginSignUp() {
             />
             {isClick && (
               <InputContainer
+                value={authNum}
                 type="text"
                 placeholder="인증 번호"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  onInputChange(e.target.value, setEmail);
+                  onInputChange(e.target.value, setAuthNum);
                 }}
               />
             )}
@@ -141,6 +144,7 @@ export default function NonLoginSignUp() {
         <>
           <InputBox>
             <InputContainer
+              value={nickname}
               type="text"
               placeholder="닉네임"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -148,6 +152,7 @@ export default function NonLoginSignUp() {
               }}
             />
             <InputContainer
+              value={password}
               type="password"
               placeholder="비밀번호"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -155,9 +160,11 @@ export default function NonLoginSignUp() {
               }}
             />
             <InputContainer
+              value={password2}
               type="password"
               placeholder="비밀번호 확인"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                onInputChange(e.target.value, setPassword2);
                 if (e.target.value !== password) {
                   setIsActive(false);
                 } else {
