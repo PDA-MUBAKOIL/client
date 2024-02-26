@@ -1,12 +1,14 @@
 import React from "react";
 import { BrowserRouter, Route, RouteObject, Routes } from "react-router-dom";
-import { mainRouter } from "./router/main-router";
+import { mainRouter} from "./router/main-router";
 import { Provider } from "react-redux";
 import { persistor, store } from "./store/store";
 import "@mantine/core/styles.css";
 import { PersistGate } from "redux-persist/integration/react";
 
 function renderRoutes(routesObj: RouteObject[]) {
+
+
   return routesObj.map((route) => {
     if (route.children) {
       return (
@@ -33,11 +35,12 @@ function renderRoutes(routesObj: RouteObject[]) {
 }
 
 function App() {
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <Routes>s{renderRoutes(mainRouter)}</Routes>
+          <Routes>{renderRoutes(mainRouter)}</Routes>
         </BrowserRouter>
       </PersistGate>
     </Provider>
