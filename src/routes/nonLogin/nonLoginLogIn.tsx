@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import CommonButton from "../../components/common/CommonButton";
-import { Text } from "@mantine/core";
+import { Text, em } from "@mantine/core";
 
 import Logo from "../../assets/img/Nav/logo.svg";
 import styled from "styled-components";
@@ -108,6 +108,7 @@ export default function NonLoginLogIn() {
       </HelloBox>
       <InputBox>
         <InputContainer
+          value={email}
           type="email"
           placeholder="이메일"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,6 +116,7 @@ export default function NonLoginLogIn() {
           }}
         />
         <InputContainer
+          value={password}
           type="password"
           placeholder="비밀번호"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

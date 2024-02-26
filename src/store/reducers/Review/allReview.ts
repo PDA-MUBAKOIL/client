@@ -8,7 +8,7 @@ const initialState = {
       drinkId: "",
       userId: "진언",
       review: "좋아요!",
-      imgUrl: "https://thesool.com/common/imageView.do?targetId=PR00001206&targetNm=PRODUCT",
+      imgUrl: "",
       isPublic: false
     },
     {
@@ -16,7 +16,7 @@ const initialState = {
       drinkId: "",
       userId: "진언",
       review: "좋아요!",
-      imgUrl: "https://thesool.com/common/imageView.do?targetId=PR00001206&targetNm=PRODUCT",
+      imgUrl: "",
       isPublic: false
     },
     {
@@ -24,15 +24,7 @@ const initialState = {
       drinkId: "",
       userId: "진언",
       review: "좋아요!",
-      imgUrl: "https://thesool.com/common/imageView.do?targetId=PR00001206&targetNm=PRODUCT",
-      isPublic: false
-    },
-    {
-      _id: "",
-      drinkId: "",
-      userId: "진언",
-      review: "좋아요!",
-      imgUrl: "https://thesool.com/common/imageView.do?targetId=PR00001206&targetNm=PRODUCT",
+      imgUrl: "",
       isPublic: false
     },
     {

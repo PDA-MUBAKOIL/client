@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 type InputProp = {
+  value: string | number;
   type: string;
   placeholder: string;
   onChange: any;
@@ -21,9 +22,10 @@ const InputDiv = styled.input`
   }
 `;
 
-export default function InputContainer({ placeholder, onChange, type }: InputProp) {
+export default function InputContainer({ value, placeholder, onChange, type }: InputProp) {
   return (
     <InputDiv 
+      value={value}
       type={type}
       placeholder={placeholder} 
       onChange={onChange}
