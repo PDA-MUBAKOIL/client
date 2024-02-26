@@ -47,6 +47,8 @@ export const getWish = createAsyncThunk(
   "review/getWish",
   async (data: GetProp, thunkAPI) => {
     const { drinkId, userId } = data;
+    console.log('drinkId: ', drinkId);
+    console.log('userId: ', userId);
     const response = await getMyWish(drinkId, userId);
     return response.data;
   }

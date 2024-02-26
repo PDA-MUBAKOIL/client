@@ -6,7 +6,7 @@ export async function getAllWishes(drinkId: string) {
 }
 
 export async function getMyWish(drinkId: string, userId: string) {
-  return await wishInstance.get(`/${drinkId}/${userId}`);
+  return await wishInstance.post(`/${drinkId}`, { userId });
 }
 
 export async function deleteMyWish(drinkId: string, userId: string) {

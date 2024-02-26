@@ -146,7 +146,7 @@ const ClickButton = styled.button<{ state: string }>`
 `;
 
 export default function DetailItem({ detail }: DetailProps) {
-  const { imgUrl, name, percent, material, capacity, description, tags } = detail;
+  const { _id, imgUrl, name, percent, material, capacity, description, tags } = detail;
 
   const [isLike, setIsLike] = useState<boolean>(false);
   
@@ -168,7 +168,11 @@ export default function DetailItem({ detail }: DetailProps) {
 
   useEffect(() => {
     dispatch(getAllWish(drinkId))
-    dispatch(getWish({ drinkId, userId }))
+    const data = {
+      drinkId,
+      userId
+    }
+    dispatch(getWish(data))
   }, [])
 
   return (
