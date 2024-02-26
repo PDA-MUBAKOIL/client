@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import { Text, Group, rem, Input } from "@mantine/core";
+import React, { useCallback, useEffect, useState } from "react";
+import { Text, Group, rem } from "@mantine/core";
 import styled from "styled-components";
 import TagButton from "../TagButton";
 import FillHeart from "../../../assets/img/Modal/fill-heart.svg";
 import EmptyHeart from "../../../assets/img/Modal/empty-heart.svg";
-import InputContainer from "../InputContainer";
-import CommonButton from "../CommonButton";
 import ToggleButton from "./ToggleButton";
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks/reduxHooks";
 import { RootState } from "../../../store/store";
-import { setPage } from "../../../store/reducers/Modal/page";
+import MyReviewContainer from "../Review/MyReviewContainer";
+import { getAllWish } from "../../../store/reducers/Review/allReview";
+import OtherReview from "../Review/OtherReview";
+import SubmitButton from '../../../assets/img/Modal/submit.svg';
+import { updateWish } from "../../../store/reducers/Review/myReview";
 
 export type DetailType = {
   _id: string;
@@ -83,7 +85,7 @@ const TagDiv = styled(Group)`
   margin: 20px 0;
 `;
 
-const ReviewInput = styled.textarea`
+const ReviewInput = styled.textarea<{ state: string }>`
   border: none;
   background-color: #ebdcdc;
   width: 80%;
@@ -96,19 +98,39 @@ const ReviewInput = styled.textarea`
   &:focus {
     outline: none;
   }
+
+  ${(props) => 
+    props.state === 'disabled' &&
+    `
+      background-color: rgba(0, 0, 0, 0.1)
+    `
+  }
 `;
 
 const ReviewFont = styled.h3`
   width: 100%;
   text-align: start;
   padding: 0 5px;
+  margin: 10px 0;
 `;
 
 const ReviewList = styled.div`
   height: 500px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  overflow-y: scroll;
+  padding: 0 0 20px 0;
 `
 
-const ClickButton = styled.div<{ state: string }>`
+const ReviewInputContainer = styled.div`
+  display: flex;
+  width: 100%;
+  padding-top: 10px;
+`
+
+const ClickButton = styled.button<{ state: string }>`
   background-color: #c17878;
   padding: 5px 10px;
   width: 70px;
@@ -118,13 +140,15 @@ const ClickButton = styled.div<{ state: string }>`
   color: #fff;
   text-align: center;
   font-size: 12px;
+  border: none;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
   ${(props) =>
     props.state === "disabled" &&
     `
-      background-color: #747474
-    `}
+      background-color: rgba(0, 0, 0, 0.2)
+    `
+  }
 `;
 
 export default function DetailItem({ detail }: DetailProps) {
@@ -134,6 +158,23 @@ export default function DetailItem({ detail }: DetailProps) {
   
   const dispatch = useAppDispatch();
   const [isReview, setIsReview] = useState<boolean>(false);
+  const myReview = useAppSelector((state: RootState) => state.myReview);
+
+  const detailId = useAppSelector((state: RootState) => state.drinkDetail.detail._id);
+  const reviewList = useAppSelector((state: RootState) => state.allReview.allReview);
+  const userId = useAppSelector((state: RootState) => state.user.id);
+
+  const [review, setReview] = useState<string>("");
+
+  const onInputChange = useCallback(
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setReview(e.target.value);
+    }, []
+  )
+
+  useEffect(() => {
+    dispatch(getAllWish(detailId))
+  }, [])
 
   return (
     <>
@@ -199,26 +240,50 @@ export default function DetailItem({ detail }: DetailProps) {
               </TagDiv>
             </Content>
           </div>
-            {/* <CommonButton
-              text="리뷰 남기기"
-              onClick={() => setPage(1)}
-              status="active"
-            /> */}
-            <img
-              src={isLike ? FillHeart : EmptyHeart}
-              alt=""
-              style={{ width: "24px", marginTop: '10px' }}
-              onClick={() => setIsLike((prev) => !prev)}
-            />
+          <img
+            src={isLike ? FillHeart : EmptyHeart}
+            alt=""
+            style={{ width: "24px", marginTop: '10px' }}
+            onClick={() => setIsLike((prev) => !prev)}
+          />
         </>
       ) : (
         <>
           <ReviewFont>"{name}"은 어떠셨나요?</ReviewFont>
-          <ReviewList>리뷰</ReviewList>
-          <div style={{ display: 'flex', width: '100%' }}>
-            <ReviewInput placeholder="리뷰를 남겨보세요!" />
-            <ClickButton state="active">남기기</ClickButton>
-          </div>
+          <ReviewList>
+            <MyReviewContainer item={myReview}></MyReviewContainer>
+            {reviewList.map((review, idx) => 
+              <OtherReview key={idx} item={review} />
+            )}
+          </ReviewList>
+          <ReviewInputContainer>
+            <ReviewInput 
+              disabled={!isLike && true} 
+              state={isLike ? "active" : "disabled"} 
+              placeholder={isLike ? "리뷰를 남겨보세요!" : "좋아요를 눌러 리뷰를 남겨보세요!"} 
+              onChange={(e) => onInputChange(e)}
+              value={review}
+            />
+            <ClickButton 
+              disabled={!isLike && true} 
+              state={isLike ? "active" : "disabled"} 
+              onClick={() => {
+                const data = {
+                  "drinkId": detailId,
+                  "userId": userId,
+                  "item": { 
+                    review,
+                    "imgUrl": "",
+                    "isPublic": true,
+                  }
+                }
+                dispatch(updateWish(data))
+                  .then((res) => {
+                    setReview('');
+                  })
+              }}
+            ><img src={SubmitButton} alt="" /></ClickButton>
+          </ReviewInputContainer>
         </>
       )}
     </>
