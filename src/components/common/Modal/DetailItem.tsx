@@ -14,17 +14,26 @@ import SubmitButton from '../../../assets/img/Modal/submit.svg';
 import { getWish, updateWish } from "../../../store/reducers/Review/myReview";
 
 export type DetailType = {
-  _id: string;
-  tags: Array<string>;
-  brewerId: string;
-  region: string;
-  capacity: string;
-  imgUrl: string;
-  name: string;
-  materials: string;
-  percent: string;
-  volume: string;
-  description: string;
+  _id: string,
+  name: string,
+  percent: string,
+  spercent: Array<number>,
+  imgUrl: string,
+  tags: Array<string>,
+  description: string,
+  brewerId: {
+      _id: string,
+      name: string,
+      link: string,
+      tel: string,
+      __v: number,
+      id: string
+  },
+  region: string,
+  material: string,
+  capacity: string,
+  __v: number,
+  id: string
 };
 
 type DetailProps = {
@@ -44,10 +53,6 @@ const ImageDiv = styled.img`
 
 const Content = styled.div`
   width: 100%;
-  max-height: 330px;
-  overflow-y: scroll;
-  // display: flex;
-  // flex-direction: column;
   padding: 0 3px;
 `;
 
@@ -152,7 +157,7 @@ const ClickButton = styled.button<{ state: string }>`
 `;
 
 export default function DetailItem({ detail }: DetailProps) {
-  const { imgUrl, name, materials, percent, volume, description } = detail;
+  const { imgUrl, name, percent, material, capacity, description } = detail;
 
   const [isLike, setIsLike] = useState<boolean>(false);
   
@@ -206,7 +211,7 @@ export default function DetailItem({ detail }: DetailProps) {
                     <TypeFont>원재료</TypeFont>
                     <TypeFont>|</TypeFont>
                   </TypeDiv>
-                  <SubFont view="">{materials}</SubFont>
+                  <SubFont view="">{material}</SubFont>
                 </ContentItem>
                 <ContentItem>
                   <TypeDiv>
@@ -220,7 +225,7 @@ export default function DetailItem({ detail }: DetailProps) {
                     <TypeFont>용량</TypeFont>
                     <TypeFont>|</TypeFont>
                   </TypeDiv>
-                  <SubFont view="">{volume}</SubFont>
+                  <SubFont view="">{capacity}</SubFont>
                 </ContentItem>
                 <ContentItem style={{ alignItems: "flex-start" }}>
                   <TypeDiv>

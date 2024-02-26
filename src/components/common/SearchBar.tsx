@@ -11,16 +11,24 @@ import { useLocation } from "react-router-dom";
 export type TSearchResult ={
   _id: string,
   name: string,
+  percent: string,
+  spercent: Array<number>,
   imgUrl: string,
   tags: Array<string>,
   description: string,
-  brewerId: string,
+  brewerId: {
+      _id: string,
+      name: string,
+      link: string,
+      tel: string,
+      __v: number,
+      id: string
+  },
   region: string,
-  capacity: string,
   material: string,
+  capacity: string,
   __v: number,
-  id: string,
-  percent: string
+  id: string
 }
 
 type TSearch = {
