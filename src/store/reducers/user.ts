@@ -6,7 +6,7 @@ const initialState = {
   id: "",
   name: "진언",
   email: "example@naver.com",
-  isUser: false,
+  isUser: true,
 };
 
 export const userLogin = createAsyncThunk(
