@@ -40,11 +40,6 @@ type DetailProps = {
   detail: DetailType;
 };
 
-type FontType = {
-  children: String;
-  view: String;
-};
-
 const ImageDiv = styled.img`
   width: 100%;
   height: 200px;
@@ -53,7 +48,7 @@ const ImageDiv = styled.img`
 
 const Content = styled.div`
   width: 100%;
-  padding: 0 3px;
+  padding: 10px 3px;
 `;
 
 const ContentItem = styled(Group)`
@@ -75,19 +70,13 @@ const TypeFont = styled(Text)`
   font-size: 14px;
 `;
 
-const SubFont = styled(Text)<FontType>`
+const SubFont = styled(Text)`
   font-size: 14px;
   width: 198px;
-  ${(props) =>
-    props.view === "description" &&
-    `
-      max-height: 125px;
-      overflow-y: scroll;
-    `}
 `;
 
 const TagDiv = styled(Group)`
-  margin: 20px 0;
+  margin: 20px 0 10px 0;
 `;
 
 const ReviewInput = styled.textarea<{ state: string }>`
@@ -157,7 +146,7 @@ const ClickButton = styled.button<{ state: string }>`
 `;
 
 export default function DetailItem({ detail }: DetailProps) {
-  const { imgUrl, name, percent, material, capacity, description } = detail;
+  const { imgUrl, name, percent, material, capacity, description, tags } = detail;
 
   const [isLike, setIsLike] = useState<boolean>(false);
   
@@ -204,45 +193,42 @@ export default function DetailItem({ detail }: DetailProps) {
                     <TypeFont>종류</TypeFont>
                     <TypeFont>|</TypeFont>
                   </TypeDiv>
-                  <SubFont view="">탁주</SubFont>
+                  <SubFont>탁주</SubFont>
                 </ContentItem>
                 <ContentItem style={{ alignItems: "flex-start" }}>
                   <TypeDiv>
                     <TypeFont>원재료</TypeFont>
                     <TypeFont>|</TypeFont>
                   </TypeDiv>
-                  <SubFont view="">{material}</SubFont>
+                  <SubFont>{material}</SubFont>
                 </ContentItem>
                 <ContentItem>
                   <TypeDiv>
                     <TypeFont>도수</TypeFont>
                     <TypeFont>|</TypeFont>
                   </TypeDiv>
-                  <SubFont view="">{percent}</SubFont>
+                  <SubFont>{percent}</SubFont>
                 </ContentItem>
                 <ContentItem>
                   <TypeDiv>
                     <TypeFont>용량</TypeFont>
                     <TypeFont>|</TypeFont>
                   </TypeDiv>
-                  <SubFont view="">{capacity}</SubFont>
+                  <SubFont>{capacity}</SubFont>
                 </ContentItem>
                 <ContentItem style={{ alignItems: "flex-start" }}>
                   <TypeDiv>
                     <TypeFont>소개</TypeFont>
                     <TypeFont>|</TypeFont>
                   </TypeDiv>
-                  <SubFont view="description">{description}</SubFont>
+                  <SubFont>{description}</SubFont>
                 </ContentItem>
               </Group>
-
+              
               <TagDiv>
-                <TagButton text="보쌈" onClick={() => console.log("태그 클릭")} />
-                <TagButton
-                  text="김치찜"
-                  onClick={() => console.log("태그 클릭")}
-                />
-                <TagButton text="튀김" onClick={() => console.log("태그 클릭")} />
+                {tags.map((tag, idx) => 
+                  <TagButton text={tag} onClick={() => console.log("태그 클릭")} />
+                )}
               </TagDiv>
             </Content>
           </div>

@@ -34,7 +34,7 @@ const Image = styled.img`
   bottom: 0px;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 `;
 
 const NameFont = styled(Text)`
@@ -47,8 +47,9 @@ export default function DrinkCard({ id, url, name }: DrinkProp) {
   const dispatch = useAppDispatch();
 
   function onDrinkDetailClick() {
-    const action = setDrinkDetail({ drinkId: id });
-    dispatch(action);
+    console.log('아이디', id)
+    dispatch(setDrinkDetail({ drinkId: id }))
+      .then((res) => console.log('데이터어', res))
 
     dispatch(setIsDetail(true));
     dispatch(setIsShow(true));
