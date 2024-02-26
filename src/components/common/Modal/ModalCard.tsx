@@ -4,7 +4,7 @@ import styled from "styled-components";
 import Quit from "../../../assets/img/Modal/quit.svg";
 import Back from '../../../assets/img/Modal/back.svg';
 import { useAppDispatch, useAppSelector } from "../../../lib/hooks/reduxHooks";
-import { setIsShow } from "../../../store/reducers/Drink/showModal";
+import { setIsDetail, setIsShow } from "../../../store/reducers/Drink/showModal";
 import { RootState } from "../../../store/store";
 import { setPage } from "../../../store/reducers/Modal/page";
 
@@ -41,7 +41,10 @@ export default function ModalCard({ content }: ModalProps) {
       {modalPage.page === 1 ? (
         <IconDiv>
           <img
-            onClick={() => dispatch(setPage(0))}
+            onClick={() => {
+              dispatch(setIsDetail(false))
+              dispatch(setPage(0))}
+            }
             src={Back}
             alt="뒤로가기 아이콘"
             style={{ width: "13px", height: "13px" }}

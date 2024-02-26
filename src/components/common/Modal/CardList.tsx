@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Flex, Grid } from '@mantine/core';
 import { setIsDetail } from '../../../store/reducers/Drink/showModal';
 import { setDrinkDetail } from '../../../store/reducers/Drink/drinkDetail';
+import { setPage } from '../../../store/reducers/Modal/page';
 
 export type ICard = {
         _id: string,
@@ -48,33 +49,38 @@ const Name = styled.div`
 
 export default function CardList() {
   const cardList = useAppSelector(state=>state.cardList);
+  const modalPage = useAppSelector(state=>state.modalPage.page);
   const dispatch = useAppDispatch();
 
 
   function onClickCard(drinkId:string){
     dispatch(setDrinkDetail({drinkId:drinkId}))
     dispatch(setIsDetail(true))
+    dispatch(setPage(1))
   }
 
 
   return (
-    <Flex w='100%' direction="column" justify="center" align="center" gap="13">
-      <Title>{cardList.title}</Title>
-        <CardListContainer>
-          <Grid style={{padding:'5px 10px 0px 0px', height: '505px', width:'280px', overflowX:'hidden', overflowY:'scroll'}}>
-            {cardList.list.map((v:ICard,idx:number)=>{
-              return (
-              <Grid.Col key={idx} span={6} style={{display:'flex', justifyContent:'center'}}>
-                <Card onClick={()=>{onClickCard(v.drinkId)}} >
-                  <Img src={v.imgUrl} alt={v._id}></Img>
-                  <Name>{v.drinkId}</Name>
-                </Card>
-              </Grid.Col>
-              )
-            })}
-          </Grid>
-        </CardListContainer>
-    </Flex>
-
+    <>
+      {modalPage === 0 && 
+        <Flex w='100%' direction="column" justify="center" align="center" gap="13">
+          <Title>{cardList.title}</Title>
+            <CardListContainer>
+              <Grid style={{padding:'5px 10px 0px 0px', height: '505px', width:'280px', overflowX:'hidden', overflowY:'scroll'}}>
+                {cardList.list.map((v:ICard,idx:number)=>{
+                  return (
+                  <Grid.Col key={idx} span={6} style={{display:'flex', justifyContent:'center'}}>
+                    <Card onClick={()=>{onClickCard(v.drinkId)}} >
+                      <Img src={v.imgUrl} alt={v._id}></Img>
+                      <Name>{v.drinkId}</Name>
+                    </Card>
+                  </Grid.Col>
+                  )
+                })}
+              </Grid>
+            </CardListContainer>
+        </Flex>
+      }
+    </>
   )
 }
