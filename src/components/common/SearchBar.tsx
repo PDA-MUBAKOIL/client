@@ -24,7 +24,8 @@ export type TSearchResult ={
 }
 
 type TSearch = {
-  setResult:React.Dispatch<React.SetStateAction<TSearchResult[]>>
+  setResult:React.Dispatch<React.SetStateAction<TSearchResult[]>>,
+  placeHolder:string
 }
 
 const SearchButton = styled.button`
@@ -47,7 +48,7 @@ const theme = createTheme({
 });
 
 
-export default function SearchBar({setResult}:TSearch) {   
+export default function SearchBar({setResult, placeHolder}:TSearch) {   
     const searchWord = useAppSelector(state=>state.search.search);
     const dispatch = useAppDispatch();
     const location = useLocation();
@@ -81,7 +82,7 @@ export default function SearchBar({setResult}:TSearch) {
     <MantineThemeProvider theme={theme}>
       <Box maw={350} mx="auto">
         <form onSubmit={onSubmitSearch}>
-              <Input placeholder='검색어를 입력하세요' 
+              <Input placeholder={placeHolder}
                   classNames={classes}
                   rightSectionPointerEvents={'auto'}
                   rightSection={

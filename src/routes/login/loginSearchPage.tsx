@@ -9,7 +9,7 @@ import DrinkDetailCard from "../../components/common/DrinkDetailCard";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks/reduxHooks";
 import { setSearch } from "../../store/reducers/Drink/search";
 import { listUp } from "../../lib/api/drinks";
-import { useLocation } from "react-router-dom";
+
 
 const LoginSearchPageContainer = styled.div`
   display: flex;
@@ -46,7 +46,7 @@ export default function LoginSearchPage() {
   const [result, setResult] = useState<Array<TSearchResult>>([]);
   const search = useAppSelector((state) => state.search.search);
   const dispatch = useAppDispatch();
-  const location = useLocation();
+
 
   function onClickTag(tag: string) {
     dispatch(setSearch(tag));
@@ -60,10 +60,11 @@ export default function LoginSearchPage() {
   return (
     <LoginSearchPageContainer>
       <Flex h="110px" align="center" justify="center">
-        <SearchBar setResult={setResult} />
+        <SearchBar setResult={setResult} placeHolder="술의 도수를 검색해보세요. ex) 5, 7"/>
       </Flex>
       {search === "" ? (
         <Flex direction="column" w="350px">
+          <div style={{color:'rgb(0,0,0,0.3)', padding:'5px'}}>태그를 눌러보세요</div>
           <Flex wrap="wrap" gap="5px">
             {TagContent.map((tag, idx) => {
               return (
