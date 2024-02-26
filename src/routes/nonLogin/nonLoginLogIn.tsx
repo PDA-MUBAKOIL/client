@@ -8,6 +8,7 @@ import InputContainer from "../../components/common/InputContainer";
 import { Link, useNavigate } from "react-router-dom";
 import { userLogin } from "../../store/reducers/user";
 import { useAppDispatch } from "../../lib/hooks/reduxHooks";
+import Drinks from '../../assets/img/Nav/drinks-icon.svg';
 
 export type User = {
   email: String;
@@ -22,7 +23,7 @@ const SignupBody = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 48px;
-  padding-top: 90px;
+  padding-top: 80px;
   overflow-y: hidden;
 `;
 
@@ -130,6 +131,7 @@ export default function NonLoginLogIn() {
         </Link>
         <ToLogin to={"/signup"}>회원가입</ToLogin>
       </ButtonBox>
+      <img src={Drinks} alt="" style={{ position: 'fixed', bottom: '0' }} />
     </SignupBody>
   );
 }

@@ -5,18 +5,19 @@ import { Text } from "@mantine/core";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks/reduxHooks";
 import { setDrinkList } from "../../store/reducers/Drink/allDrink";
+import { RootState } from "../../store/store";
 
 type DrinkType = {
   _id: string;
   name: string;
   imgUrl: string;
-  tags: [];
+  tags: Array<string>;
   description: string;
   brewerId: string;
   region: string;
   capacity: String;
   material: string;
-  __v: 0;
+  __v: number;
   id: string;
 };
 
@@ -34,7 +35,7 @@ const MainText = styled(Text)`
 
 export default function NonLoginMainPage() {
   const dispatch = useAppDispatch();
-  const drinkState = useAppSelector((state: any) => state.drinkList);
+  const drinkState = useAppSelector((state: RootState) => state.drinkList);
 
   useEffect(() => {
     dispatch(setDrinkList());
@@ -47,6 +48,7 @@ export default function NonLoginMainPage() {
       <ListItems>
         {drinkState.data?.map((item: DrinkType, idx: number) => (
           <DrinkCard
+            // key={item._id}
             key={idx}
             url={item.imgUrl}
             name={item.name}

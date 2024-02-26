@@ -6,6 +6,10 @@ import FillHeart from "../../../assets/img/Modal/fill-heart.svg";
 import EmptyHeart from "../../../assets/img/Modal/empty-heart.svg";
 import InputContainer from "../InputContainer";
 import CommonButton from "../CommonButton";
+import ToggleButton from "./ToggleButton";
+import { useAppDispatch, useAppSelector } from "../../../lib/hooks/reduxHooks";
+import { RootState } from "../../../store/store";
+import { setPage } from "../../../store/reducers/Modal/page";
 
 export type DetailType = {
   _id: string;
@@ -82,10 +86,12 @@ const TagDiv = styled(Group)`
 const ReviewInput = styled.textarea`
   border: none;
   background-color: #ebdcdc;
-  width: 100%;
-  height: 200px;
-  padding: 20px;
-  border-radius: 10px;
+  width: 80%;
+  height: 60px;
+  padding: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  font-size: 14px;
 
   &:focus {
     outline: none;
@@ -98,13 +104,22 @@ const ReviewFont = styled.h3`
   padding: 0 5px;
 `;
 
+const ReviewList = styled.div`
+  height: 500px;
+`
+
 const ClickButton = styled.div<{ state: string }>`
   background-color: #c17878;
-  padding: 10px 35px;
-  width: 130px;
-  border-radius: 99px;
+  padding: 5px 10px;
+  width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #fff;
   text-align: center;
+  font-size: 12px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
   ${(props) =>
     props.state === "disabled" &&
     `
@@ -116,112 +131,93 @@ export default function DetailItem({ detail }: DetailProps) {
   const { imgUrl, name, materials, percent, volume, description } = detail;
 
   const [isLike, setIsLike] = useState<boolean>(false);
-  const [page, setPage] = useState<Number>(0);
+  
+  const dispatch = useAppDispatch();
+  const [isReview, setIsReview] = useState<boolean>(false);
 
   return (
     <>
-      {page === 0 ? (
+      <ToggleButton isReview={isReview} setIsReview={setIsReview} />
+      {!isReview ? (
         <>
-          <ImageDiv src={imgUrl} />
-          <Content>
-            <MainFont>{name}</MainFont>
+          <div style={{ maxHeight: '500px', overflowY: 'scroll' }}>
+            <ImageDiv src={imgUrl} />
+            <Content>
+              <MainFont>{name}</MainFont>
 
-            <Group
-              style={{
-                flexDirection: "column",
-                gap: rem(4),
-                marginTop: rem(10),
-              }}
-            >
-              <ContentItem>
-                <TypeDiv>
-                  <TypeFont>종류</TypeFont>
-                  <TypeFont>|</TypeFont>
-                </TypeDiv>
-                <SubFont view="">탁주</SubFont>
-              </ContentItem>
-              <ContentItem style={{ alignItems: "flex-start" }}>
-                <TypeDiv>
-                  <TypeFont>원재료</TypeFont>
-                  <TypeFont>|</TypeFont>
-                </TypeDiv>
-                <SubFont view="">{materials}</SubFont>
-              </ContentItem>
-              <ContentItem>
-                <TypeDiv>
-                  <TypeFont>도수</TypeFont>
-                  <TypeFont>|</TypeFont>
-                </TypeDiv>
-                <SubFont view="">{percent}</SubFont>
-              </ContentItem>
-              <ContentItem>
-                <TypeDiv>
-                  <TypeFont>용량</TypeFont>
-                  <TypeFont>|</TypeFont>
-                </TypeDiv>
-                <SubFont view="">{volume}</SubFont>
-              </ContentItem>
-              <ContentItem style={{ alignItems: "flex-start" }}>
-                <TypeDiv>
-                  <TypeFont>소개</TypeFont>
-                  <TypeFont>|</TypeFont>
-                </TypeDiv>
-                <SubFont view="description">{description}</SubFont>
-              </ContentItem>
-            </Group>
+              <Group
+                style={{
+                  flexDirection: "column",
+                  gap: rem(4),
+                  marginTop: rem(10),
+                }}
+              >
+                <ContentItem>
+                  <TypeDiv>
+                    <TypeFont>종류</TypeFont>
+                    <TypeFont>|</TypeFont>
+                  </TypeDiv>
+                  <SubFont view="">탁주</SubFont>
+                </ContentItem>
+                <ContentItem style={{ alignItems: "flex-start" }}>
+                  <TypeDiv>
+                    <TypeFont>원재료</TypeFont>
+                    <TypeFont>|</TypeFont>
+                  </TypeDiv>
+                  <SubFont view="">{materials}</SubFont>
+                </ContentItem>
+                <ContentItem>
+                  <TypeDiv>
+                    <TypeFont>도수</TypeFont>
+                    <TypeFont>|</TypeFont>
+                  </TypeDiv>
+                  <SubFont view="">{percent}</SubFont>
+                </ContentItem>
+                <ContentItem>
+                  <TypeDiv>
+                    <TypeFont>용량</TypeFont>
+                    <TypeFont>|</TypeFont>
+                  </TypeDiv>
+                  <SubFont view="">{volume}</SubFont>
+                </ContentItem>
+                <ContentItem style={{ alignItems: "flex-start" }}>
+                  <TypeDiv>
+                    <TypeFont>소개</TypeFont>
+                    <TypeFont>|</TypeFont>
+                  </TypeDiv>
+                  <SubFont view="description">{description}</SubFont>
+                </ContentItem>
+              </Group>
 
-            <TagDiv>
-              <TagButton text="보쌈" onClick={() => console.log("태그 클릭")} />
-              <TagButton
-                text="김치찜"
-                onClick={() => console.log("태그 클릭")}
-              />
-              <TagButton text="튀김" onClick={() => console.log("태그 클릭")} />
-            </TagDiv>
-          </Content>
-          <div
-            style={{
-              width: "100%",
-              zoom: "0.8",
-              display: "flex",
-              justifyContent: "space-around",
-            }}
-          >
-            <CommonButton
+              <TagDiv>
+                <TagButton text="보쌈" onClick={() => console.log("태그 클릭")} />
+                <TagButton
+                  text="김치찜"
+                  onClick={() => console.log("태그 클릭")}
+                />
+                <TagButton text="튀김" onClick={() => console.log("태그 클릭")} />
+              </TagDiv>
+            </Content>
+          </div>
+            {/* <CommonButton
               text="리뷰 남기기"
               onClick={() => setPage(1)}
               status="active"
-            />
+            /> */}
             <img
               src={isLike ? FillHeart : EmptyHeart}
               alt=""
-              style={{ width: "34px" }}
+              style={{ width: "24px", marginTop: '10px' }}
               onClick={() => setIsLike((prev) => !prev)}
             />
-          </div>
         </>
       ) : (
         <>
           <ReviewFont>"{name}"은 어떠셨나요?</ReviewFont>
-          <ReviewInput placeholder="리뷰를 남겨보세요!" />
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center",
-              margin: "20px 0 10px 0",
-              gap: "10px",
-            }}
-          >
-            <ClickButton state="disabled" onClick={() => setPage(0)}>
-              이전
-            </ClickButton>
-            <ClickButton
-              state="active"
-              onClick={() => console.log("로그인 페이지로 이동")}
-            >
-              남기기
-            </ClickButton>
+          <ReviewList>리뷰</ReviewList>
+          <div style={{ display: 'flex', width: '100%' }}>
+            <ReviewInput placeholder="리뷰를 남겨보세요!" />
+            <ClickButton state="active">남기기</ClickButton>
           </div>
         </>
       )}
