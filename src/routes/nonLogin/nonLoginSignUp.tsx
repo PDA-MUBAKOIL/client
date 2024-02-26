@@ -5,10 +5,10 @@ import { Text } from "@mantine/core";
 import Logo from "../../assets/img/Nav/logo.svg";
 import styled from "styled-components";
 import InputContainer from "../../components/common/InputContainer";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsEmail } from "../../store/reducers/Auth/email";
-import { useAppDispatch } from "../../lib/hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../lib/hooks/reduxHooks";
 import Drinks from '../../assets/img/Nav/drinks-icon.svg';
 
 const SignupBody = styled.div`
@@ -54,7 +54,7 @@ const ToLogin = styled(Link)`
 
 export default function NonLoginSignUp() {
   const isEmail = useSelector((state: any) => state.email.isEmail);
-
+  const isUser = useAppSelector(state => state.user.isUser);
   const [email, setEmail] = useState<String>("");
   const [authNum, setAuthNum] = useState<String>("");
   const [nickname, setNickname] = useState<String>("");
@@ -76,83 +76,86 @@ export default function NonLoginSignUp() {
 
   console.log(isEmail);
   return (
-    <SignupBody>
-      <HelloBox>
-        <MainFont>함께 하실래요?</MainFont>
-        <img src={Logo} alt="" style={{ width: "105px" }} />
-      </HelloBox>
-      {!isEmail ? (
-        <>
-          <InputBox>
-            <InputContainer
-              placeholder="이메일"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                onInputChange(e.target.value, setEmail);
-              }}
-            />
-            {isClick && (
+    <>
+      {isUser} ? <Navigate to= '/map' /> :
+      <SignupBody>
+        <HelloBox>
+          <MainFont>함께 하실래요?</MainFont>
+          <img src={Logo} alt="" style={{ width: "105px" }} />
+        </HelloBox>
+        {!isEmail ? (
+          <>
+            <InputBox>
               <InputContainer
-                placeholder="인증 번호"
+                placeholder="이메일"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  onInputChange(e.target.value, setAuthNum);
+                  onInputChange(e.target.value, setEmail);
                 }}
               />
-            )}
-          </InputBox>
-          <ButtonBox>
-            {!isClick ? (
-              <CommonButton
-                text="인증번호 요청"
-                onClick={() => setIsClick(true)}
-                status="active"
+              {isClick && (
+                <InputContainer
+                  placeholder="인증 번호"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    onInputChange(e.target.value, setAuthNum);
+                  }}
+                />
+              )}
+            </InputBox>
+            <ButtonBox>
+              {!isClick ? (
+                <CommonButton
+                  text="인증번호 요청"
+                  onClick={() => setIsClick(true)}
+                  status="active"
+                />
+              ) : (
+                <CommonButton
+                  text="이메일 인증"
+                  onClick={() => dispatch(setIsEmail(true))}
+                  status="active"
+                />
+              )}
+              <ToLogin to={"/login"}>로그인</ToLogin>
+            </ButtonBox>
+          </>
+        ) : (
+          <>
+            <InputBox>
+              <InputContainer
+                placeholder="닉네임"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputChange(e.target.value, setNickname);
+                }}
               />
-            ) : (
-              <CommonButton
-                text="이메일 인증"
-                onClick={() => dispatch(setIsEmail(true))}
-                status="active"
+              <InputContainer
+                placeholder="비밀번호"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  onInputChange(e.target.value, setPassword);
+                }}
               />
-            )}
-            <ToLogin to={"/login"}>로그인</ToLogin>
-          </ButtonBox>
-        </>
-      ) : (
-        <>
-          <InputBox>
-            <InputContainer
-              placeholder="닉네임"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                onInputChange(e.target.value, setNickname);
-              }}
-            />
-            <InputContainer
-              placeholder="비밀번호"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                onInputChange(e.target.value, setPassword);
-              }}
-            />
-            <InputContainer
-              placeholder="비밀번호 확인"
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                if (e.target.value !== password) {
-                  setIsActive(false);
-                } else {
-                  setIsActive(true);
-                }
-              }}
-            />
-          </InputBox>
-          <ButtonBox>
-            <CommonButton
-              text="회원가입"
-              onClick={() => dispatch(setIsEmail(false))}
-              status={isActive ? "active" : "disabled"}
-            />
-            <ToLogin to={"/login"}>로그인</ToLogin>
-          </ButtonBox>
-        </>
-      )}
-      <img src={Drinks} alt="" style={{ position: 'fixed', bottom: '0' }} />
-    </SignupBody>
+              <InputContainer
+                placeholder="비밀번호 확인"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  if (e.target.value !== password) {
+                    setIsActive(false);
+                  } else {
+                    setIsActive(true);
+                  }
+                }}
+              />
+            </InputBox>
+            <ButtonBox>
+              <CommonButton
+                text="회원가입"
+                onClick={() => dispatch(setIsEmail(false))}
+                status={isActive ? "active" : "disabled"}
+              />
+              <ToLogin to={"/login"}>로그인</ToLogin>
+            </ButtonBox>
+          </>
+        )}
+        <img src={Drinks} alt="" style={{ position: 'fixed', bottom: '0' }} />
+      </SignupBody>
+    </>
   );
 }

@@ -10,6 +10,8 @@ import LoginListPage from "../routes/login/loginListPage";
 import LoginWishPage from "../routes/login/loginWishPage";
 import LoginSearchPage from "../routes/login/loginSearchPage";
 import LoginMyPage from "../routes/login/loginMyPage";
+import LoginNavigatePage from "../routes/loginNavigate";
+import NonLoginNavigatePage from "../routes/nonLoginNavaigate";
 
 export const mainRouter = [
   {
@@ -18,48 +20,57 @@ export const mainRouter = [
     children: [
       {
         path: "",
-        element: <NonLoginMainPage />,
+        element: <NonLoginNavigatePage><NonLoginMainPage /></NonLoginNavigatePage>,
         index: true,
       },
       {
         path: "/login",
-        element: <NonLoginLogIn />,
+        element: <NonLoginNavigatePage><NonLoginLogIn /></NonLoginNavigatePage>,
         index: true,
       },
       {
         path: "/signup",
-        element: <NonLoginSignUp />,
+        element: <NonLoginNavigatePage><NonLoginSignUp /></NonLoginNavigatePage>,
         index: true,
       },
       {
         path: "/map",
-        element: <LoginMapPage />,
+        element: <LoginNavigatePage><LoginMapPage /></LoginNavigatePage>,
         index: true,
       },
       {
         path: "/list",
-        element: <LoginListPage />,
+        element: <LoginNavigatePage><LoginListPage /></LoginNavigatePage>,
         index: true,
       },
       {
         path: "/wish",
-        element: <LoginWishPage />,
+        element: <LoginNavigatePage><LoginWishPage /></LoginNavigatePage>,
         index: true,
       },
       {
         path: "/search",
-        element: <LoginSearchPage />,
+        element: <LoginNavigatePage><LoginSearchPage /></LoginNavigatePage>,
         index: true,
       },
       {
         path: "/mypage",
-        element: <LoginMyPage />,
+        element: <LoginNavigatePage><LoginMyPage /></LoginNavigatePage>,
         index: true,
       },
     ],
   },
 ];
 
-const router = createBrowserRouter(mainRouter);
+
+
+const router = createBrowserRouter(mainRouter.map(v=>{
+  return v.children.map((route)=>{
+    return {
+      ...route,
+      element: <LoginNavigatePage />
+    }
+  })
+}));
 
 export default router;
