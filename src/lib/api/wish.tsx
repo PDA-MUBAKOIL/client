@@ -6,7 +6,7 @@ const instance = axios.create({
 });
 
 export async function getAllWishes(drinkId: string) {
-  return await instance.get(`/${drinkId}`);
+  return await instance.get(`/review/${drinkId}`);
 }
 
 export async function getMyWish(drinkId: string, userId: string) {

@@ -90,10 +90,10 @@ export default function LoginMyPage() {
         <CallContainer>
           <span>개발자 연락처</span>
           <CallDiv>
-            <span>김민우 | example@naver.com</span>
-            <span>박유진 | example@naver.com</span>
-            <span>박진언 | example@naver.com</span>
-            <span>이한슬 | example@naver.com</span>
+            <span>김민우 | roboticts49@gmail.com</span>
+            <span>박유진 | yjp8842@naver.com</span>
+            <span>박진언 | pjo3789@naver.com</span>
+            <span>이한슬 | gkstmf616@gmail.com</span>
           </CallDiv>
         </CallContainer>
         <CommonButton
