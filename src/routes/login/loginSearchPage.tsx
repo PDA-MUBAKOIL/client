@@ -4,12 +4,12 @@ import { TSearchResult } from "../../components/common/SearchBar";
 import { Flex } from "@mantine/core";
 import styled from "styled-components";
 
-import { Text } from "@mantine/core";
 import TagButton from "../../components/common/TagButton";
 import DrinkDetailCard from "../../components/common/DrinkDetailCard";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks/reduxHooks";
 import { setSearch } from "../../store/reducers/Drink/search";
 import { listUp } from "../../lib/api/drinks";
+import { useLocation } from "react-router-dom";
 
 const LoginSearchPageContainer = styled.div`
   display: flex;
@@ -46,6 +46,7 @@ export default function LoginSearchPage() {
   const [result, setResult] = useState<Array<TSearchResult>>([]);
   const search = useAppSelector((state) => state.search.search);
   const dispatch = useAppDispatch();
+  const location = useLocation();
 
   function onClickTag(tag: string) {
     dispatch(setSearch(tag));
@@ -54,7 +55,8 @@ export default function LoginSearchPage() {
     });
   }
 
-  useEffect(() => {}, [search]);
+  useEffect(() => {
+  }, [search]);
   return (
     <LoginSearchPageContainer>
       <Flex h="110px" align="center" justify="center">
