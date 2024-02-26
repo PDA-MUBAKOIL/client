@@ -3,11 +3,10 @@ import { Box, Input,MantineThemeProvider, createTheme} from '@mantine/core';
 import classes from '../../styles/Navbar.module.css';
 import search from '../../assets/img/SearchBar/search.png';
 import styled from 'styled-components';
-import { useInputState } from '@mantine/hooks';
 import { listUp } from '../../lib/api/drinks';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks/reduxHooks';
 import { setSearch } from '../../store/reducers/Drink/search';
-import { useLocation } from 'react-router';
+import { useLocation } from "react-router-dom";
 
 export type TSearchResult ={
   _id: string,
@@ -25,7 +24,8 @@ export type TSearchResult ={
 }
 
 type TSearch = {
-  setResult:React.Dispatch<React.SetStateAction<TSearchResult[]>>
+  setResult:React.Dispatch<React.SetStateAction<TSearchResult[]>>,
+  placeHolder:string
 }
 
 const SearchButton = styled.button`
@@ -48,10 +48,10 @@ const theme = createTheme({
 });
 
 
-export default function SearchBar({setResult}:TSearch) {   
-    const [searchValue,setSearchValue] = useInputState('');
+export default function SearchBar({setResult, placeHolder}:TSearch) {   
     const searchWord = useAppSelector(state=>state.search.search);
     const dispatch = useAppDispatch();
+    const location = useLocation();
 
     const onSubmitSearch = (e:React.FormEvent<HTMLFormElement>)=>{
       e.preventDefault();
@@ -61,7 +61,6 @@ export default function SearchBar({setResult}:TSearch) {
     }
 
     const onChangeSearch = (e:React.ChangeEvent<HTMLInputElement>)=>{
-      setSearchValue(e.target.value);
       dispatch(setSearch(e.target.value));
       listUp().then(data=>{
         setResult(data.data);
@@ -69,13 +68,21 @@ export default function SearchBar({setResult}:TSearch) {
     }
 
   useEffect(()=>{
-    dispatch(setSearch(''))
+    if(location.state){
+      dispatch(setSearch(location.state['tag']));
+      listUp().then(data=>{
+        setResult(data.data);
+      })
+    }else{
+      dispatch(setSearch(''));
+    }
   },[])
+
   return (
     <MantineThemeProvider theme={theme}>
       <Box maw={350} mx="auto">
         <form onSubmit={onSubmitSearch}>
-              <Input placeholder='검색어를 입력하세요' 
+              <Input placeholder={placeHolder}
                   classNames={classes}
                   rightSectionPointerEvents={'auto'}
                   rightSection={

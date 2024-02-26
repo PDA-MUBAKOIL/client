@@ -1,7 +1,9 @@
 import React from 'react'
-import { useAppSelector } from '../../../lib/hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../../../lib/hooks/reduxHooks'
 import styled from 'styled-components';
 import { Flex, Grid } from '@mantine/core';
+import { setIsDetail } from '../../../store/reducers/Drink/showModal';
+import { setDrinkDetail } from '../../../store/reducers/Drink/drinkDetail';
 
 export type ICard = {
         _id: string,
@@ -46,6 +48,13 @@ const Name = styled.div`
 
 export default function CardList() {
   const cardList = useAppSelector(state=>state.cardList);
+  const dispatch = useAppDispatch();
+
+
+  function onClickCard(drinkId:string){
+    dispatch(setDrinkDetail({drinkId:drinkId}))
+    dispatch(setIsDetail(true))
+  }
 
 
   return (
@@ -56,7 +65,7 @@ export default function CardList() {
             {cardList.list.map((v:ICard,idx:number)=>{
               return (
               <Grid.Col key={idx} span={6} style={{display:'flex', justifyContent:'center'}}>
-                <Card >
+                <Card onClick={()=>{onClickCard(v.drinkId)}} >
                   <Img src={v.imgUrl} alt={v._id}></Img>
                   <Name>{v.drinkId}</Name>
                 </Card>

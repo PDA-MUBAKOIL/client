@@ -97,7 +97,7 @@ export default function LoginListPage() {
   return (
     <LoginSearchPageContainer>
       <Flex h='110px' align='center' justify='center'>
-        <SearchBar setResult={setResult}/>
+        <SearchBar setResult={setResult} placeHolder='술의 이름을 검색해보세요.'/>
       </Flex>
       <MainText>술 리스트</MainText>
       <ListItems>

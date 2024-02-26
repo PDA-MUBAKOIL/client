@@ -49,12 +49,10 @@ const FooterItemTxt = styled.div`
 
 function FooterItemComponent(props: { src: string; txt: string; url: string }) {
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   return (
     <FooterItem
       onClick={() => {
-        dispatch(setSearch(""));
         navigate(props.url);
       }}
     >
