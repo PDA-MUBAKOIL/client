@@ -8,7 +8,7 @@ import TagButton from "../../components/common/TagButton";
 import DrinkDetailCard from "../../components/common/DrinkDetailCard";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks/reduxHooks";
 import { setSearch } from "../../store/reducers/Drink/search";
-import { listUp } from "../../lib/api/drinks";
+import { searchDrink } from "../../lib/api/drinks";
 
 
 const LoginSearchPageContainer = styled.div`
@@ -49,10 +49,10 @@ export default function LoginSearchPage() {
 
 
   function onClickTag(tag: string) {
-    dispatch(setSearch(tag));
-    listUp().then((data) => {
-      setResult(data.data);
-    });
+    dispatch(setSearch('#'+tag));
+    searchDrink(tag,null,null).then(data=>{
+      if(data !== undefined){setResult(data.data);}
+    })
   }
 
   useEffect(() => {
@@ -72,7 +72,7 @@ export default function LoginSearchPage() {
                   key={idx}
                   text={tag}
                   onClick={() => {
-                    onClickTag("#" + tag);
+                    onClickTag(tag);
                   }}
                 />
               );

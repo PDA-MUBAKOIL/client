@@ -7,6 +7,7 @@ import { Flex } from "@mantine/core";
 import { Button, rem } from "@mantine/core";
 import { useAppDispatch } from "../../lib/hooks/reduxHooks";
 import { setIsDetail, setIsShow } from "../../store/reducers/Drink/showModal";
+import { setDrinkDetail } from "../../store/reducers/Drink/drinkDetail";
 
 type TagProp = {
   text: string;
@@ -58,6 +59,7 @@ export default function DrinkDetailCard(item: TSearchResult) {
   const dispatch = useAppDispatch();
 
   function onCardClick() {
+    dispatch(setDrinkDetail({drinkId: item.id}))
     dispatch(setIsShow(true));
     dispatch(setIsDetail(true));
   }

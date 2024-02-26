@@ -25,6 +25,8 @@ import daegu from '../../assets/img/Map/대구.png';
 import busan from '../../assets/img/Map/부산.png';
 import ulsan from '../../assets/img/Map/울산.png';
 import gwangju from '../../assets/img/Map/광주.png';
+import axios from 'axios';
+import { listUp } from '../../lib/api/drinks';
 
 
 type PinType ={
@@ -109,7 +111,6 @@ function MarkerComponent(props:{region:string, fullName:string, left:number, top
 
 
   useEffect(()=>{
-
   
   },[])
 
