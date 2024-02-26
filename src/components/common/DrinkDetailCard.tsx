@@ -94,7 +94,7 @@ export default function DrinkDetailCard(item: TSearchResult) {
                     wordBreak: "break-all",
                   }}
                 >
-                  {item.brewerId}
+                  {item.brewerId.name}
                 </div>
               </Flex>
             </Flex>

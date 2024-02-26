@@ -8,17 +8,26 @@ import { setDrinkList } from "../../store/reducers/Drink/allDrink";
 import { RootState } from "../../store/store";
 
 type DrinkType = {
-  _id: string;
-  name: string;
-  imgUrl: string;
-  tags: Array<string>;
-  description: string;
-  brewerId: string;
-  region: string;
-  capacity: String;
-  material: string;
-  __v: number;
-  id: string;
+  _id: string,
+  name: string,
+  percent: string,
+  spercent: Array<number>,
+  imgUrl: string,
+  tags: Array<string>,
+  description: string,
+  brewerId: {
+    _id: string,
+    name: string,
+    link: string,
+    tel: string,
+    __v: number,
+    id: string
+  },
+  region: string,
+  material: string,
+  capacity: string,
+  __v: number,
+  id: string
 };
 
 const ListItems = styled.div`
