@@ -4,12 +4,12 @@ import { TSearchResult } from "../../components/common/SearchBar";
 import { Flex } from "@mantine/core";
 import styled from "styled-components";
 
-import { Text } from "@mantine/core";
 import TagButton from "../../components/common/TagButton";
 import DrinkDetailCard from "../../components/common/DrinkDetailCard";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks/reduxHooks";
 import { setSearch } from "../../store/reducers/Drink/search";
 import { listUp } from "../../lib/api/drinks";
+
 
 const LoginSearchPageContainer = styled.div`
   display: flex;
@@ -47,6 +47,7 @@ export default function LoginSearchPage() {
   const search = useAppSelector((state) => state.search.search);
   const dispatch = useAppDispatch();
 
+
   function onClickTag(tag: string) {
     dispatch(setSearch(tag));
     listUp().then((data) => {
@@ -54,14 +55,16 @@ export default function LoginSearchPage() {
     });
   }
 
-  useEffect(() => {}, [search]);
+  useEffect(() => {
+  }, [search]);
   return (
     <LoginSearchPageContainer>
       <Flex h="110px" align="center" justify="center">
-        <SearchBar setResult={setResult} />
+        <SearchBar setResult={setResult} placeHolder="술의 도수를 검색해보세요. ex) 5, 7"/>
       </Flex>
       {search === "" ? (
         <Flex direction="column" w="350px">
+          <div style={{color:'rgb(0,0,0,0.3)', padding:'5px'}}>태그를 눌러보세요</div>
           <Flex wrap="wrap" gap="5px">
             {TagContent.map((tag, idx) => {
               return (
