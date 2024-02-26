@@ -28,8 +28,8 @@ export default function TagButton({ text, onClick }: TagProp) {
   return (
     <Button
       style={{ 
-        paddingLeft: rem('25px'), 
-        paddingRight: rem('25px'),
+        paddingLeft: rem('21px'), 
+        paddingRight: rem('21px'),
         backgroundColor: '#DFBBBB',
         color: '#000',
         fontSize: rem('12px'),

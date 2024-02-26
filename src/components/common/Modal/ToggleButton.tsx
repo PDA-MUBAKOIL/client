@@ -9,7 +9,7 @@ type ToggleProps = {
 const ToggleContainer = styled.div`
   display: flex;
   width: 100%;
-  padding: 15px 0;
+  padding: 15px 0 25px 0;
 `
 
 const ToggleBtn1 = styled.div<{ isreview: string }>`

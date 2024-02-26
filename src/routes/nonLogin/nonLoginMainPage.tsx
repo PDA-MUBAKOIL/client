@@ -48,7 +48,7 @@ export default function NonLoginMainPage() {
 
   useEffect(() => {
     dispatch(setDrinkList());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
