@@ -63,17 +63,17 @@ const ToLogin = styled(Link)`
 // `;
 
 export default function NonLoginLogIn() {
-  const [email, setEmail] = useState<String>("");
-  const [password, setPassword] = useState<String>("");
-  const [isActive, setIsActive] = useState<Boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [isActive, setIsActive] = useState<boolean>(false);
   // const [isError, setIsError] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const onInputChange = useCallback(
     (
-      inputText: String,
-      setFn: React.Dispatch<React.SetStateAction<String>>
+      inputText: string,
+      setFn: React.Dispatch<React.SetStateAction<string>>
     ) => {
       setFn(inputText);
     },
@@ -108,12 +108,14 @@ export default function NonLoginLogIn() {
       </HelloBox>
       <InputBox>
         <InputContainer
+          type="email"
           placeholder="이메일"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             onInputChange(e.target.value, setEmail);
           }}
         />
         <InputContainer
+          type="password"
           placeholder="비밀번호"
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             onInputChange(e.target.value, setPassword);

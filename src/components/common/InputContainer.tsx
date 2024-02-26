@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 
 type InputProp = {
+  type: string;
   placeholder: string;
   onChange: any;
 };
@@ -20,6 +21,12 @@ const InputDiv = styled.input`
   }
 `;
 
-export default function InputContainer({ placeholder, onChange }: InputProp) {
-  return <InputDiv placeholder={placeholder} onChange={onChange} />;
+export default function InputContainer({ placeholder, onChange, type }: InputProp) {
+  return (
+    <InputDiv 
+      type={type}
+      placeholder={placeholder} 
+      onChange={onChange}
+    />
+  )
 }

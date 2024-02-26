@@ -85,6 +85,7 @@ export default function NonLoginSignUp() {
         <>
           <InputBox>
             <InputContainer
+              type="email"
               placeholder="이메일"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputChange(e.target.value, setEmail);
@@ -92,6 +93,7 @@ export default function NonLoginSignUp() {
             />
             {isClick && (
               <InputContainer
+                type="text"
                 placeholder="인증 번호"
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   onInputChange(e.target.value, setAuthNum);
@@ -120,18 +122,21 @@ export default function NonLoginSignUp() {
         <>
           <InputBox>
             <InputContainer
+              type="text"
               placeholder="닉네임"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputChange(e.target.value, setNickname);
               }}
             />
             <InputContainer
+              type="password"
               placeholder="비밀번호"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 onInputChange(e.target.value, setPassword);
               }}
             />
             <InputContainer
+              type="password"
               placeholder="비밀번호 확인"
               onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                 if (e.target.value !== password) {
