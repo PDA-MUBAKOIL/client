@@ -39,7 +39,7 @@ export default function MyReviewContainer() {
       <MainFont>✨</MainFont>
       <Content>
         <MainFont>나의 리뷰</MainFont>
-        <SubFont>{myReview.review}</SubFont>
+        <SubFont>{myReview?.review}</SubFont>
       </Content>
     </ReviewDiv>
   )

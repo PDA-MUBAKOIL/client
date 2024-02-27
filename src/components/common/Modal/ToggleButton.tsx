@@ -8,8 +8,6 @@ import { getWish } from '../../../store/reducers/Review/myReview';
 type ToggleProps = {
   isReview: boolean;
   setIsReview: React.Dispatch<React.SetStateAction<boolean>>;
-  drinkId: string;
-  userId: string;
 }
 
 const ToggleContainer = styled.div`

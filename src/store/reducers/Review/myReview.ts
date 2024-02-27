@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getMyWish, updateMyWish, writeMyWish } from "../../../lib/api/wish";
+import { deleteMyWish, getMyWish, updateMyWish, writeMyWish } from "../../../lib/api/wish";
 import { useCookies } from "react-cookie";
 
 const initialState = {
@@ -36,15 +36,21 @@ export const writeWish = createAsyncThunk(
   }
 );
 
+export const deletedWish = createAsyncThunk(
+  "review/deleteWish",
+  async (data: DataProp, thunkAPI) => {
+    const { drinkId, item } = data;
+    const response = await deleteMyWish(drinkId, item.token);
+    return response.data;
+  }
+);
+
 export const updateWish = createAsyncThunk(
   "review/updateWish",
   async (data: DataProp, thunkAPI) => {
-    const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
-
-    // 토큰값 가져오기
-    const token = cookies['authToken'];
     const { drinkId, item } = data;
-    const response = await updateMyWish(drinkId, item, token);
+    const response = await updateMyWish(drinkId, item);
+    console.log('my review: ', response.data)
     return response.data;
   }
 );
