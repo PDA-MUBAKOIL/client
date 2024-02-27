@@ -8,6 +8,8 @@ void setBuildStatus(String message, String state) {
   ]);
 }
 
+def REACT_IMAGE_ID = '';
+
 pipeline {
   agent any
 	post {
@@ -35,6 +37,8 @@ pipeline {
     }
     stage('build-react') {
       steps {
+        REACT_IMAGE_ID = sh(returnStdout: true, script: 'docker images | grep react | awk \'{print $3\'}').trim()
+        echo "prev image id : ${REACT_IMAGE_ID}"
         echo 'move directory'
         sh 'pwd'
         sh 'docker build -t react .'
@@ -60,6 +64,17 @@ pipeline {
       steps {
         echo 'run docker container'
         sh 'docker run --name react -d -p 3000:3000 react'
+      }
+    }
+    stage('clean') {
+      when {
+        expression {
+          return REACT_IMAGE_ID != '';
+        }
+      }
+      steps {
+        echo "Clean react image ${REACT_IMAGE_ID}"
+        sh "docker rmi ${REACT_IMAGE_ID}"
       }
     }
   }
