@@ -36,8 +36,10 @@ pipeline {
       }
     }
     stage('build-react') {
-      steps {
+      environment {
         REACT_IMAGE_ID = sh(returnStdout: true, script: 'docker images | grep react | awk \'{print $3\'}').trim()
+      }
+      steps {
         echo "prev image id : ${REACT_IMAGE_ID}"
         echo 'move directory'
         sh 'pwd'
