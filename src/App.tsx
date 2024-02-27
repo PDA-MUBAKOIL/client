@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, RouteObject, Routes } from "react-router-dom";
-import { mainRouter} from "./router/main-router";
+import { NonLoginRouter, LoginRouter } from "./router/main-router";
 import { Provider } from "react-redux";
 import { persistor, store } from "./store/store";
 import "@mantine/core/styles.css";
 import { PersistGate } from "redux-persist/integration/react";
+import { useCookies } from "react-cookie";
 
 function renderRoutes(routesObj: RouteObject[]) {
 
@@ -35,12 +36,20 @@ function renderRoutes(routesObj: RouteObject[]) {
 }
 
 function App() {
+  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+
+    // 토큰값 가져오기
+  const token = cookies['authToken'];
 
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <BrowserRouter>
-          <Routes>{renderRoutes(mainRouter)}</Routes>
+          {!token ? (
+            <Routes>{renderRoutes(NonLoginRouter)}</Routes>
+          ) : (
+            <Routes>{renderRoutes(LoginRouter)}</Routes>
+          )}
         </BrowserRouter>
       </PersistGate>
     </Provider>

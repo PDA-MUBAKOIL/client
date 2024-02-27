@@ -25,6 +25,7 @@ const ImgDiv = styled.div<{ url: string }>`
 `
 
 export default function OtherReview() {
+  const myReview = useAppSelector((state: RootState) => state.myReview);
   const reviewList = useAppSelector((state: RootState) => state.allReview.allReview);
 
   useEffect(() => {
@@ -34,16 +35,18 @@ export default function OtherReview() {
   return (
     <>
       {reviewList?.map((review, idx) => 
-        <ReviewDiv key={review._id}>
-          <MainFont>✨</MainFont>
-          <Content>
-            <MainFont>{review.userId}</MainFont>
-            <SubFont>{review.review}</SubFont>
-            {review.imgUrl && (
-              <ImgDiv url={review.imgUrl} />
-            )}
-          </Content>
-        </ReviewDiv>
+        myReview.userId !== review.userId._id && (
+          <ReviewDiv key={review._id}>
+            <MainFont>✨</MainFont>
+            <Content>
+              <MainFont>{review.userId.name}</MainFont>
+              <SubFont>{review.review}</SubFont>
+              {review.imgUrl && (
+                <ImgDiv url={review.imgUrl} />
+              )}
+            </Content>
+          </ReviewDiv>
+        )
       )}
     </>
   )

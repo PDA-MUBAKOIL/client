@@ -11,10 +11,10 @@ import MyReviewContainer from "../Review/MyReviewContainer";
 import { getAllWish } from "../../../store/reducers/Review/allReview";
 import OtherReview from "../Review/OtherReview";
 import SubmitButton from '../../../assets/img/Modal/submit.svg';
-import { getWish, updateWish } from "../../../store/reducers/Review/myReview";
+import { deletedWish, getWish, updateWish, writeWish } from "../../../store/reducers/Review/myReview";
 import { setDrinkDetail } from "../../../store/reducers/Drink/drinkDetail";
 import { setSearch } from "../../../store/reducers/Drink/search";
-import { deleteMyWish, isWish, writeMyWish } from "../../../lib/api/wish";
+import { isWish } from "../../../lib/api/wish";
 import { useCookies } from "react-cookie";
 
 export type DetailType = {
@@ -152,7 +152,7 @@ const ClickButton = styled.button<{ state: string }>`
 const ToggleContainer = styled.div`
   display: flex;
   width: 100%;
-  padding: 15px 0;
+  padding: 15px 0 25px 0;
 `
 
 export default function DetailItem({ detail }: DetailProps) {
@@ -178,40 +178,74 @@ export default function DetailItem({ detail }: DetailProps) {
     }, []
   )
 
-  const [detailId, setDetailId] = useState<string>("");
   function addWish(){
-    writeMyWish(detail._id,{review:'', imgUrl:'', isPublic:true, token: token} )
+    const data = {
+      "drinkId": detail._id,
+      "item": {
+        "token": token,
+        "userId": userId,
+        review,
+        "imgUrl": "",
+        "isPublic": true,
+      }
+    }
+    dispatch(writeWish(data))
     .then((data)=>{
       setIsLike(true);
     })
   }
 
   function deleteWish(){
-    deleteMyWish(detail._id,token).then((data)=>{
+    const data = {
+      "drinkId": detail._id,
+      "item": {
+        "token": token,
+        "userId": userId,
+        review,
+        "imgUrl": "",
+        "isPublic": true,
+      }
+    }
+    dispatch(deletedWish(data))
+    .then((data)=>{
       setIsLike(false);
-    });
+    })
+  }
+
+  function updatedWish(){
+    const data = {
+      "drinkId": detail._id,
+      "item": {
+        "token": token,
+        "userId": userId,
+        review,
+        "imgUrl": "",
+        "isPublic": true,
+      }
+    }
+    console.log('리뷰보내기', data)
+    dispatch(updateWish(data))
+      .then((res) => {
+        setReview('');
+      })
   }
 
   useEffect(() => {
-    if (detail) {
-      setDetailId(detailId);
-    }
-
     isWish(token,detail._id).then((data)=>{
       setIsLike(data.data.result);
     })
-  }, [dispatch, detail])
+  }, [dispatch])
 
   return (
     <>
       {isUser ? (
-        <ToggleButton isReview={isReview} setIsReview={setIsReview} drinkId={detailId} userId={userId} />
+        <ToggleButton isReview={isReview} setIsReview={setIsReview} />
       ) : (
         <ToggleContainer></ToggleContainer>
       )}
       {!isReview ? (
         <>
-          <div style={{ maxHeight: '500px', overflowY: 'scroll' }}>
+          <div style={{ overflowY: 'scroll' }}>
             <ImageDiv src={imgUrl} />
             <Content>
               <MainFont>{name}</MainFont>
@@ -262,7 +296,7 @@ export default function DetailItem({ detail }: DetailProps) {
               
               <TagDiv>
                 {tags.map((tag, idx) => 
-                  <TagButton text={tag} onClick={() =>{}} />
+                  <TagButton text={tag} onClick={() =>{}} type="food" />
                 )}
               </TagDiv>
             </Content>
@@ -272,14 +306,14 @@ export default function DetailItem({ detail }: DetailProps) {
                 src={FillHeart}
                 alt=""
                 style={{ width: "20px" }}
-                onClick={deleteWish}
+                onClick={() => deleteWish()}
               />
             ) : (
               <img
                 src={EmptyHeart}
                 alt=""
                 style={{ width: "20px" }}
-                onClick={addWish}
+                onClick={() => addWish()}
               />
             )}
         </>
@@ -301,22 +335,7 @@ export default function DetailItem({ detail }: DetailProps) {
             <ClickButton 
               disabled={!isLike && true} 
               state={isLike ? "active" : "disabled"} 
-              onClick={() => {
-                const data = {
-                  "drinkId": detailId,
-                  "item": {
-                    "token": token,
-                    "userId": userId,
-                    review,
-                    "imgUrl": "",
-                    "isPublic": true,
-                  }
-                }
-                dispatch(updateWish(data))
-                  .then((res) => {
-                    setReview('');
-                  })
-              }}
+              onClick={() => updatedWish()}
             ><img src={SubmitButton} alt="" /></ClickButton>
           </ReviewInputContainer>
         </>

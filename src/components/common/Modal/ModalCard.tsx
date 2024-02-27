@@ -14,7 +14,9 @@ export type ModalProps = {
 
 const CardDiv = styled(Card)`
   width: 324px;
-  height: 622px;
+  // height: 622px;
+  // min-width: 304px;
+  max-height: 632px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
