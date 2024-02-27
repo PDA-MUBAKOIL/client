@@ -1,10 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { confirmAuthNumber, sendEmailAuthNumber } from "../../../lib/api/mail";
+import { authEmail } from "../../../lib/api/users";
 
 const initialState = {
   isEmail: false,
   email: "",
 };
+
+export const alreadyEmail = createAsyncThunk(
+  "mail/alreadyEmail",
+  async (data: string, thunkAPI) => {
+    const response = await authEmail(data);
+    return response.data;
+  }
+);
 
 export const sendEmail = createAsyncThunk(
   "mail/sendEmail",
