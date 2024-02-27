@@ -152,7 +152,7 @@ const ClickButton = styled.button<{ state: string }>`
 const ToggleContainer = styled.div`
   display: flex;
   width: 100%;
-  padding: 15px 0;
+  padding: 15px 0 25px 0;
 `
 
 export default function DetailItem({ detail }: DetailProps) {
@@ -245,7 +245,7 @@ export default function DetailItem({ detail }: DetailProps) {
       )}
       {!isReview ? (
         <>
-          <div style={{ maxHeight: '500px', overflowY: 'scroll' }}>
+          <div style={{ overflowY: 'scroll' }}>
             <ImageDiv src={imgUrl} />
             <Content>
               <MainFont>{name}</MainFont>
@@ -296,7 +296,7 @@ export default function DetailItem({ detail }: DetailProps) {
               
               <TagDiv>
                 {tags.map((tag, idx) => 
-                  <TagButton text={tag} onClick={() =>{}} />
+                  <TagButton text={tag} onClick={() =>{}} type="food" />
                 )}
               </TagDiv>
             </Content>

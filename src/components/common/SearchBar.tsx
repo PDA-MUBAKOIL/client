@@ -64,12 +64,12 @@ export default function SearchBar({setResult, placeHolder}:TSearch) {
     const onSubmitSearch = (e:React.FormEvent<HTMLFormElement>)=>{
       e.preventDefault();
       if(location.pathname === '/search'){
-        searchDrink(null,Number(searchWord),null).then(data=>{
+        searchDrink(null,Number(searchWord),null,null).then(data=>{
           if(data !== undefined){setResult(data.data);}
           else(setResult([]))
         })
       }else{
-        searchDrink(null,null,searchWord).then(data=>{
+        searchDrink(null,null,searchWord,null).then(data=>{
           if(data !== undefined){
             setResult(data.data);}
           else(setResult([]))
@@ -79,12 +79,12 @@ export default function SearchBar({setResult, placeHolder}:TSearch) {
     const onChangeSearch = (e:React.ChangeEvent<HTMLInputElement>)=>{
       dispatch(setSearch(e.target.value));
       if(location.pathname === '/search'){
-        searchDrink(null,Number(e.target.value),null).then(data=>{
+        searchDrink(null,Number(e.target.value),null,null).then(data=>{
           if(data !== undefined){setResult(data.data);}
           else(setResult([]))
         })
       }else{
-        searchDrink(null,null,e.target.value).then(data=>{
+        searchDrink(null,null,e.target.value,null).then(data=>{
           if(data !== undefined){setResult(data.data);console.log(data.data);}
           else(setResult([]))
       })
@@ -93,7 +93,7 @@ export default function SearchBar({setResult, placeHolder}:TSearch) {
   useEffect(()=>{
     if(location.state !== null && location.state !== ''){
       dispatch(setSearch(location.state['tag']));
-      searchDrink(location.state['tag'].split('#')[1],null,null).then(data=>{
+      searchDrink(location.state['tag'].split('#')[1],null,null,null).then(data=>{
         if(data !== undefined){setResult(data.data);}
         location.state = '';
       })
