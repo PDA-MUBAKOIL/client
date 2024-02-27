@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Input,MantineThemeProvider, createTheme} from '@mantine/core';
 import classes from '../../styles/Navbar.module.css';
 import search from '../../assets/img/SearchBar/search.png';
@@ -91,16 +91,17 @@ export default function SearchBar({setResult, placeHolder}:TSearch) {
     }}
 
   useEffect(()=>{
-    if(location.state){
+    if(location.state !== null && location.state !== ''){
       dispatch(setSearch(location.state['tag']));
-      console.log(location.state['tag'].split('#'))
-      searchDrink(location.state['tag'].split('#')[0],null,null).then(data=>{
+      searchDrink(location.state['tag'].split('#')[1],null,null).then(data=>{
         if(data !== undefined){setResult(data.data);}
+        location.state = '';
       })
-    }else{
+    }else if(location.state === null ){
       dispatch(setSearch(''));
+      location.state = '';
     }
-  },[])
+  },[searchWord])
 
   return (
     <MantineThemeProvider theme={theme}>

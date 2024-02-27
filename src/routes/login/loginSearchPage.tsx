@@ -40,7 +40,7 @@ export default function LoginSearchPage() {
     "과일/디저트",
     "찜/탕",
     "일식",
-    "견과류/마른 안주",
+    "견과류/마른안주",
   ];
 
   const [result, setResult] = useState<Array<TSearchResult>>([]);
@@ -56,7 +56,7 @@ export default function LoginSearchPage() {
   }
 
   useEffect(() => {
-  }, [search]);
+  }, []);
   return (
     <LoginSearchPageContainer>
       <Flex h="110px" align="center" justify="center">

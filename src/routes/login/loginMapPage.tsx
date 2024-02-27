@@ -93,19 +93,19 @@ function MarkerComponent(props:{region:string, fullName:string, left:number, top
   var clickState = false;
 
   const onClickMarker = () => {
-    if(clickState){
-      getMyWishes(user.id, props.region).then(data=>{
-        const action = setCardList({
-          title: props.fullName,
-          list: data.data.map((v,idx)=>{return{...v,drinkId:`drinkId${idx}`}})
-        })
-        dispatch(action);
-        dispatch(setIsDetail(false));
-        dispatch(setIsShow(true));
-      })}else{
-        props.setMap(props.img);
-        clickState = true;
-      }
+    // if(clickState){
+    //   getMyWishes(props.region).then(data=>{
+    //     const action = setCardList({
+    //       title: props.fullName,
+    //       list: data.data.map((v,idx)=>{return{...v,drinkId:`drinkId${idx}`}})
+    //     })
+    //     dispatch(action);
+    //     dispatch(setIsDetail(false));
+    //     dispatch(setIsShow(true));
+    //   })}else{
+    //     props.setMap(props.img);
+    //     clickState = true;
+    //   }
   }
 
 
@@ -152,8 +152,9 @@ export default function LoginMapPage() {
 
 
   useEffect(()=>{
-    getMyRegionWishCnt(user.id).then((data)=>{
+    getMyRegionWishCnt().then((data)=>{
       setCnt(data.data)
+      console.log(data)
     })
     setMap(defaultMap);
 

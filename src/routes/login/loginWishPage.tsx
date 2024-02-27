@@ -19,10 +19,11 @@ export default function LoginWishPage() {
   `;
 
   useEffect(()=>{
-    getMyWishes(user.id,null).then(data=>{
-      setResult(data.data.map((v)=>{
-        return v['drinkId']
-      }));
+    getMyWishes(null).then(data=>{
+      console.log(data);
+      // setResult(data.data.map((v:)=>{
+      //   return v['drinkId']
+      // }));
     })
   },[])
   return (

@@ -46,6 +46,7 @@ function TagButton({ text, onClick }: TagProp) {
         fontWeight: rem(400),
         borderRadius: rem("5px"),
         border: "solid 1px #C17878",
+        margin: '1.5px',
       }}
       onClick={onClick}
     >
@@ -70,7 +71,7 @@ export default function DrinkDetailCard(item: TSearchResult) {
         <img
           src={item.imgUrl}
           alt={item.name}
-          style={{ width: "80px", height: "100px", objectFit: "cover" }}
+          style={{ width: "80px", height: "100px", objectFit: "contain" }}
         />
         <Flex gap="14px" direction="column" style={{ width: "100%" }}>
           <Flex gap="7px" direction="column">
@@ -101,11 +102,11 @@ export default function DrinkDetailCard(item: TSearchResult) {
               </Flex>
             </Flex>
           </Flex>
-          <Flex gap="3px">
+          <div style={{width:'200px', display:"block"}}>
             {item.tags.map((tag, idx) => {
               return <TagButton key={idx} text={tag} onClick={() => {}} />;
             })}
-          </Flex>
+          </div>
         </Flex>
       </CardContent>
       {isLike ? (
