@@ -15,26 +15,16 @@ export type DrinkProp = {
 };
 
 const DrinkContainer = styled(Container)`
-<<<<<<< HEAD
-  // width: 110px;
-=======
-  width: 28vw;
->>>>>>> 0dc8e8457e3b7e204d231a8f8299ebd5666ad0f2
+  flex: 1 1 30%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-<<<<<<< HEAD
   height: 144px;
   gap: 8px;
-=======
-  height: 18vh;
-  gap: 4vw;
->>>>>>> 0dc8e8457e3b7e204d231a8f8299ebd5666ad0f2
-  padding: 0;
   margin: 8px 0;
+  padding: 0;
 `;
-
 const ImageContainer = styled.div`
   width: 100px;
   height: 120px;

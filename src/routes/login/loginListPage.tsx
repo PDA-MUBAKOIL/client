@@ -14,9 +14,8 @@ const LoginSearchPageContainer = styled.div`
 `
 
 const ListItems = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  padding: 0 18px;
+  display: flex;
+  flex-wrap: wrap;
   height: calc(100vh - 277px);
   overflow-y:scroll;
 `;
