@@ -7,7 +7,7 @@ import { Flex } from "@mantine/core";
 import { useAppSelector } from "../../lib/hooks/reduxHooks";
 import { useCookies } from "react-cookie";
 
-interface Drink {
+export interface Drink {
   brewerId: string;
   capacity: string;
   description: string;
@@ -23,7 +23,7 @@ interface Drink {
   _id: string;
 }
 
-interface Review {
+export interface Review {
   drinkId: Drink;
   id: string;
   imgUrl: string | null;
