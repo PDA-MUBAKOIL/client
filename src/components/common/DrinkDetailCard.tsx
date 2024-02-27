@@ -82,7 +82,7 @@ export default function DrinkDetailCard(item: TSearchResult) {
 
 
   function addWish(){
-    writeMyWish(item.id,{review:'', imgUrl:'', isPublic:true},token )
+    writeMyWish(item.id,{review:'', imgUrl:'', isPublic:true, token: token} )
     .then((data)=>{
       setIsLike(true);
     })
