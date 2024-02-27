@@ -1,45 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getAllWishes, updateMyWish, writeMyWish } from "../../../lib/api/wish";
+import { useCookies } from "react-cookie";
 
 const initialState = {
   allReview: [
     {
       _id: "",
       drinkId: "",
-      userId: "진언",
-      review: "좋아요!",
-      imgUrl: "",
-      isPublic: false
-    },
-    {
-      _id: "",
-      drinkId: "",
-      userId: "진언",
-      review: "좋아요!",
-      imgUrl: "",
-      isPublic: false
-    },
-    {
-      _id: "",
-      drinkId: "",
-      userId: "진언",
-      review: "좋아요!",
-      imgUrl: "",
-      isPublic: false
-    },
-    {
-      _id: "",
-      drinkId: "",
-      userId: "진언",
-      review: "좋아요!",
-      imgUrl: "",
-      isPublic: false
-    },
-    {
-      _id: "",
-      drinkId: "",
-      userId: "진언",
-      review: "좋아요!",
+      userId: "",
+      review: "",
       imgUrl: "",
       isPublic: false
     },
@@ -49,7 +18,12 @@ const initialState = {
 export const getAllWish = createAsyncThunk(
   "review/getAllWish",
   async (data: string, thunkAPI) => {
-    const response = await getAllWishes(data);
+    const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+
+    // 토큰값 가져오기
+    const token = cookies['authToken'];
+    const response = await getAllWishes(data, token);
+    console.log('리스폰스',response.data)
     return response.data;
   }
 );

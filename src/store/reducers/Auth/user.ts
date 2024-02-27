@@ -1,11 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { login, logout, signup } from "../../../lib/api/users";
 import { User } from "../../../routes/nonLogin/nonLoginLogIn";
+import { useCookies } from "react-cookie";
 
 const initialState = {
-  id: "",
-  name: "진언",
-  email: "example@naver.com",
+  user: {
+    id: "",
+    name: "진언",
+    email: "example@naver.com",
+  },
+  token: "",
   isUser: false,
 };
 
@@ -33,8 +37,12 @@ export const userLogin = createAsyncThunk(
 
 export const userLogout = createAsyncThunk(
   "auth/userLogout",
-  async (data: string, thunkAPI) => {
-    const response = await logout(data);
+  async (data, thunkAPI) => {
+    const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+
+    // 토큰값 가져오기
+    const token = cookies['authToken'];
+    const response = await logout(token);
     return response.data;
   }
 );
@@ -45,15 +53,17 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(userLogin.fulfilled, (state, action) => {
-      state.id = action.payload._id;
-      state.name = action.payload.name;
-      state.email = action.payload.email;
+      state.user.id = action.payload.user._id;
+      state.user.name = action.payload.user.name;
+      state.user.email = action.payload.user.email;
+      state.token = action.payload.token;
       state.isUser = true;
     });
     builder.addCase(userLogout.fulfilled, (state, action) => {
-      state.id = "";
-      state.name = "";
-      state.email = "";
+      state.user.id = "";
+      state.user.name = "";
+      state.user.email = "";
+      state.token ="";
       state.isUser = false;
     });
   },

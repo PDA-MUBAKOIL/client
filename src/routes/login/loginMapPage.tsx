@@ -25,6 +25,7 @@ import daegu from '../../assets/img/Map/대구.png';
 import busan from '../../assets/img/Map/부산.png';
 import ulsan from '../../assets/img/Map/울산.png';
 import gwangju from '../../assets/img/Map/광주.png';
+import { useCookies } from 'react-cookie';
 
 
 type PinType ={
@@ -90,9 +91,14 @@ function MarkerComponent(props:{region:string, fullName:string, left:number, top
   const user = useAppSelector(state=>state.user);
   var clickState = false;
 
+  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+
+    // 토큰값 가져오기
+  const token = cookies['authToken'];
+
   const onClickMarker = () => {
     if(clickState){
-      getMyWishes(user.id, props.region).then(data=>{
+      getMyWishes(user.user.id, props.region, token).then(data=>{
         const action = setCardList({
           title: props.fullName,
           list: data.data.map((v,idx)=>{return{...v,drinkId:`drinkId${idx}`}})
@@ -148,10 +154,13 @@ export default function LoginMapPage() {
       "전북":	0, "전남": 0, "경북":	0, "경남": 0, "제주": 0
     })
 
+  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
 
+    // 토큰값 가져오기
+  const token = cookies['authToken'];
 
   useEffect(()=>{
-    getMyRegionWishCnt(user.id).then((data)=>{
+    getMyRegionWishCnt(user.user.id, token).then((data)=>{
       setCnt(data.data)
     })
     setMap(defaultMap);
@@ -161,7 +170,7 @@ export default function LoginMapPage() {
   return (
       <Flex h='calc(100vh - 134px)' direction="column" justify="center" align="center" gap="20">
         <Flex  direction="column" justify="center" align="center" gap="25" >
-          <Title><b >{user.name}님</b>의 무박오일 여행</Title>
+          <Title><b >{user.user.name}님</b>의 무박오일 여행</Title>
           <SwitchButton setIsCity={setIsCity}/>
         </Flex>
          <Map>
