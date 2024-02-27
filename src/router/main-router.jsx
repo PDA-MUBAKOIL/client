@@ -10,8 +10,6 @@ import LoginListPage from "../routes/login/loginListPage";
 import LoginWishPage from "../routes/login/loginWishPage";
 import LoginSearchPage from "../routes/login/loginSearchPage";
 import LoginMyPage from "../routes/login/loginMyPage";
-import LoginNavigatePage from "../routes/loginNavigate";
-import NonLoginNavigatePage from "../routes/nonLoginNavaigate";
 
 export const NonLoginRouter = [
   {

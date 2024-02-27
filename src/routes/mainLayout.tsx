@@ -11,6 +11,7 @@ import styled from "styled-components";
 import CardList from "../components/common/Modal/CardList";
 
 import { useAppSelector } from "../lib/hooks/reduxHooks";
+import { useCookies } from "react-cookie";
 
 const OutletContainer = styled.div<{ isuser: string }>`
   ${(props) =>
@@ -31,6 +32,10 @@ export default function MainLayout() {
   const isUser = useAppSelector((state) => state.user.isUser);
 
   useEffect(() => {}, []);
+  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+
+    // 토큰값 가져오기
+  const token = cookies['authToken'];
 
   return (
     <>
@@ -45,7 +50,7 @@ export default function MainLayout() {
         <Outlet />
       </OutletContainer>
       {/* <button onClick={() => setIsShow(true)}>모달</button> */}
-      {isUser && <Footer />}
+      {token && <Footer />}
     </>
   );
 }
