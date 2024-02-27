@@ -1,6 +1,13 @@
-import React from 'react'
-import { Content, MainFont, ReviewProp, SubFont } from './MyReviewContainer'
+import React, { useEffect } from 'react'
+import { Content, MainFont, SubFont } from './MyReviewContainer'
 import styled from 'styled-components';
+import { RootState } from '../../../store/store';
+import { useAppDispatch, useAppSelector } from '../../../lib/hooks/reduxHooks';
+import { getAllWish } from "../../../store/reducers/Review/allReview";
+
+type AllReview = {
+  id: string;
+}
 
 const ReviewDiv = styled.div`
   width: 98%;
@@ -22,19 +29,29 @@ const ImgDiv = styled.div<{ url: string }>`
   background-position: center center;
 `
 
-export default function OtherReview({ item }: ReviewProp) {
-  const { _id, drinkId, userId, review, imgUrl, isPublic } = item;
+export default function OtherReview({ id }: AllReview) {
+  const reviewList = useAppSelector((state: RootState) => state.allReview.allReview);
+  console.log(reviewList)
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getAllWish(id))
+  }, [dispatch])
 
   return (
-    <ReviewDiv>
-      <MainFont>✨</MainFont>
-      <Content>
-        <MainFont>{userId}</MainFont>
-        <SubFont>{review}</SubFont>
-        {imgUrl && (
-          <ImgDiv url={imgUrl} />
-        )}
-      </Content>
-    </ReviewDiv>
+    <>
+      {reviewList?.map((review, idx) => 
+        <ReviewDiv key={review._id}>
+          <MainFont>✨</MainFont>
+          <Content>
+            <MainFont>{review.userId}</MainFont>
+            <SubFont>{review.review}</SubFont>
+            {review.imgUrl && (
+              <ImgDiv url={review.imgUrl} />
+            )}
+          </Content>
+        </ReviewDiv>
+      )}
+    </>
   )
 }

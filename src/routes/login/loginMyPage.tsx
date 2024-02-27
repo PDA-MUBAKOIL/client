@@ -6,6 +6,7 @@ import CommonButton from "../../components/common/CommonButton";
 import { logout } from "../../lib/api/users";
 import { userLogout } from "../../store/reducers/Auth/user";
 import { useNavigate } from "react-router";
+import { useCookies } from "react-cookie";
 
 const MyContainer = styled.div`
   display: flex;
@@ -64,14 +65,16 @@ export default function LoginMyPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+
   return (
     <MyContainer>
       <div>
         <UserFont>
-          <b>{userState.name}</b>님
+          <b>{userState.user.name}</b>님
         </UserFont>
-        <SubFont>이메일 &nbsp; | &nbsp; {userState.email}</SubFont>
-        <WishContainer onClick={()=>{navigate('/wish')}}>
+        <SubFont>이메일 &nbsp; | &nbsp; {userState.user.email}</SubFont>
+        <WishContainer>
           <WishButton>
             <span>위시리스트</span>
             <img src={FillHeart} alt="" style={{ width: "24px" }} />
@@ -99,7 +102,10 @@ export default function LoginMyPage() {
         <CommonButton
           text="로그아웃"
           onClick={() =>
-            dispatch(userLogout(userState.id)).then((res) => navigate("/"))
+            dispatch(userLogout()).then((res) => {
+              removeCookie('authToken');
+              navigate("/");
+            })
           }
           status="active"
         />
