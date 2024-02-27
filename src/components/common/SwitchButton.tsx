@@ -20,8 +20,8 @@ const CheckBox = styled.input`
 
 const ButtonLabel = styled.label<ToggleType>`
   z-index: 10;
-  width: 200px;
-  height: 50px;
+  width: 50vw;
+  height: 6vh;
   border-radius: 100px;
   background-color: #fff;
   border: solid 1px #C17878;
@@ -33,9 +33,9 @@ const ButtonLabel = styled.label<ToggleType>`
         display: flex;
         position: absolute;
         // before 요소가 이동할 경로의 길이만큼 width 지정
-        width: 200px;
-        height: 50px;
-        padding-right: 40px;
+        width: 50vw;
+        height: 6vh;
+        padding-right: 10vw;
         // 우측에 text가 오기 위함
         justify-content: flex-end;
         align-items: center;
@@ -43,12 +43,13 @@ const ButtonLabel = styled.label<ToggleType>`
         font-weight: bold;
         color: #000;
         transition: all 0.2s ease-out;
+        font-size: 4vw;
       };
       &::after {
         display: flex;
         position: relative;
-        width: 7rem;
-        height: 50px;
+        width: 30vw;
+        height: 6vh;
         justify-content: center;
         align-items: center;
         /* true일 때는 좌측에 있어야 함 */
@@ -60,6 +61,7 @@ const ButtonLabel = styled.label<ToggleType>`
         color: #fff;
         transition: all 0.2s ease-out;
         margin: -1px;
+        font-size: 4vw;
       }
     ` :
     `
@@ -67,9 +69,9 @@ const ButtonLabel = styled.label<ToggleType>`
         display: flex;
         position: absolute;
         // before 요소가 이동할 경로의 길이만큼 width 지정
-        width: 200px;
-        height: 50px;
-        padding-left: 40px;
+        width: 40vw;
+        height: 6vh;
+        padding-left: 10vw;
         // 좌측에 text가 오게 하기
         justify-content: flex-start;
         align-items: center;
@@ -77,17 +79,18 @@ const ButtonLabel = styled.label<ToggleType>`
         font-weight: bold;
         color: #000;
         transition: all 0.2s ease-out;
+        font-size: 4vw;
       }
     
       &::after {
         display: flex;
         position: relative;
-        width: 7rem;
-        height: 50px;
+        width: 30vw;
+        height: 6vh;
         justify-content: center;
         align-items: center;
         // false일 때 우측에 있어야하므로 전체 길이의 반만큼 이동한 상태
-        left: 90px;
+        left: 20vw;
         border-radius: 100px;
         background-color: #C17878;
         content: '도';
@@ -95,6 +98,7 @@ const ButtonLabel = styled.label<ToggleType>`
         color: #fff;
         transition: all 0.2s ease-out;
         margin: -1px;
+        font-size: 4vw;
       }
     `
   }

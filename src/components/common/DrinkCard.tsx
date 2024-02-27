@@ -15,13 +15,22 @@ export type DrinkProp = {
 };
 
 const DrinkContainer = styled(Container)`
+<<<<<<< HEAD
   // width: 110px;
+=======
+  width: 28vw;
+>>>>>>> 0dc8e8457e3b7e204d231a8f8299ebd5666ad0f2
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+<<<<<<< HEAD
   height: 144px;
   gap: 8px;
+=======
+  height: 18vh;
+  gap: 4vw;
+>>>>>>> 0dc8e8457e3b7e204d231a8f8299ebd5666ad0f2
   padding: 0;
   margin: 8px 0;
 `;
@@ -44,7 +53,7 @@ const Image = styled.img`
 const NameFont = styled(Text)`
   word-break: keep-all;
   text-align: center;
-  font-size: 14px;
+  font-size: 3vw;
 `;
 
 export default function DrinkCard({ drinkId, url, name }: DrinkProp) {

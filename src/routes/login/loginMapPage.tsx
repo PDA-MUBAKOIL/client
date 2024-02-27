@@ -5,9 +5,8 @@ import { Flex } from '@mantine/core';
 import defaultMap from '../../assets/img/Map/무박오일map 시도.png'
 import marker from '../../assets/img/Map/marker.png'
 import { useAppDispatch, useAppSelector } from '../../lib/hooks/reduxHooks';
-import { setCardList } from '../../store/reducers/Drink/cardList';
+
 import { getMyRegionWishCnt, getMyWishes } from '../../lib/api/wish';
-import { setIsDetail, setIsShow } from '../../store/reducers/Drink/showModal';
 import gengi from '../../assets/img/Map/경기도.png';
 import gangwon from '../../assets/img/Map/강원도.png';
 import chungbok from '../../assets/img/Map/충북.png';
@@ -26,8 +25,6 @@ import busan from '../../assets/img/Map/부산.png';
 import ulsan from '../../assets/img/Map/울산.png';
 import gwangju from '../../assets/img/Map/광주.png';
 import { useCookies } from 'react-cookie';
-import axios from 'axios';
-import { listUp } from '../../lib/api/drinks';
 
 
 type PinType ={
@@ -38,13 +35,13 @@ type PinType ={
 
 const Title = styled.div`
   font-family: 'GangwonEdu_OTFBoldA' !important;
-  font-Size : 25px;
+  font-Size : 6vw;
 `
 
 const MarkerContainer = styled.div`
   position: relative;
-  width: 350px;
-  height: 500px;
+  width: 90vw;
+  height: 60vh;
 `
 
 
@@ -133,13 +130,17 @@ export default function LoginMapPage() {
 
   const BaseMap =styled.div`
     background-image: url('${defaultMap}');
-    width: 350px;
-    height: 500px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 90vw;
+    background-position: center center;
   `
   const Map = styled.div`
     background-image: url('${map}');
-    width: 350px;
-    height: 500px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 90vw;
+    background-position: center center;
   `
 
   const [cnt, setCnt] = useState(
@@ -157,16 +158,16 @@ export default function LoginMapPage() {
 
   useEffect(()=>{
     getMyRegionWishCnt(token).then((data)=>{
-      setCnt(data.data)
       console.log(data)
+      setCnt(data.data.regionCount)
     })
     setMap(defaultMap);
 
   },[isCity])
 
   return (
-      <Flex h='calc(100vh - 134px)' direction="column" justify="center" align="center" gap="20">
-        <Flex  direction="column" justify="center" align="center" gap="25" >
+      <Flex h='calc(100vh - 134px)' direction="column" justify="center" align="center" gap="3vw">
+        <Flex  direction="column" justify="center" align="center" gap="3vw" >
           <Title><b >{user.user.name}님</b>의 무박오일 여행</Title>
           <SwitchButton setIsCity={setIsCity}/>
         </Flex>

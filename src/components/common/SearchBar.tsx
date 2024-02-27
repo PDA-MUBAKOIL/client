@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Box, Input,MantineThemeProvider, createTheme} from '@mantine/core';
 import classes from '../../styles/Navbar.module.css';
 import search from '../../assets/img/SearchBar/search.png';
 import styled from 'styled-components';
-import { listUp, searchDrink } from '../../lib/api/drinks';
+import { searchDrink } from '../../lib/api/drinks';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks/reduxHooks';
 import { setSearch } from '../../store/reducers/Drink/search';
 import { useLocation } from "react-router-dom";
@@ -105,7 +105,7 @@ export default function SearchBar({setResult, placeHolder}:TSearch) {
 
   return (
     <MantineThemeProvider theme={theme}>
-      <Box maw={350} mx="auto">
+      <Box  mx="auto">
         <form onSubmit={onSubmitSearch}>
               <Input placeholder={placeHolder}
                   classNames={classes}

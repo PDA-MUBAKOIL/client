@@ -14,6 +14,7 @@ import SubmitButton from '../../../assets/img/Modal/submit.svg';
 import { getWish, updateWish } from "../../../store/reducers/Review/myReview";
 import { setDrinkDetail } from "../../../store/reducers/Drink/drinkDetail";
 import { setSearch } from "../../../store/reducers/Drink/search";
+import { deleteMyWish, isWish, writeMyWish } from "../../../lib/api/wish";
 import { useCookies } from "react-cookie";
 
 export type DetailType = {
@@ -164,6 +165,11 @@ export default function DetailItem({ detail }: DetailProps) {
   const userId = useAppSelector((state: RootState) => state.user.user.id);
   const isUser = useAppSelector((state: RootState) => state.user.isUser);
 
+
+  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+  // 토큰값 가져오기
+  const token = cookies['authToken'];
+
   const [review, setReview] = useState<string>("");
 
   const onInputChange = useCallback(
@@ -172,17 +178,29 @@ export default function DetailItem({ detail }: DetailProps) {
     }, []
   )
 
-  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
-
-    // 토큰값 가져오기
-  const token = cookies['authToken'];
   const [detailId, setDetailId] = useState<string>("");
+  function addWish(){
+    writeMyWish(detail._id,{review:'', imgUrl:'', isPublic:true, token: token} )
+    .then((data)=>{
+      setIsLike(true);
+    })
+  }
+
+  function deleteWish(){
+    deleteMyWish(detail._id,token).then((data)=>{
+      setIsLike(false);
+    });
+  }
 
   useEffect(() => {
     if (detail) {
       setDetailId(detailId);
     }
-  }, [detail])
+
+    isWish(token,detail._id).then((data)=>{
+      setIsLike(data.data.result);
+    })
+  }, [dispatch, detail])
 
   return (
     <>
@@ -249,12 +267,21 @@ export default function DetailItem({ detail }: DetailProps) {
               </TagDiv>
             </Content>
           </div>
-          <img
-            src={isLike ? FillHeart : EmptyHeart}
-            alt=""
-            style={{ width: "24px", marginTop: '10px' }}
-            onClick={() => setIsLike((prev) => !prev)}
-          />
+          {isLike ? (
+              <img
+                src={FillHeart}
+                alt=""
+                style={{ width: "20px" }}
+                onClick={deleteWish}
+              />
+            ) : (
+              <img
+                src={EmptyHeart}
+                alt=""
+                style={{ width: "20px" }}
+                onClick={addWish}
+              />
+            )}
         </>
       ) : (
         <>

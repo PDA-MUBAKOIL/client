@@ -4,6 +4,7 @@ import { User } from "../../../routes/nonLogin/nonLoginLogIn";
 
 const initialState = {
   user: {
+
     id: "",
     name: "",
     email: "",

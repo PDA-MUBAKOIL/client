@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from 'react'
 import SearchBar from '../../components/common/SearchBar';
 import { TSearchResult } from '../../components/common/SearchBar';
-import { Flex} from '@mantine/core';
+import { Flex, Grid} from '@mantine/core';
 import styled from 'styled-components';
 import DrinkCard from "../../components/common/DrinkCard";
 import { Text } from "@mantine/core";
@@ -11,19 +11,18 @@ const LoginSearchPageContainer = styled.div`
   display:flex;
   flex-direction: column;
   overflow: hidden;
-
 `
 
 const ListItems = styled.div`
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   padding: 0 18px;
-  gap: 12px;
+  height: calc(100vh - 277px);
   overflow-y:scroll;
 `;
 
 const MainText = styled(Text)`
-  font-size: 20px;
+  font-size: 5vw;
   padding: 0px 20px;
 `;
 

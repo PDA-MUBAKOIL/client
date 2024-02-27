@@ -7,6 +7,33 @@ import { Flex } from "@mantine/core";
 import { useAppSelector } from "../../lib/hooks/reduxHooks";
 import { useCookies } from "react-cookie";
 
+interface Drink {
+  brewerId: string;
+  capacity: string;
+  description: string;
+  id: string;
+  imgUrl: string | null;
+  material: string;
+  name: string;
+  percent: string;
+  region: string;
+  spercent: number[];
+  tags: string[];
+  __v: number;
+  _id: string;
+}
+
+interface Review {
+  drinkId: Drink;
+  id: string;
+  imgUrl: string | null;
+  isPublic: boolean;
+  review: string | null;
+  userId: string;
+  __v: number;
+  _id: string;
+}
+
 export default function LoginWishPage() {
   const [result, setResult] = useState<Array<TSearchResult>>([]);
   const user = useAppSelector((state) => state.user);
@@ -25,15 +52,14 @@ export default function LoginWishPage() {
 
   useEffect(()=>{
     getMyWishes(null, token).then(data=>{
-      console.log(data);
-      // setResult(data.data.map((v:)=>{
-      //   return v['drinkId']
-      // }));
+      setResult(data.data.map((data:Review)=>{
+        return data['drinkId']
+      }));
     })
   },[])
   return (
     <Flex h="calc(100vh - 134px)" gap="25px" direction="column" align="center">
-      <div style={{ width: "321px", paddingTop: "30px", fontSize: "20px" }}>
+      <div style={{ width: "90vw", paddingTop: "30px", fontSize: "5vw" }}>
         <b>{user.user.name}</b>님의 무박오일 여행
       </div>
       <ListItems>

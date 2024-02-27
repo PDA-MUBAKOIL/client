@@ -6,12 +6,12 @@
 
 
 .wrapper{
-    width: 349px;
+    width: 90vw;
     border:solid 1px rgb(193, 120, 120, 30%);
     border-radius: 10px;
     box-shadow: 1px 1px 3px 0 rgba(0,0,0,0.25);
 }
 
 .section{
-    margin: 0 10px;
+    margin: 0 3vw;
 }
