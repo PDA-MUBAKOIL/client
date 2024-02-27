@@ -80,7 +80,7 @@ export default function NonLoginLogIn() {
     []
   );
 
-  const onSubmitLogin = useCallback(() => {
+  const onSubmitLogin = useCallback((email:string,password:string) => {
     const data = { email, password };
     dispatch(userLogin(data)).then((res: any) => {
       if (res.type === "auth/userLogin/rejected") {
@@ -129,7 +129,7 @@ export default function NonLoginLogIn() {
         <Link to={"/map"}>
           <CommonButton
             text="로그인"
-            onClick={() => onSubmitLogin()}
+            onClick={() => onSubmitLogin(email,password)}
             status={isActive ? "active" : "disabled"}
           />
         </Link>
