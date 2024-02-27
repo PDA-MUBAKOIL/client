@@ -52,7 +52,7 @@ export default function ModalCard({ content }: ModalProps) {
             style={{ width: "13px", height: "13px" }}
           />
           <img
-            onClick={() => dispatch(setIsShow(false))}
+            onClick={() => {dispatch(setIsShow(false)); setPage(0)}}
             src={Quit}
             alt="닫는 아이콘"
             style={{ width: "13px", height: "13px" }}

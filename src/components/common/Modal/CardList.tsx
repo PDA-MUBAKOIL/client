@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../lib/hooks/reduxHooks'
 import styled from 'styled-components';
 import { Flex, Grid } from '@mantine/core';
@@ -41,6 +41,7 @@ const Card = styled.div`
 const Img = styled.img`
   width: 120px;
   height: 120px;
+  object-fit: contain;
 `
 
 const Name = styled.div`
@@ -59,7 +60,9 @@ export default function CardList() {
     dispatch(setPage(1))
   }
 
-
+  useEffect(()=>{
+    console.log(cardList);
+  })
   return (
     <>
       {modalPage === 0 && 
@@ -67,12 +70,12 @@ export default function CardList() {
           <Title>{cardList.title}</Title>
             <CardListContainer>
               <Grid style={{padding:'5px 10px 0px 0px', height: '505px', width:'280px', overflowX:'hidden', overflowY:'scroll'}}>
-                {cardList.list.map((v:ICard,idx:number)=>{
+                {cardList.list.map((v,idx:number)=>{
                   return (
                   <Grid.Col key={idx} span={6} style={{display:'flex', justifyContent:'center'}}>
-                    <Card onClick={()=>{onClickCard(v.drinkId)}} >
-                      <Img src={v.imgUrl} alt={v._id}></Img>
-                      <Name>{v.drinkId}</Name>
+                    <Card onClick={()=>{onClickCard(v.drinkId.id)}} >
+                      <Img src={v.drinkId.imgUrl} alt={v._id}></Img>
+                      <Name>{v.drinkId.name}</Name>
                     </Card>
                   </Grid.Col>
                   )

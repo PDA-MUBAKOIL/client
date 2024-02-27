@@ -25,7 +25,9 @@ import busan from '../../assets/img/Map/부산.png';
 import ulsan from '../../assets/img/Map/울산.png';
 import gwangju from '../../assets/img/Map/광주.png';
 import { useCookies } from 'react-cookie';
-
+import { setIsDetail, setIsShow } from '../../store/reducers/Drink/showModal';
+import { setCardList } from '../../store/reducers/Drink/cardList';
+import { Drink, Review } from './loginWishPage';
 
 type PinType ={
   top: number,
@@ -33,16 +35,13 @@ type PinType ={
 }
 
 
+
 const Title = styled.div`
   font-family: 'GangwonEdu_OTFBoldA' !important;
   font-Size : 6vw;
 `
 
-const MarkerContainer = styled.div`
-  position: relative;
-  width: 90vw;
-  height: 60vh;
-`
+
 
 
 const Marker = styled.button<PinType>`
@@ -90,26 +89,32 @@ function MarkerComponent(props:{region:string, fullName:string, left:number, top
   const user = useAppSelector(state=>state.user);
   var clickState = false;
 
+
+  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+
+  // 토큰값 가져오기
+  const token = cookies['authToken'];
+
   const onClickMarker = () => {
-    // if(clickState){
-    //   getMyWishes(props.region).then(data=>{
-    //     const action = setCardList({
-    //       title: props.fullName,
-    //       list: data.data.map((v,idx)=>{return{...v,drinkId:`drinkId${idx}`}})
-    //     })
-    //     dispatch(action);
-    //     dispatch(setIsDetail(false));
-    //     dispatch(setIsShow(true));
-    //   })}else{
-    //     props.setMap(props.img);
-    //     clickState = true;
-    //   }
+    if(clickState){
+      getMyWishes(props.region,token).then(data=>{
+        const action = setCardList({
+          title: props.fullName,
+          list: data.data
+        })
+        dispatch(action);
+        dispatch(setIsDetail(false));
+        dispatch(setIsShow(true));
+      })}else{
+        props.setMap(props.img);
+        clickState = true;
+      }
   }
 
 
 
   useEffect(()=>{
-  
+
   },[])
 
   return(
@@ -127,19 +132,33 @@ export default function LoginMapPage() {
   const [isCity, setIsCity] = useState(false)
   const user = useAppSelector(state=>state.user);
   const [map,setMap] = useState(defaultMap);
+  const [mapw,setMapw] = useState(0);
+  const [maph,setMaph] = useState(0);
 
-  const BaseMap =styled.div`
-    background-image: url('${defaultMap}');
+  const HEIGHT = document.documentElement.clientHeight;
+  const WIDTH = document.documentElement.clientWidth;
+
+  const MarkerContainer = styled.div`
+    position: relative;
+    width: ${(HEIGHT-344)*0.7 }px;
+    height:${ (HEIGHT-344)}px;
+  `
+
+
+  const BaseMap = styled.div`
+    background-image: url('${map}');
     background-size: contain;
     background-repeat: no-repeat;
-    width: 90vw;
+    width: ${(HEIGHT-344)*0.7 }px;
+    height:${ (HEIGHT-344)}px;
     background-position: center center;
   `
   const Map = styled.div`
     background-image: url('${map}');
     background-size: contain;
     background-repeat: no-repeat;
-    width: 90vw;
+    width: ${(HEIGHT-344)*0.7 }px;
+    height:${ (HEIGHT-344)}px;
     background-position: center center;
   `
 
@@ -158,11 +177,11 @@ export default function LoginMapPage() {
 
   useEffect(()=>{
     getMyRegionWishCnt(token).then((data)=>{
-      console.log(data)
       setCnt(data.data.regionCount)
     })
     setMap(defaultMap);
-
+    setMapw(document.getElementsByClassName('map')[0].clientWidth-65);
+    setMaph(document.getElementsByClassName('map')[0].clientHeight-97.5);
   },[isCity])
 
   return (
@@ -171,31 +190,31 @@ export default function LoginMapPage() {
           <Title><b >{user.user.name}님</b>의 무박오일 여행</Title>
           <SwitchButton setIsCity={setIsCity}/>
         </Flex>
-         <Map>
-          <BaseMap>
+         <Map >
+          <BaseMap >
             {!isCity? 
-              <MarkerContainer>
-                <MarkerComponent img={gengi} setMap={setMap}left={80} top={63} region='경기' fullName='경기도' cnt={cnt['경기']}/>
-                <MarkerComponent img={gangwon} setMap={setMap} left={168} top={69} region='강원' fullName='강원도' cnt={cnt['강원']}/>
-                <MarkerComponent img={chungnam} setMap={setMap} left={62} top={182} region='충남' fullName='충청남도' cnt={cnt['충남']}/>
-                <MarkerComponent img={chungbok} setMap={setMap} left={133} top={149} region='충북' fullName='충청북도' cnt={cnt['충북']}/>
-                <MarkerComponent img={jeonbok} setMap={setMap} left={88} top={251} region='전북' fullName='전라북도' cnt={cnt['전북']}/>
-                <MarkerComponent img={geongbok} setMap={setMap} left={208} top={193} region='경북' fullName='경상북도' cnt={cnt['경북']}/>
-                <MarkerComponent img={jeonnam} setMap={setMap} left={74} top={326} region='전남' fullName='전라남도' cnt={cnt['전남']}/>
-                <MarkerComponent img={geongnam} setMap={setMap} left={166} top={290} region='경남' fullName='경상남도' cnt={cnt['경남']}/>
-                <MarkerComponent img={jeju} setMap={setMap} left={7} top={411} region='제주' fullName='제주특별자치도' cnt={cnt['제주']}/>
-              </MarkerContainer> : 
-              <MarkerContainer>
-                <MarkerComponent img={seoul} setMap={setMap} left={82} top={91} region='서울' fullName='서울특별시' cnt={cnt['서울']}/>
-                <MarkerComponent img={incheon} setMap={setMap} left={45} top={84} region='인천' fullName='인천광역시' cnt={cnt['인천']}/>
-                <MarkerComponent img={sejong} setMap={setMap} left={88} top={169} region='세종' fullName='세종특별자치시' cnt={cnt['세종']}/>
-                <MarkerComponent img={daejeon} setMap={setMap} left={110} top={204} region='대전' fullName='대전광역시' cnt={cnt['대전']}/>
-                <MarkerComponent img={gwangju} setMap={setMap} left={63} top={307} region='광주' fullName='광주광역시' cnt={cnt['광주']}/>
-                <MarkerComponent img={daegu} setMap={setMap} left={186} top={237} region='대구' fullName='대구광역시' cnt={cnt['대구']}/>
-                <MarkerComponent img={ulsan} setMap={setMap} left={256} top={261} region='울산' fullName='울산광역시' cnt={cnt['울산']}/>
-                <MarkerComponent img={busan} setMap={setMap} left={224} top={307} region='부산' fullName='부산광역시' cnt={cnt['부산']}/>
+              <MarkerContainer className='map'>
+                <MarkerComponent img={gengi} setMap={setMap} left={(mapw)/3.25} top={(maph)/5} region='경기' fullName='경기도' cnt={cnt['경기']}/>
+                <MarkerComponent img={gangwon} setMap={setMap}  left={(mapw)/1.8} top={(maph)/5.5} region='강원' fullName='강원도' cnt={cnt['강원']}/>
+                <MarkerComponent img={chungnam} setMap={setMap}  left={(mapw)/4.2} top={(maph)/2.2} region='충남' fullName='충청남도' cnt={cnt['충남']}/>
+                <MarkerComponent img={chungbok} setMap={setMap}  left={(mapw)/2.3} top={(maph)/2.5} region='충북' fullName='충청북도' cnt={cnt['충북']}/>
+                <MarkerComponent img={jeonbok} setMap={setMap} left={(mapw)/3.5} top={(maph)/1.5}region='전북' fullName='전라북도' cnt={cnt['전북']}/>
+                <MarkerComponent img={geongbok} setMap={setMap}  left={(mapw)/1.4} top={(maph)/2} region='경북' fullName='경상북도' cnt={cnt['경북']}/>
+                <MarkerComponent img={jeonnam} setMap={setMap}  left={(mapw)/4} top={(maph)/1.2}  region='전남' fullName='전라남도' cnt={cnt['전남']}/>
+                <MarkerComponent img={geongnam} setMap={setMap} left={(mapw)/1.7} top={(maph)/1.35} region='경남' fullName='경상남도' cnt={cnt['경남']}/>
+                <MarkerComponent img={jeju} setMap={setMap} left={(mapw)/290} top={(maph)*1.02} region='제주' fullName='제주특별자치도' cnt={cnt['제주']}/>
+              </MarkerContainer>:
+              <MarkerContainer className='map'>
+                <MarkerComponent img={seoul} setMap={setMap} left={(mapw)/3.5} top={(maph)/4.7}  region='서울' fullName='서울특별시' cnt={cnt['서울']}/>
+                <MarkerComponent img={incheon} setMap={setMap} left={(mapw)/6} top={(maph)/4.7}region='인천' fullName='인천광역시' cnt={cnt['인천']}/>
+                <MarkerComponent img={sejong} setMap={setMap} left={(mapw)/2.8} top={(maph)/2.5} region='세종' fullName='세종특별자치시' cnt={cnt['세종']}/>
+                <MarkerComponent img={daejeon} setMap={setMap}  left={(mapw)/2.7} top={(maph)/2.03}region='대전' fullName='대전광역시' cnt={cnt['대전']}/>
+                <MarkerComponent img={gwangju} setMap={setMap} left={(mapw)/4.2} top={(maph)/1.35} region='광주' fullName='광주광역시' cnt={cnt['광주']}/>
+                <MarkerComponent img={daegu} setMap={setMap}  left={(mapw)/1.5} top={(maph)/1.7} region='대구' fullName='대구광역시' cnt={cnt['대구']}/>
+                <MarkerComponent img={ulsan} setMap={setMap}  left={(mapw)/1.15} top={(maph)/1.5} region='울산' fullName='울산광역시' cnt={cnt['울산']}/>
+                <MarkerComponent img={busan} setMap={setMap} left={(mapw)/1.3} top={(maph)/1.35} region='부산' fullName='부산광역시' cnt={cnt['부산']}/>
               </MarkerContainer> 
-            }
+             } 
           </BaseMap>
          </Map>
       </Flex>
