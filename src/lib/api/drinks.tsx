@@ -1,9 +1,10 @@
 import { BASE_URL, drinkInstance } from "./api";
 
-export async function searchDrink(tag:string|null, percent:number|null, name:string|null){
+export async function searchDrink(tag:string|null, percent:number|null, name:string|null, region:string|null){
   if(tag){ return await drinkInstance.get(`/search?tag=${tag}`)}
   else if(percent){ return await drinkInstance.get(`/search?percent=${percent}`)}
   else if(name) {return await drinkInstance.get(`/search?name=${name}`)}
+  else if(region) {return await drinkInstance.get(`/search?region=${region}`)}
 }
 
 export async function listUp() {

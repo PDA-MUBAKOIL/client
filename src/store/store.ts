@@ -28,7 +28,7 @@ import logger from "redux-logger";
 const rootPersistConfig = {
   key: "root",
   storage: storage,
-  whitelist: [],
+  whitelist: ['user', 'email'],
 };
 
 const myMiddlewares = [logger];

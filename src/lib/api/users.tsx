@@ -17,6 +17,6 @@ export async function setPassWord() {
   return await userInstance.put("/setpassword");
 }
 
-export async function authEmail() {
-  return await userInstance.get("/:email");
+export async function authEmail(email: string) {
+  return await userInstance.get(`/${email}`);
 }

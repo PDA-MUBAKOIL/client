@@ -28,19 +28,18 @@ export async function deleteMyWish(drinkId: string, token: string) {
 
 export async function updateMyWish(
   drinkId: string,
-  item: { userId: string, review: string; imgUrl: string; isPublic: boolean },
-  token: string
+  item: { token: string, review: string },
 ) {
-  return await wishInstance.put(`/${drinkId}`, { item }, {
+  return await wishInstance.put(`/${drinkId}`, { 'review': item.review }, {
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${item.token}`
     }
   });
 }
 
 export async function writeMyWish(
   drinkId: string,
-  item: { token: string, review: string; imgUrl: string; isPublic: boolean },
+  item: { token: string, review: string, imgUrl: string; isPublic: boolean },
 ) {
   return await wishInstance.post(`/${drinkId}`, { item }, {
     headers: {

@@ -8,10 +8,11 @@ import { setIsShow } from '../../store/reducers/Drink/showModal';
 type TagProp = {
   text: string;
   onClick: () => void;
+  type: string;
 }
 
 
-export default function TagButton({ text, onClick }: TagProp) {
+export default function TagButton({ text, onClick, type }: TagProp) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -27,12 +28,12 @@ export default function TagButton({ text, onClick }: TagProp) {
       style={{ 
         paddingLeft: rem('21px'), 
         paddingRight: rem('21px'),
-        backgroundColor: '#DFBBBB',
+        backgroundColor: type === 'food' ? '#DFBBBB' : '#EBDCDC',
         color: '#000',
         fontSize: rem('12px'),
-        fontWeight: rem(400),
+        fontWeight: rem(600),
         borderRadius: rem('10px'),
-        border: 'solid 1px #C17878'
+        border: type === 'food' ? 'solid 1px #C17878' : 'solid 1px #C17878'
       }}
       onClick={onClickTag}
     >

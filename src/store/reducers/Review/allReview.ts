@@ -12,10 +12,19 @@ const initialState = {
     {
       _id: "",
       drinkId: "",
-      userId: "",
       review: "",
       imgUrl: "",
-      isPublic: false
+      isPublic: false,
+      __v: 0,
+      userId: {
+        email: "",
+        id: "",
+        name: "",
+        password: "",
+        visibleUser: {_id: '', email: '', name: ''},
+        __v: 0,
+        _id: "",
+      },
     },
   ],
 };
