@@ -9,12 +9,8 @@ export async function login(data: User) {
   return await userInstance.post("/login", data);
 }
 
-export async function logout(token: string) {
-  return await userInstance.post("/logout", {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
+export async function logout() {
+  return await userInstance.post("/logout");
 }
 
 export async function setPassWord() {

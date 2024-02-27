@@ -149,14 +149,21 @@ const ClickButton = styled.button<{ state: string }>`
   }
 `;
 
+const ToggleContainer = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 15px 0;
+`
+
 export default function DetailItem({ detail }: DetailProps) {
-  const { _id, imgUrl, name, percent, material, capacity, description, tags } = detail;
+  const { imgUrl, name, percent, material, capacity, description, tags } = detail;
 
   const [isLike, setIsLike] = useState<boolean>(false);
   
   const dispatch = useAppDispatch();
   const [isReview, setIsReview] = useState<boolean>(false);
   const userId = useAppSelector((state: RootState) => state.user.user.id);
+  const isUser = useAppSelector((state: RootState) => state.user.isUser);
 
 
   const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
@@ -171,8 +178,9 @@ export default function DetailItem({ detail }: DetailProps) {
     }, []
   )
 
+  const [detailId, setDetailId] = useState<string>("");
   function addWish(){
-    writeMyWish(detail._id,{review:'', imgUrl:'', isPublic:true},token )
+    writeMyWish(detail._id,{review:'', imgUrl:'', isPublic:true, token: token} )
     .then((data)=>{
       setIsLike(true);
     })
@@ -185,21 +193,22 @@ export default function DetailItem({ detail }: DetailProps) {
   }
 
   useEffect(() => {
-    dispatch(getAllWish(_id))
-    const data = {
-      drinkId: _id,
-      userId: "65dbfad95b84725d49586c45"
+    if (detail) {
+      setDetailId(detailId);
     }
-    dispatch(getWish(data))
 
     isWish(token,detail._id).then((data)=>{
       setIsLike(data.data.result);
     })
-  }, [_id, dispatch])
+  }, [dispatch, detail])
 
   return (
     <>
-      <ToggleButton isReview={isReview} setIsReview={setIsReview} />
+      {isUser ? (
+        <ToggleButton isReview={isReview} setIsReview={setIsReview} drinkId={detailId} userId={userId} />
+      ) : (
+        <ToggleContainer></ToggleContainer>
+      )}
       {!isReview ? (
         <>
           <div style={{ maxHeight: '500px', overflowY: 'scroll' }}>
@@ -278,8 +287,8 @@ export default function DetailItem({ detail }: DetailProps) {
         <>
           <ReviewFont>"{name}"은 어떠셨나요?</ReviewFont>
           <ReviewList>
-            <MyReviewContainer id={_id} userId={userId} />
-            <OtherReview id={_id} />
+            <MyReviewContainer />
+            <OtherReview />
           </ReviewList>
           <ReviewInputContainer>
             <ReviewInput 
@@ -294,8 +303,9 @@ export default function DetailItem({ detail }: DetailProps) {
               state={isLike ? "active" : "disabled"} 
               onClick={() => {
                 const data = {
-                  "drinkId": _id,
+                  "drinkId": detailId,
                   "item": {
+                    "token": token,
                     "userId": userId,
                     review,
                     "imgUrl": "",

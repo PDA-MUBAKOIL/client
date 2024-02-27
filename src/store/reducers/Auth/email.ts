@@ -25,14 +25,18 @@ export const checkEmail = createAsyncThunk(
 const emailSlice = createSlice({
   name: "email",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setUserEmail(state, action){
+      console.log('액션 페이로드', action.payload)
+      state.email = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(sendEmail.fulfilled, (state, action) => {
       // state.isEmail = action.payload.result;
     });
     builder.addCase(checkEmail.fulfilled, (state, action) => {
       state.isEmail = true;
-      state.email = action.payload;
     });
     builder.addCase(checkEmail.rejected, (state, action) => {
       state.isEmail = true;
@@ -40,5 +44,8 @@ const emailSlice = createSlice({
     });
   },
 });
+
+const { setUserEmail } = emailSlice.actions;
+export { setUserEmail };
 
 export default emailSlice.reducer;

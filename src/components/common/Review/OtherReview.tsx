@@ -2,12 +2,7 @@ import React, { useEffect } from 'react'
 import { Content, MainFont, SubFont } from './MyReviewContainer'
 import styled from 'styled-components';
 import { RootState } from '../../../store/store';
-import { useAppDispatch, useAppSelector } from '../../../lib/hooks/reduxHooks';
-import { getAllWish } from "../../../store/reducers/Review/allReview";
-
-type AllReview = {
-  id: string;
-}
+import { useAppSelector } from '../../../lib/hooks/reduxHooks';
 
 const ReviewDiv = styled.div`
   width: 98%;
@@ -29,14 +24,12 @@ const ImgDiv = styled.div<{ url: string }>`
   background-position: center center;
 `
 
-export default function OtherReview({ id }: AllReview) {
+export default function OtherReview() {
   const reviewList = useAppSelector((state: RootState) => state.allReview.allReview);
-  console.log(reviewList)
 
-  const dispatch = useAppDispatch();
   useEffect(() => {
-    dispatch(getAllWish(id))
-  }, [dispatch])
+    console.log('리뷰리스트', reviewList)
+  }, [])
 
   return (
     <>

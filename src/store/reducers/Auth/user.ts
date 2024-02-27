@@ -1,14 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { login, logout, signup } from "../../../lib/api/users";
 import { User } from "../../../routes/nonLogin/nonLoginLogIn";
-import { useCookies } from "react-cookie";
 
 const initialState = {
   user: {
 
     id: "",
-    name: "진언",
-    email: "example@naver.com",
+    name: "",
+    email: "",
   },
   token: "",
   isUser: false,
@@ -31,6 +30,7 @@ export const userSignup = createAsyncThunk(
 export const userLogin = createAsyncThunk(
   "auth/userLogin",
   async (data: User, thunkAPI) => {
+    console.log("user: ", data)
     const response = await login(data);
     return response.data;
   }
@@ -39,11 +39,7 @@ export const userLogin = createAsyncThunk(
 export const userLogout = createAsyncThunk(
   "auth/userLogout",
   async (data, thunkAPI) => {
-    const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
-
-    // 토큰값 가져오기
-    const token = cookies['authToken'];
-    const response = await logout(token);
+    const response = await logout();
     return response.data;
   }
 );

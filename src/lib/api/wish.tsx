@@ -9,9 +9,9 @@ export async function getAllWishes(drinkId: string, token: string) {
   });
 }
 
-export async function getMyWish(drinkId: string, userId: string, token: string) {
+export async function getMyWish(drinkId: string, token: string) {
   console.log("api drinkId: ", drinkId);
-  return await wishInstance.post(`/${drinkId}`, { userId }, {
+  return await wishInstance.get(`/${drinkId}`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -40,12 +40,11 @@ export async function updateMyWish(
 
 export async function writeMyWish(
   drinkId: string,
-  item: { review: string; imgUrl: string; isPublic: boolean },
-  token: string
+  item: { token: string, review: string; imgUrl: string; isPublic: boolean },
 ) {
   return await wishInstance.post(`/${drinkId}`, { item }, {
     headers: {
-      Authorization: `Bearer ${token}`
+      Authorization: `Bearer ${item.token}`
     }
   });
 }

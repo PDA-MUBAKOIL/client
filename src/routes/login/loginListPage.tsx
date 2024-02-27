@@ -43,7 +43,7 @@ export default function LoginListPage() {
       <MainText>술 리스트</MainText>
       <ListItems>
         {result.map((item, idx) => (
-          <DrinkCard url={item.imgUrl} name={item.name} id={item.id} key={idx}/>
+          <DrinkCard url={item.imgUrl} name={item.name} drinkId={item.id} key={idx}/>
         ))}
       </ListItems>
     </LoginSearchPageContainer>

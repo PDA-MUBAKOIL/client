@@ -13,7 +13,7 @@ const NavBarContainer = styled.div`
   align-items: center;
   padding: 0px 15px;
   background-color: #ebdcdc;
-  width: 100%;
+  width: 100vw;
   height: 62px;
   z-index: 1;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);

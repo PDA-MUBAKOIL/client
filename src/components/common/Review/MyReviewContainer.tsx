@@ -1,13 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { RootState } from '../../../store/store';
-import { useAppDispatch, useAppSelector } from '../../../lib/hooks/reduxHooks';
-import { getWish } from '../../../store/reducers/Review/myReview';
-
-type MyReview = {
-  id: string;
-  userId: string;
-}
+import { useAppSelector } from '../../../lib/hooks/reduxHooks';
 
 const ReviewDiv = styled.div`
   width: 98%;
@@ -33,17 +27,12 @@ export const SubFont = styled.span`
   font-size: 15px;
 `
 
-export default function MyReviewContainer({ id, userId }: MyReview) {
+export default function MyReviewContainer() {
   const myReview = useAppSelector((state: RootState) => state.myReview);
 
-  const dispatch = useAppDispatch();
   useEffect(() => {
-    const data = {
-      drinkId: id,
-      userId: "65dbfad95b84725d49586c45"
-    }
-    dispatch(getWish(data))
-  }, [dispatch])
+    console.log('마이리뷰', myReview)
+  }, [])
 
   return (
     <ReviewDiv>

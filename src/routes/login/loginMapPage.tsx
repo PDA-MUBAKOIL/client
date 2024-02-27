@@ -90,11 +90,6 @@ function MarkerComponent(props:{region:string, fullName:string, left:number, top
   const user = useAppSelector(state=>state.user);
   var clickState = false;
 
-  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
-
-    // 토큰값 가져오기
-  const token = cookies['authToken'];
-
   const onClickMarker = () => {
     // if(clickState){
     //   getMyWishes(props.region).then(data=>{

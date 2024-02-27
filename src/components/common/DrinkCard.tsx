@@ -1,23 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Text } from "@mantine/core";
 import styled from "styled-components";
 import { useAppDispatch } from "../../lib/hooks/reduxHooks";
 import { setIsDetail, setIsShow } from "../../store/reducers/Drink/showModal";
 import { setDrinkDetail } from "../../store/reducers/Drink/drinkDetail";
+import { getWish } from "../../store/reducers/Review/myReview";
+import { getAllWish } from "../../store/reducers/Review/allReview";
+import { useCookies } from "react-cookie";
 
 export type DrinkProp = {
-  id: string;
+  drinkId: string;
   url: string;
   name: string;
 };
 
 const DrinkContainer = styled(Container)`
+<<<<<<< HEAD
+  // width: 110px;
+=======
   width: 28vw;
+>>>>>>> 0dc8e8457e3b7e204d231a8f8299ebd5666ad0f2
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+<<<<<<< HEAD
+  height: 144px;
+  gap: 8px;
+=======
   height: 18vh;
   gap: 4vw;
+>>>>>>> 0dc8e8457e3b7e204d231a8f8299ebd5666ad0f2
   padding: 0;
   margin: 8px 0;
 `;
@@ -43,18 +56,31 @@ const NameFont = styled(Text)`
   font-size: 3vw;
 `;
 
-export default function DrinkCard({ id, url, name }: DrinkProp) {
+export default function DrinkCard({ drinkId, url, name }: DrinkProp) {
   const dispatch = useAppDispatch();
+  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
 
-  function onDrinkDetailClick() {
-    const action = setDrinkDetail({ drinkId: id });
+    // 토큰값 가져오기
+  const token = cookies['authToken'];
+
+  function onDrinkDetailClick(drinkId: string) {
+    const action = setDrinkDetail({ drinkId: drinkId });
     dispatch(action);
     dispatch(setIsDetail(true));
     dispatch(setIsShow(true));
+
+    const data = {
+      drinkId: drinkId,
+      token: token,
+    }
+
+    console.log(drinkId)
+    dispatch(getAllWish(data))
+    dispatch(getWish(data))
   }
 
   return (
-    <DrinkContainer onClick={onDrinkDetailClick}>
+    <DrinkContainer onClick={() => onDrinkDetailClick(drinkId)}>
       <ImageContainer>
         <Image src={url} alt="" />
       </ImageContainer>

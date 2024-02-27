@@ -62,15 +62,4 @@ export const mainRouter = [
   },
 ];
 
-
-
-const router = createBrowserRouter(mainRouter.map(v=>{
-  return v.children.map((route)=>{
-    return {
-      ...route,
-      element: <LoginNavigatePage />
-    }
-  })
-}));
-
-export default router;
+export default mainRouter;
