@@ -25,25 +25,25 @@ const SignupBody = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 48px;
-  padding-top: 80px;
+  padding-top: 1rem;
   overflow-y: hidden;
 `;
 
 const MainFont = styled(Text)`
-  font-size: 20px;
+  font-size: 1rem;
 `;
 
 const HelloBox = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 0.8rem;
 `;
 
 const InputBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 1.2rem;
 `;
 
 const ButtonBox = styled.div`
@@ -87,7 +87,7 @@ export default function NonLoginLogIn() {
   const onSubmitLogin = useCallback((email: string, password: string) => {
     const data = { email, password };
     dispatch(userLogin(data)).then((res: any) => {
-      setCookie('authToken', res.payload.token);
+      setCookie('authToken', res.payload.user.token);
       console.log('로그인', res);
       if (res.type === "auth/userLogin/rejected") {
         navigate("/login");
@@ -141,7 +141,7 @@ export default function NonLoginLogIn() {
         </Link>
         <ToLogin to={"/signup"}>회원가입</ToLogin>
       </ButtonBox>
-      <img src={Drinks} alt="" style={{ position: 'fixed', bottom: '0' }} />
+      {/* <img src={Drinks} alt="" style={{ position: 'fixed', bottom: '0' }} /> */}
     </SignupBody>
   );
 }

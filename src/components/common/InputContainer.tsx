@@ -9,8 +9,8 @@ type InputProp = {
 };
 
 const InputDiv = styled.input`
-  width: 273px;
-  padding: 14px 20px;
+  width: 100%;
+  padding: 1rem 1.6rem;
   background-color: #fff;
   color: #717171;
   box-shadow: 3px 3px 3px 0 rgb(193, 120, 120, 50%);

@@ -9,7 +9,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useAppDispatch } from "../../lib/hooks/reduxHooks";
 import Drinks from '../../assets/img/Nav/drinks-icon.svg';
-import { checkEmail, sendEmail } from "../../store/reducers/Auth/email";
+import { checkEmail, sendEmail, setUserEmail } from "../../store/reducers/Auth/email";
 import { RootState } from "../../store/store";
 import { userSignup } from "../../store/reducers/Auth/user";
 
@@ -78,11 +78,10 @@ export default function NonLoginSignUp() {
 
   const [isClick, setIsClick] = useState<boolean>(false);
 
-  const onSubmitSignup = useCallback(() => {
-    console.log('회원가입')
+  const onSubmitSignup = useCallback((email: string, nickname: string, password: string) => {
     const data = { 
-      "email": userEmail, 
-      password,
+      "email": email, 
+      "password": password,
       "name": nickname
     };
     dispatch(userSignup(data)).then((res: any) => {
@@ -124,6 +123,8 @@ export default function NonLoginSignUp() {
                 text="인증번호 요청"
                 onClick={() => {
                   setIsClick(true)
+                  console.log('email', email)
+                  dispatch(setUserEmail(email))
                   dispatch(sendEmail(email))
                 }}
                 status={email ? "active" : "disabled"}
@@ -176,7 +177,7 @@ export default function NonLoginSignUp() {
           <ButtonBox>
             <CommonButton
               text="회원가입"
-              onClick={() => onSubmitSignup()}
+              onClick={() => onSubmitSignup(userEmail, nickname, password)}
               status={isActive ? "active" : "disabled"}
             />
             <ToLogin to={"/login"}>로그인</ToLogin>

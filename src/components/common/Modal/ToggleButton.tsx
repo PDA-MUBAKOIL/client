@@ -1,9 +1,15 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { useAppDispatch } from '../../../lib/hooks/reduxHooks';
+import { getAllWish } from '../../../store/reducers/Review/allReview';
+import { useCookies } from 'react-cookie';
+import { getWish } from '../../../store/reducers/Review/myReview';
 
 type ToggleProps = {
   isReview: boolean;
   setIsReview: React.Dispatch<React.SetStateAction<boolean>>;
+  drinkId: string;
+  userId: string;
 }
 
 const ToggleContainer = styled.div`
@@ -63,8 +69,9 @@ export default function ToggleButton({ isReview, setIsReview }: ToggleProps) {
       setIsReview(true);
     } else {
       setIsReview(false);
+      
     }
-  }, [isReview, setIsReview])
+  }, [isReview])
 
   return (
     <ToggleContainer>

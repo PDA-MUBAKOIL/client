@@ -58,10 +58,10 @@ export default function NonLoginMainPage() {
         {drinkState.data?.map((item: DrinkType, idx: number) => (
           <DrinkCard
             // key={item._id}
-            key={idx}
+            key={item._id}
             url={item.imgUrl}
             name={item.name}
-            id={item.id}
+            drinkId={item._id}
           />
         ))}
       </ListItems>
