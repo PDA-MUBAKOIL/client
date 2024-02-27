@@ -11,7 +11,8 @@ const LoginSearchPageContainer = styled.div`
   display:flex;
   flex-direction: column;
   overflow: hidden;
-
+  
+ 
 `
 
 const ListItems = styled.div`
@@ -19,6 +20,7 @@ const ListItems = styled.div`
   flex-wrap: wrap;
   padding: 0 18px;
   gap: 12px;
+  height: calc(100vh - 277px);
   overflow-y:scroll;
 `;
 

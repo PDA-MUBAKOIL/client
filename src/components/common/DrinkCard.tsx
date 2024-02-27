@@ -12,12 +12,12 @@ export type DrinkProp = {
 };
 
 const DrinkContainer = styled(Container)`
-  width: 110px;
+  width: 28vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height:144px;
-  gap: 8px;
+  height: 18vh;
+  gap: 4vw;
   padding: 0;
   margin: 8px 0;
 `;
@@ -40,7 +40,7 @@ const Image = styled.img`
 const NameFont = styled(Text)`
   word-break: keep-all;
   text-align: center;
-  font-size: 14px;
+  font-size: 3vw;
 `;
 
 export default function DrinkCard({ id, url, name }: DrinkProp) {

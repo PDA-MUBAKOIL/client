@@ -30,7 +30,7 @@ export default function Navbar() {
       {user ? <Link to={"/map"}> 
         <NavLogo src={Logo} alt="navLogo"></NavLogo>
         </Link>
-      : <Link to={"/"}>
+      : <Link to={"/"} onClick={()=>{window.scroll({top: 0, behavior: 'smooth'})}}>
           <NavLogo src={Logo} alt="navLogo"></NavLogo>
         </Link>
       }

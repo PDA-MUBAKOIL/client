@@ -8,6 +8,8 @@ import { Button, rem } from "@mantine/core";
 import { useAppDispatch } from "../../lib/hooks/reduxHooks";
 import { setIsDetail, setIsShow } from "../../store/reducers/Drink/showModal";
 import { setDrinkDetail } from "../../store/reducers/Drink/drinkDetail";
+import { useNavigate } from "react-router-dom";
+import { setSearch } from "../../store/reducers/Drink/search";
 
 type TagProp = {
   text: string;
@@ -65,16 +67,24 @@ export default function DrinkDetailCard(item: TSearchResult) {
     dispatch(setIsDetail(true));
   }
 
+  const navigate = useNavigate();
+
+  function onClickTag(text:string){
+    dispatch(setIsShow(false));
+    dispatch(setSearch('#'+text))
+    navigate('/search',{state:{tag:'#'+text}});
+  }
+
   return (
     <Card>
-      <CardContent onClick={onCardClick}>
-        <img
+      <CardContent >
+        <img onClick={onCardClick}
           src={item.imgUrl}
           alt={item.name}
           style={{ width: "80px", height: "100px", objectFit: "contain" }}
         />
-        <Flex gap="14px" direction="column" style={{ width: "100%" }}>
-          <Flex gap="7px" direction="column">
+        <Flex  gap="14px" direction="column" style={{ width: "100%" }}>
+          <Flex onClick={onCardClick} gap="7px" direction="column">
             <div style={{ fontSize: "14px" }}>{item.name}</div>
             <Flex gap="4px" direction="column">
               <Flex gap="8px">
@@ -104,7 +114,7 @@ export default function DrinkDetailCard(item: TSearchResult) {
           </Flex>
           <div style={{width:'200px', display:"block"}}>
             {item.tags.map((tag, idx) => {
-              return <TagButton key={idx} text={tag} onClick={() => {}} />;
+              return <TagButton key={idx} text={tag} onClick={() => {onClickTag(tag)}} />;
             })}
           </div>
         </Flex>
