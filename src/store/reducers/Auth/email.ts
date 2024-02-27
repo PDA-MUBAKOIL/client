@@ -49,7 +49,7 @@ const emailSlice = createSlice({
       // state.isEmail = action.payload.result;
     });
     builder.addCase(checkEmail.fulfilled, (state, action) => {
-      state.isEmail = true;
+      // state.isEmail = true;
     });
     builder.addCase(checkEmail.rejected, (state, action) => {
       state.isEmail = false;
