@@ -8,24 +8,23 @@ import InputContainer from "../../components/common/InputContainer";
 import { Link, useNavigate } from "react-router-dom";
 import { userLogin } from "../../store/reducers/Auth/user";
 import { useAppDispatch } from "../../lib/hooks/reduxHooks";
-import Drinks from '../../assets/img/Nav/drinks-icon.svg';
+import Drinks from "../../assets/img/Nav/drinks-icon.svg";
 
-import { useCookies } from 'react-cookie';
+import { useCookies } from "react-cookie";
 
 export type User = {
   email: String;
   password: String;
 };
 
-const SignupBody = styled.div`
+export const SignupBody = styled.div`
   background-color: #ebdcdc;
   // footer 없애고 디자인 수정하기
-  height: calc(100vh - 62px);
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 48px;
-  padding-top: 1rem;
+  gap: 6vh;
   overflow-y: hidden;
 `;
 
@@ -53,9 +52,10 @@ const ButtonBox = styled.div`
   gap: 15px;
 `;
 
-const ToLogin = styled(Link)`
+export const ToLogin = styled(Link)`
   text-decoration: none;
   color: #717171;
+  font-size: 90%;
 `;
 
 // const ErrorFont = styled.span`
@@ -82,13 +82,13 @@ export default function NonLoginLogIn() {
     []
   );
 
-  const [cookies, setCookie] = useCookies(['authToken']);
+  const [cookies, setCookie] = useCookies(["authToken"]);
 
   const onSubmitLogin = useCallback((email: string, password: string) => {
     const data = { email, password };
     dispatch(userLogin(data)).then((res: any) => {
-      setCookie('authToken', res.payload.user.token);
-      console.log('로그인', res);
+      setCookie("authToken", res.payload.user.token);
+      console.log("로그인", res);
       if (res.type === "auth/userLogin/rejected") {
         navigate("/login");
       } else {
@@ -110,7 +110,7 @@ export default function NonLoginLogIn() {
     <SignupBody>
       <HelloBox>
         <MainFont>함께 하기</MainFont>
-        <img src={Logo} alt="" style={{ width: "105px" }} />
+        <img src={Logo} alt="" style={{ width: "30vw" }} />
       </HelloBox>
       <InputBox>
         <InputContainer

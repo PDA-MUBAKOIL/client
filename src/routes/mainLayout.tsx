@@ -14,13 +14,14 @@ import { useAppSelector } from "../lib/hooks/reduxHooks";
 import { useCookies } from "react-cookie";
 
 const OutletContainer = styled.div<{ isuser: string }>`
+  height: 100vh;
   ${(props) =>
     props.isuser === "true"
       ? `
-      padding: 62px 0 72px 0;
+      padding: 10vh 0;
     `
       : `
-      padding: 62px 0 0 0;
+      padding: 10vh 0 0 0;
     `}
 `;
 
@@ -32,10 +33,10 @@ export default function MainLayout() {
   const isUser = useAppSelector((state) => state.user.isUser);
 
   useEffect(() => {}, []);
-  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+  const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
 
-    // 토큰값 가져오기
-  const token = cookies['authToken'];
+  // 토큰값 가져오기
+  const token = cookies["authToken"];
 
   return (
     <>

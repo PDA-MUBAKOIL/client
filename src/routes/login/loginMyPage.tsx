@@ -8,24 +8,29 @@ import { userLogout } from "../../store/reducers/Auth/user";
 import { useNavigate } from "react-router";
 import { useCookies } from "react-cookie";
 import { Button } from "@mantine/core";
+import { RootState } from "../../store/store";
 
 const MyContainer = styled.div`
+  height: 78vh;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   padding: 1vh 10vw;
-  gap: 30vh;
+  // gap: 21vh;
 `;
 
 const UserFont = styled.p`
-  font-size: 5vw;
+  font-size: 6vw;
 `;
 
 const SubFont = styled.p`
   font-size: 3.5vw;
+  padding: 0 2vw;
 `;
 
 const WishContainer = styled.div`
-  width: 80vw;
+  width: 85vw;
   padding: 1vh 0;
   background-color: #f0e9e9;
   border-radius: 20px;
@@ -60,13 +65,12 @@ const CallDiv = styled.div`
   gap: 1vw;
 `;
 
-
 export default function LoginMyPage() {
-  const userState = useAppSelector((state) => state.user);
+  const userState = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+  const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
 
   return (
     <MyContainer>
@@ -75,7 +79,11 @@ export default function LoginMyPage() {
           <b>{userState.user.name}</b>님
         </UserFont>
         <SubFont>이메일 &nbsp; | &nbsp; {userState.user.email}</SubFont>
-        <WishContainer onClick={()=>{navigate('/wish')}}>
+        <WishContainer
+          onClick={() => {
+            navigate("/wish");
+          }}
+        >
           <WishButton>
             <span>위시리스트</span>
             <img src={FillHeart} alt="" style={{ width: "6vw" }} />
@@ -92,33 +100,43 @@ export default function LoginMyPage() {
         }}
       >
         <CallContainer>
-          <span>개발자 연락처</span>
+          <span style={{ fontSize: "2vh" }}>개발자 연락처</span>
           <CallDiv>
-            <span>김민우 | roboticts49@gmail.com</span>
-            <span>박유진 | yjp8842@naver.com</span>
-            <span>박진언 | pjo3789@naver.com</span>
-            <span>이한슬 | gkstmf616@gmail.com</span>
+            <span style={{ fontSize: "1.5vh" }}>
+              김민우 | roboticts49@gmail.com
+            </span>
+            <span style={{ fontSize: "1.5vh" }}>
+              박유진 | yjp8842@naver.com
+            </span>
+            <span style={{ fontSize: "1.5vh" }}>
+              박진언 | pjo3789@naver.com
+            </span>
+            <span style={{ fontSize: "1.5vh" }}>
+              이한슬 | gkstmf616@gmail.com
+            </span>
           </CallDiv>
         </CallContainer>
-            <Button
-                radius="xl"
-                size="md"
-                styles={{
-                  root: {
-                    backgroundColor: "#C17878",
-                    color: "#fff",
-                    width:'80vw',
-                    fontSize:'4vw'
-                  },
-                }}
-                onClick={() =>
-                  dispatch(userLogout()).then((res) => {
-                    removeCookie('authToken');
-                    navigate("/");
-                  })}
-              >
-                로그아웃
-              </Button>
+        <Button
+          radius="xl"
+          size="md"
+          styles={{
+            root: {
+              backgroundColor: "#C17878",
+              color: "#fff",
+              width: "80vw",
+              fontSize: "4vw",
+              height: "7vh",
+            },
+          }}
+          onClick={() =>
+            dispatch(userLogout()).then((res) => {
+              removeCookie("authToken");
+              navigate("/");
+            })
+          }
+        >
+          로그아웃
+        </Button>
       </div>
     </MyContainer>
   );

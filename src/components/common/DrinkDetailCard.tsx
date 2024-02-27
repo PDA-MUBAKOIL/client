@@ -33,7 +33,7 @@ const CardContent = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 8px;
+  gap: 6vw;
   width: 80vw;
 `;
 
@@ -46,11 +46,11 @@ function TagButton({ text, onClick }: TagProp) {
         height: rem("18px"),
         backgroundColor: "#DFBBBB",
         color: "#000",
-        fontSize: '2.5vw',
+        fontSize: "2.5vw",
         fontWeight: rem(400),
         borderRadius: rem("5px"),
         border: "solid 1px #C17878",
-        margin: '1.5px',
+        margin: "1.5px",
       }}
       onClick={onClick}
     >
@@ -62,54 +62,57 @@ function TagButton({ text, onClick }: TagProp) {
 export default function DrinkDetailCard(item: TSearchResult) {
   const [isLike, setIsLike] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+  const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
   // 토큰값 가져오기
-  const token = cookies['authToken'];
+  const token = cookies["authToken"];
 
   function onCardClick() {
-    dispatch(setDrinkDetail({drinkId: item.id}))
+    dispatch(setDrinkDetail({ drinkId: item.id }));
     dispatch(setIsShow(true));
     dispatch(setIsDetail(true));
   }
 
   const navigate = useNavigate();
 
-  function onClickTag(text:string){
+  function onClickTag(text: string) {
     dispatch(setIsShow(false));
-    dispatch(setSearch('#'+text))
-    navigate('/search',{state:{tag:'#'+text}});
+    dispatch(setSearch("#" + text));
+    navigate("/search", { state: { tag: "#" + text } });
   }
 
-
-  function addWish(){
-    writeMyWish(item.id,{review:'', imgUrl:'', isPublic:true, token: token} )
-    .then((data)=>{
+  function addWish() {
+    writeMyWish(item.id, {
+      review: "",
+      imgUrl: "",
+      isPublic: true,
+      token: token,
+    }).then((data) => {
       setIsLike(true);
-    })
+    });
   }
 
-  function deleteWish(){
-    deleteMyWish(item.id,token).then((data)=>{
+  function deleteWish() {
+    deleteMyWish(item.id, token).then((data) => {
       setIsLike(false);
     });
   }
 
-  useEffect(()=>{
-    isWish(token,item.id).then((data)=>{
+  useEffect(() => {
+    isWish(token, item.id).then((data) => {
       setIsLike(data.data.result);
-    })
-
-  })
+    });
+  });
 
   return (
     <Card>
-      <CardContent >
-        <img onClick={onCardClick}
+      <CardContent>
+        <img
+          onClick={onCardClick}
           src={item.imgUrl}
           alt={item.name}
-          style={{ width:'25vw', height: '10vh', objectFit: "contain" }}
+          style={{ width: "25vw", height: "10vh", objectFit: "contain" }}
         />
-        <Flex  gap="14px" direction="column" style={{ width: '60vw' }}>
+        <Flex gap="14px" direction="column" style={{ width: "55vw" }}>
           <Flex onClick={onCardClick} gap="7px" direction="column">
             <div style={{ fontSize: "14px" }}>{item.name}</div>
             <Flex gap="4px" direction="column">
@@ -129,7 +132,7 @@ export default function DrinkDetailCard(item: TSearchResult) {
                 <div
                   style={{
                     fontSize: "10px",
-                    width: "80%",
+                    width: "73%",
                     wordBreak: "break-all",
                   }}
                 >
@@ -138,9 +141,17 @@ export default function DrinkDetailCard(item: TSearchResult) {
               </Flex>
             </Flex>
           </Flex>
-          <div style={{width:'60vw', display:"block"}}>
+          <div style={{ width: "60vw", display: "block" }}>
             {item.tags.map((tag, idx) => {
-              return <TagButton key={idx} text={tag} onClick={() => {onClickTag(tag)}} />;
+              return (
+                <TagButton
+                  key={idx}
+                  text={tag}
+                  onClick={() => {
+                    onClickTag(tag);
+                  }}
+                />
+              );
             })}
           </div>
         </Flex>
