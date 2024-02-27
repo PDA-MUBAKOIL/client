@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie";
 
 const initialState = {
   user: {
+
     id: "",
     name: "진언",
     email: "example@naver.com",

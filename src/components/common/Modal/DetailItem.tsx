@@ -14,6 +14,8 @@ import SubmitButton from '../../../assets/img/Modal/submit.svg';
 import { getWish, updateWish } from "../../../store/reducers/Review/myReview";
 import { setDrinkDetail } from "../../../store/reducers/Drink/drinkDetail";
 import { setSearch } from "../../../store/reducers/Drink/search";
+import { deleteMyWish, isWish, writeMyWish } from "../../../lib/api/wish";
+import { useCookies } from "react-cookie";
 
 export type DetailType = {
   _id: string,
@@ -156,6 +158,11 @@ export default function DetailItem({ detail }: DetailProps) {
   const [isReview, setIsReview] = useState<boolean>(false);
   const userId = useAppSelector((state: RootState) => state.user.user.id);
 
+
+  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+  // 토큰값 가져오기
+  const token = cookies['authToken'];
+
   const [review, setReview] = useState<string>("");
 
   const onInputChange = useCallback(
@@ -164,6 +171,18 @@ export default function DetailItem({ detail }: DetailProps) {
     }, []
   )
 
+  function addWish(){
+    writeMyWish(detail._id,{review:'', imgUrl:'', isPublic:true},token )
+    .then((data)=>{
+      setIsLike(true);
+    })
+  }
+
+  function deleteWish(){
+    deleteMyWish(detail._id,token).then((data)=>{
+      setIsLike(false);
+    });
+  }
 
   useEffect(() => {
     dispatch(getAllWish(_id))
@@ -172,6 +191,10 @@ export default function DetailItem({ detail }: DetailProps) {
       userId: "65dbfad95b84725d49586c45"
     }
     dispatch(getWish(data))
+
+    isWish(token,detail._id).then((data)=>{
+      setIsLike(data.data.result);
+    })
   }, [_id, dispatch])
 
   return (
@@ -235,12 +258,21 @@ export default function DetailItem({ detail }: DetailProps) {
               </TagDiv>
             </Content>
           </div>
-          <img
-            src={isLike ? FillHeart : EmptyHeart}
-            alt=""
-            style={{ width: "24px", marginTop: '10px' }}
-            onClick={() => setIsLike((prev) => !prev)}
-          />
+          {isLike ? (
+              <img
+                src={FillHeart}
+                alt=""
+                style={{ width: "20px" }}
+                onClick={deleteWish}
+              />
+            ) : (
+              <img
+                src={EmptyHeart}
+                alt=""
+                style={{ width: "20px" }}
+                onClick={addWish}
+              />
+            )}
         </>
       ) : (
         <>

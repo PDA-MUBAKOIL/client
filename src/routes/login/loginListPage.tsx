@@ -22,7 +22,7 @@ const ListItems = styled.div`
 `;
 
 const MainText = styled(Text)`
-  font-size: 20px;
+  font-size: 5vw;
   padding: 0px 20px;
 `;
 
