@@ -12,6 +12,7 @@ import { getAllWish } from "../../../store/reducers/Review/allReview";
 import OtherReview from "../Review/OtherReview";
 import SubmitButton from '../../../assets/img/Modal/submit.svg';
 import { getWish, updateWish } from "../../../store/reducers/Review/myReview";
+import { setDrinkDetail } from "../../../store/reducers/Drink/drinkDetail";
 import { setSearch } from "../../../store/reducers/Drink/search";
 
 export type DetailType = {
@@ -147,17 +148,13 @@ const ClickButton = styled.button<{ state: string }>`
 `;
 
 export default function DetailItem({ detail }: DetailProps) {
-  const { imgUrl, name, percent, material, capacity, description, tags } = detail;
+  const { _id, imgUrl, name, percent, material, capacity, description, tags } = detail;
 
   const [isLike, setIsLike] = useState<boolean>(false);
   
   const dispatch = useAppDispatch();
   const [isReview, setIsReview] = useState<boolean>(false);
-  const myReview = useAppSelector((state: RootState) => state.myReview);
-
-  const drinkId = useAppSelector((state: RootState) => state.drinkDetail.detail._id);
-  const reviewList = useAppSelector((state: RootState) => state.allReview.allReview);
-  const userId = useAppSelector((state: RootState) => state.user.id);
+  const userId = useAppSelector((state: RootState) => state.user.user.id);
 
   const [review, setReview] = useState<string>("");
 
@@ -169,9 +166,13 @@ export default function DetailItem({ detail }: DetailProps) {
 
 
   useEffect(() => {
-    // dispatch(getAllWish(drinkId))
-    // dispatch(getWish({ drinkId, userId }))
-  }, [])
+    dispatch(getAllWish(_id))
+    const data = {
+      drinkId: _id,
+      userId: "65dbfad95b84725d49586c45"
+    }
+    dispatch(getWish(data))
+  }, [_id, dispatch])
 
   return (
     <>
@@ -245,10 +246,8 @@ export default function DetailItem({ detail }: DetailProps) {
         <>
           <ReviewFont>"{name}"은 어떠셨나요?</ReviewFont>
           <ReviewList>
-            {myReview && <MyReviewContainer item={myReview}></MyReviewContainer>}
-            {reviewList?.map((review, idx) => 
-              <OtherReview key={idx} item={review} />
-            )}
+            <MyReviewContainer id={_id} userId={userId} />
+            <OtherReview id={_id} />
           </ReviewList>
           <ReviewInputContainer>
             <ReviewInput 
@@ -263,9 +262,9 @@ export default function DetailItem({ detail }: DetailProps) {
               state={isLike ? "active" : "disabled"} 
               onClick={() => {
                 const data = {
-                  "drinkId": drinkId,
-                  "userId": userId,
-                  "item": { 
+                  "drinkId": _id,
+                  "item": {
+                    "userId": userId,
                     review,
                     "imgUrl": "",
                     "isPublic": true,

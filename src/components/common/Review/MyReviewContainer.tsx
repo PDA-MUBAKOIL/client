@@ -1,17 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
+import { RootState } from '../../../store/store';
+import { useAppDispatch, useAppSelector } from '../../../lib/hooks/reduxHooks';
+import { getWish } from '../../../store/reducers/Review/myReview';
 
-type ReviewType = {
-  _id: string;
-  drinkId: string;
+type MyReview = {
+  id: string;
   userId: string;
-  review: string;
-  imgUrl: string;
-  isPublic: boolean;
-}
-
-export type ReviewProp = {
-  item: ReviewType;
 }
 
 const ReviewDiv = styled.div`
@@ -38,15 +33,24 @@ export const SubFont = styled.span`
   font-size: 15px;
 `
 
-export default function MyReviewContainer({ item }: ReviewProp) {
-  const { _id, drinkId, userId, review, imgUrl, isPublic } = item;
+export default function MyReviewContainer({ id, userId }: MyReview) {
+  const myReview = useAppSelector((state: RootState) => state.myReview);
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    const data = {
+      drinkId: id,
+      userId: "65dbfad95b84725d49586c45"
+    }
+    dispatch(getWish(data))
+  }, [dispatch])
 
   return (
     <ReviewDiv>
       <MainFont>✨</MainFont>
       <Content>
         <MainFont>나의 리뷰</MainFont>
-        <SubFont>{review}</SubFont>
+        <SubFont>{myReview.review}</SubFont>
       </Content>
     </ReviewDiv>
   )

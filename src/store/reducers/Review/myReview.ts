@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getMyWish, updateMyWish, writeMyWish } from "../../../lib/api/wish";
+import { useCookies } from "react-cookie";
 
 const initialState = {
   _id: "",
@@ -12,8 +13,8 @@ const initialState = {
 
 type DataProp = {
   drinkId: string;
-  userId: string;
   item : {
+    userId: string;
     review: string;
     imgUrl: string;
     isPublic: boolean;
@@ -28,8 +29,12 @@ type GetProp = {
 export const writeWish = createAsyncThunk(
   "review/writeWish",
   async (data: DataProp, thunkAPI) => {
-    const { drinkId, userId, item } = data;
-    const response = await writeMyWish(drinkId, userId, item);
+    const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+
+    // 토큰값 가져오기
+    const token = cookies['authToken'];
+    const { drinkId, item } = data;
+    const response = await writeMyWish(drinkId, item, token);
     return response.data;
   }
 );
@@ -37,8 +42,12 @@ export const writeWish = createAsyncThunk(
 export const updateWish = createAsyncThunk(
   "review/updateWish",
   async (data: DataProp, thunkAPI) => {
-    const { drinkId, userId, item } = data;
-    const response = await updateMyWish(drinkId, userId, item);
+    const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+
+    // 토큰값 가져오기
+    const token = cookies['authToken'];
+    const { drinkId, item } = data;
+    const response = await updateMyWish(drinkId, item, token);
     return response.data;
   }
 );
@@ -46,8 +55,14 @@ export const updateWish = createAsyncThunk(
 export const getWish = createAsyncThunk(
   "review/getWish",
   async (data: GetProp, thunkAPI) => {
+    const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+
+    // 토큰값 가져오기
+    const token = cookies['authToken'];
     const { drinkId, userId } = data;
-    const response = await getMyWish(drinkId, userId);
+    console.log('drinkId: ', drinkId);
+    console.log('userId: ', userId);
+    const response = await getMyWish(drinkId, userId, token);
     return response.data;
   }
 );
