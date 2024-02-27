@@ -38,23 +38,27 @@ const emailSlice = createSlice({
     setUserEmail(state, action){
       console.log('액션 페이로드', action.payload)
       state.email = action.payload;
-    }
+    },
+    setIsEmail(state, action){
+      console.log('액션 페이로드', action.payload)
+      state.isEmail = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(sendEmail.fulfilled, (state, action) => {
       // state.isEmail = action.payload.result;
     });
     builder.addCase(checkEmail.fulfilled, (state, action) => {
-      state.isEmail = true;
+      // state.isEmail = true;
     });
     builder.addCase(checkEmail.rejected, (state, action) => {
-      state.isEmail = true;
+      state.isEmail = false;
       // state.email = action.payload;
     });
   },
 });
 
-const { setUserEmail } = emailSlice.actions;
-export { setUserEmail };
+const { setUserEmail, setIsEmail } = emailSlice.actions;
+export { setUserEmail, setIsEmail };
 
 export default emailSlice.reducer;

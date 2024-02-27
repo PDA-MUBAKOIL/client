@@ -13,6 +13,7 @@ import {
   alreadyEmail,
   checkEmail,
   sendEmail,
+  setIsEmail,
   setUserEmail,
 } from "../../store/reducers/Auth/email";
 import { RootState } from "../../store/store";
@@ -55,6 +56,7 @@ export default function NonLoginSignUp() {
   const [isActive, setIsActive] = useState<boolean>(false);
 
   const [isAlready, setIsAlready] = useState<boolean>(false);
+  const [isAuth, setIsAuth] = useState<boolean>(true);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -82,6 +84,19 @@ export default function NonLoginSignUp() {
       }
     });
   }
+
+  function checkIsAuth(authNum: string) {
+    dispatch(checkEmail(authNum))
+      .then((res) => {
+        console.log(res.payload)
+        if (res.payload.result === false) {
+          setIsAuth(false);
+        } else {
+          dispatch(setIsEmail(true))
+        }
+      })
+  }
+
   const [isClick, setIsClick] = useState<boolean>(false);
 
   const onSubmitSignup = useCallback(
@@ -106,7 +121,7 @@ export default function NonLoginSignUp() {
     <SignupBody>
       <HelloBox>
         <MainFont>함께 하실래요?</MainFont>
-        <img src={Logo} alt="" style={{ width: "30vw" }} />
+        <img src={Logo} alt="" style={{ width: "30vw" }} onClick={() => dispatch(setIsEmail(false))} />
       </HelloBox>
       {!isEmail ? (
         <>
@@ -134,6 +149,11 @@ export default function NonLoginSignUp() {
                 }}
               />
             )}
+            {!isAuth && (
+              <div style={{ color: "red", fontSize: "12px", paddingLeft: 12 }}>
+                인증번호가 같지 않습니다.
+              </div>
+            )}
           </InputBox>
           <ButtonBox>
             {!isClick ? (
@@ -147,9 +167,7 @@ export default function NonLoginSignUp() {
             ) : (
               <CommonButton
                 text="이메일 인증"
-                onClick={() => {
-                  dispatch(checkEmail(authNum));
-                }}
+                onClick={() => checkIsAuth(authNum)}
                 status={authNum ? "active" : "disabled"}
               />
             )}
