@@ -24,6 +24,7 @@ const ListItems = styled.div`
   padding: 5px 18px;
   gap: 14px;
   height: calc(100vh - 277px);
+  overflow-y: scroll;
 `;
 
 export default function LoginSearchPage() {
