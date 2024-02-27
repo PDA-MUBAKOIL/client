@@ -3,6 +3,7 @@ import Logo from "../../assets/img/Nav/logo.svg";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useAppSelector } from "../../lib/hooks/reduxHooks";
+import { RootState } from "../../store/store";
 
 const NavBarContainer = styled.div`
   position: fixed;
@@ -14,26 +15,33 @@ const NavBarContainer = styled.div`
   padding: 0px 15px;
   background-color: #ebdcdc;
   width: 100vw;
-  height: 62px;
+  height: 10vh;
   z-index: 1;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 `;
 const NavLogo = styled.img`
-  width: 45px;
-  height: 45px;
+  width: 11vw;
+  height: 8vh;
 `;
 export default function Navbar() {
-  const user = useAppSelector(state => state.user.isUser);
+  const user = useAppSelector((state: RootState) => state.user.isUser);
 
   return (
     <NavBarContainer>
-      {user ? <Link to={"/map"}> 
-        <NavLogo src={Logo} alt="navLogo"></NavLogo>
-        </Link>
-      : <Link to={"/"} onClick={()=>{window.scroll({top: 0, behavior: 'smooth'})}}>
+      {user ? (
+        <Link to={"/map"} style={{ display: "flex", justifyContent: "center" }}>
           <NavLogo src={Logo} alt="navLogo"></NavLogo>
         </Link>
-      }
+      ) : (
+        <Link
+          to={"/"}
+          onClick={() => {
+            window.scroll({ top: 0, behavior: "smooth" });
+          }}
+        >
+          <NavLogo src={Logo} alt="navLogo"></NavLogo>
+        </Link>
+      )}
     </NavBarContainer>
   );
 }

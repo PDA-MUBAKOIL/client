@@ -17,14 +17,16 @@ export default function CommonButton({ text, onClick, status }: ButtonProp) {
           // paddingLeft: rem("107px"),
           // paddingRight: rem("107px"),
           height: rem("7vh"),
-          backgroundColor: status === "disabled" ? "rgba(0, 0, 0, 0.2)" : "#C17878",
-          color: status === "disabled" ? "#fff" : '',
+          backgroundColor:
+            status === "disabled" ? "rgba(0, 0, 0, 0.2)" : "#C17878",
+          color: status === "disabled" ? "#fff" : "",
           maxWidth: "fit-content",
-          minWidth: rem("16em"),
+          minWidth: rem("70vw"),
+          fontSize: rem("90%"),
         },
       }}
       onClick={onClick}
-      disabled={status === 'disabled' && true}
+      disabled={status === "disabled" && true}
     >
       {text}
     </Button>

@@ -10,13 +10,12 @@ import { useAppDispatch, useAppSelector } from "../../lib/hooks/reduxHooks";
 import { setSearch } from "../../store/reducers/Drink/search";
 import { searchDrink } from "../../lib/api/drinks";
 
-
 const LoginSearchPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  height: calc(100vh - 134px);
   align-items: center;
+  margin-bottom: 2vh;
 `;
 
 const ListItems = styled.div`
@@ -24,8 +23,7 @@ const ListItems = styled.div`
   flex-direction: column;
   padding: 5px 18px;
   gap: 14px;
-  height: calc(100vh - 274px);
-  overflow-y: scroll;
+  height: calc(100vh - 277px);
 `;
 
 export default function LoginSearchPage() {
@@ -67,61 +65,86 @@ export default function LoginSearchPage() {
   const search = useAppSelector((state) => state.search.search);
   const dispatch = useAppDispatch();
 
-
   function onClickTag(tag: string) {
-    dispatch(setSearch('#'+tag));
-    searchDrink(tag,null,null,null).then(data=>{
-      if(data !== undefined){setResult(data.data);}
-    })
+    dispatch(setSearch("#" + tag));
+    searchDrink(tag, null, null, null).then((data) => {
+      if (data !== undefined) {
+        setResult(data.data);
+      }
+    });
   }
 
   function onClickRegion(tag: string) {
-    dispatch(setSearch('#'+tag));
-    searchDrink(null,null,null,tag).then(data=>{
-      if(data !== undefined){setResult(data.data);}
-    })
+    dispatch(setSearch("#" + tag));
+    searchDrink(null, null, null, tag).then((data) => {
+      if (data !== undefined) {
+        setResult(data.data);
+      }
+    });
   }
 
-  useEffect(() => {
-  }, []);
+  useEffect(() => {}, []);
   return (
     <LoginSearchPageContainer>
-      <Flex h="110px" align="center" justify="center">
-        <SearchBar setResult={setResult} placeHolder="술의 도수를 검색해보세요. ex) 5, 7"/>
+      <Flex h="16vh" align="center" justify="center">
+        <SearchBar
+          setResult={setResult}
+          placeHolder="술의 도수를 검색해보세요. ex) 5, 7"
+        />
       </Flex>
       {search === "" ? (
-        <Flex direction="column" w="90vw">
-          <div style={{color:'rgb(0,0,0,0.3)', width:'90vw', padding:'5px', fontSize: '14px'}}>음식태그를 눌러보세요</div>
-          <Flex wrap="wrap" gap="5px" w="90vw" mb="30">
-            {TagContent.map((tag, idx) => {
-              return (
-                <TagButton
-                  key={idx}
-                  text={tag}
-                  onClick={() => {
-                    onClickTag(tag);
-                  }}
-                  type="food"
-                />
-              );
-            })}
+        <div style={{ height: "calc(100vh - 243px)", overflowY: "scroll" }}>
+          <Flex direction="column" w="90vw">
+            <div
+              style={{
+                color: "rgb(0,0,0,0.3)",
+                width: "90vw",
+                padding: "5px",
+                fontSize: "14px",
+              }}
+            >
+              음식태그를 눌러보세요
+            </div>
+            <Flex wrap="wrap" gap="5px" w="90vw" mb="30">
+              {TagContent.map((tag, idx) => {
+                return (
+                  <TagButton
+                    key={idx}
+                    text={tag}
+                    onClick={() => {
+                      onClickTag(tag);
+                    }}
+                    type="food"
+                  />
+                );
+              })}
+            </Flex>
+            <div
+              style={{
+                color: "rgb(0,0,0,0.3)",
+                width: "90vw",
+                padding: "5px",
+                fontSize: "14px",
+              }}
+            >
+              지역태그를 눌러보세요
+            </div>
+            <Flex wrap="wrap" gap="5px" w="90vw">
+              {RegionTag.map((tag, idx) => {
+                return (
+                  <TagButton
+                    key={idx}
+                    text={tag}
+                    onClick={() => {
+                      onClickRegion(tag);
+                    }}
+                    type="region"
+                  />
+                );
+              })}
+            </Flex>
           </Flex>
-          <div style={{color:'rgb(0,0,0,0.3)', width:'90vw', padding:'5px', fontSize: '14px'}}>지역태그를 눌러보세요</div>
-          <Flex wrap="wrap" gap="5px" w="90vw">
-            {RegionTag.map((tag, idx) => {
-              return (
-                <TagButton
-                  key={idx}
-                  text={tag}
-                  onClick={() => {
-                    onClickRegion(tag);
-                  }}
-                  type="region"
-                />
-              );
-            })}
-          </Flex>
-        </Flex>
+        </div>
       ) : (
         <ListItems>
           {result.map((item, idx) => (

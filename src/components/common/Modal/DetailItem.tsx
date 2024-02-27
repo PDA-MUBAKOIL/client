@@ -10,34 +10,39 @@ import { RootState } from "../../../store/store";
 import MyReviewContainer from "../Review/MyReviewContainer";
 import { getAllWish } from "../../../store/reducers/Review/allReview";
 import OtherReview from "../Review/OtherReview";
-import SubmitButton from '../../../assets/img/Modal/submit.svg';
-import { deletedWish, getWish, updateWish, writeWish } from "../../../store/reducers/Review/myReview";
+import SubmitButton from "../../../assets/img/Modal/submit.svg";
+import {
+  deletedWish,
+  getWish,
+  updateWish,
+  writeWish,
+} from "../../../store/reducers/Review/myReview";
 import { setDrinkDetail } from "../../../store/reducers/Drink/drinkDetail";
 import { setSearch } from "../../../store/reducers/Drink/search";
 import { isWish } from "../../../lib/api/wish";
 import { useCookies } from "react-cookie";
 
 export type DetailType = {
-  _id: string,
-  name: string,
-  percent: string,
-  spercent: Array<number>,
-  imgUrl: string,
-  tags: Array<string>,
-  description: string,
+  _id: string;
+  name: string;
+  percent: string;
+  spercent: Array<number>;
+  imgUrl: string;
+  tags: Array<string>;
+  description: string;
   brewerId: {
-      _id: string,
-      name: string,
-      link: string,
-      tel: string,
-      __v: number,
-      id: string
-  },
-  region: string,
-  material: string,
-  capacity: string,
-  __v: number,
-  id: string
+    _id: string;
+    name: string;
+    link: string;
+    tel: string;
+    __v: number;
+    id: string;
+  };
+  region: string;
+  material: string;
+  capacity: string;
+  __v: number;
+  id: string;
 };
 
 type DetailProps = {
@@ -97,12 +102,11 @@ const ReviewInput = styled.textarea<{ state: string }>`
     outline: none;
   }
 
-  ${(props) => 
-    props.state === 'disabled' &&
+  ${(props) =>
+    props.state === "disabled" &&
     `
       background-color: rgba(0, 0, 0, 0.1)
-    `
-  }
+    `}
 `;
 
 const ReviewFont = styled.h3`
@@ -120,13 +124,13 @@ const ReviewList = styled.div`
   gap: 15px;
   overflow-y: scroll;
   padding: 0 0 20px 0;
-`
+`;
 
 const ReviewInputContainer = styled.div`
   display: flex;
   width: 100%;
   padding-top: 10px;
-`
+`;
 
 const ClickButton = styled.button<{ state: string }>`
   background-color: #c17878;
@@ -145,96 +149,93 @@ const ClickButton = styled.button<{ state: string }>`
     props.state === "disabled" &&
     `
       background-color: rgba(0, 0, 0, 0.2)
-    `
-  }
+    `}
 `;
 
 const ToggleContainer = styled.div`
   display: flex;
   width: 100%;
   padding: 15px 0 25px 0;
-`
+`;
 
 export default function DetailItem({ detail }: DetailProps) {
-  const { imgUrl, name, percent, material, capacity, description, tags } = detail;
+  const { imgUrl, name, percent, material, capacity, description, tags } =
+    detail;
 
   const [isLike, setIsLike] = useState<boolean>(false);
-  
+
   const dispatch = useAppDispatch();
   const [isReview, setIsReview] = useState<boolean>(false);
   const userId = useAppSelector((state: RootState) => state.user.user.id);
   const isUser = useAppSelector((state: RootState) => state.user.isUser);
 
-
-  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+  const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
   // 토큰값 가져오기
-  const token = cookies['authToken'];
+  const token = cookies["authToken"];
 
   const [review, setReview] = useState<string>("");
 
   const onInputChange = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       setReview(e.target.value);
-    }, []
-  )
+    },
+    []
+  );
 
-  function addWish(){
+  function addWish() {
     const data = {
-      "drinkId": detail._id,
-      "item": {
-        "token": token,
-        "userId": userId,
+      drinkId: detail._id,
+      item: {
+        token: token,
+        userId: userId,
         review,
-        "imgUrl": "",
-        "isPublic": true,
-      }
-    }
-    dispatch(writeWish(data))
-    .then((data)=>{
+        imgUrl: "",
+        isPublic: true,
+      },
+    };
+    dispatch(writeWish(data)).then((data) => {
       setIsLike(true);
-    })
+    });
   }
 
-  function deleteWish(){
+  function deleteWish() {
     const data = {
-      "drinkId": detail._id,
-      "item": {
-        "token": token,
-        "userId": userId,
+      drinkId: detail._id,
+      item: {
+        token: token,
+        userId: userId,
         review,
-        "imgUrl": "",
-        "isPublic": true,
-      }
-    }
-    dispatch(deletedWish(data))
-    .then((data)=>{
+        imgUrl: "",
+        isPublic: true,
+      },
+    };
+    dispatch(deletedWish(data)).then((data) => {
       setIsLike(false);
-    })
+    });
   }
 
-  function updatedWish(){
+  function updatedWish() {
     const data = {
-      "drinkId": detail._id,
-      "item": {
-        "token": token,
-        "userId": userId,
+      drinkId: detail._id,
+      item: {
+        token: token,
+        userId: userId,
         review,
-        "imgUrl": "",
-        "isPublic": true,
-      }
-    }
-    console.log('리뷰보내기', data)
-    dispatch(updateWish(data))
-      .then((res) => {
-        setReview('');
-      })
+        imgUrl: "",
+        isPublic: true,
+      },
+    };
+    console.log("리뷰보내기", data);
+    dispatch(updateWish(data)).then((res) => {
+      setReview("");
+    });
   }
 
   useEffect(() => {
-    isWish(token,detail._id).then((data)=>{
+    isWish(token, detail._id).then((data) => {
       setIsLike(data.data.result);
-    })
-  }, [dispatch])
+    });
+  }, [dispatch]);
 
   return (
     <>
@@ -245,7 +246,7 @@ export default function DetailItem({ detail }: DetailProps) {
       )}
       {!isReview ? (
         <>
-          <div style={{ overflowY: 'scroll' }}>
+          <div style={{ overflowY: "scroll" }}>
             <ImageDiv src={imgUrl} />
             <Content>
               <MainFont>{name}</MainFont>
@@ -293,15 +294,16 @@ export default function DetailItem({ detail }: DetailProps) {
                   <SubFont>{description}</SubFont>
                 </ContentItem>
               </Group>
-              
+
               <TagDiv>
-                {tags.map((tag, idx) => 
-                  <TagButton text={tag} onClick={() =>{}} type="food" />
-                )}
+                {tags.map((tag, idx) => (
+                  <TagButton text={tag} onClick={() => {}} type="food" />
+                ))}
               </TagDiv>
             </Content>
           </div>
-          {isLike ? (
+          {isUser &&
+            (isLike ? (
               <img
                 src={FillHeart}
                 alt=""
@@ -315,7 +317,7 @@ export default function DetailItem({ detail }: DetailProps) {
                 style={{ width: "20px" }}
                 onClick={() => addWish()}
               />
-            )}
+            ))}
         </>
       ) : (
         <>
@@ -325,18 +327,24 @@ export default function DetailItem({ detail }: DetailProps) {
             <OtherReview />
           </ReviewList>
           <ReviewInputContainer>
-            <ReviewInput 
-              disabled={!isLike && true} 
-              state={isLike ? "active" : "disabled"} 
-              placeholder={isLike ? "리뷰를 남겨보세요!" : "좋아요를 눌러 리뷰를 남겨보세요!"} 
+            <ReviewInput
+              disabled={!isLike && true}
+              state={isLike ? "active" : "disabled"}
+              placeholder={
+                isLike
+                  ? "리뷰를 남겨보세요!"
+                  : "좋아요를 눌러 리뷰를 남겨보세요!"
+              }
               onChange={(e) => onInputChange(e)}
               value={review}
             />
-            <ClickButton 
-              disabled={!isLike && true} 
-              state={isLike ? "active" : "disabled"} 
+            <ClickButton
+              disabled={!isLike && true}
+              state={isLike ? "active" : "disabled"}
               onClick={() => updatedWish()}
-            ><img src={SubmitButton} alt="" /></ClickButton>
+            >
+              <img src={SubmitButton} alt="" />
+            </ClickButton>
           </ReviewInputContainer>
         </>
       )}

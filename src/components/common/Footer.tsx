@@ -5,14 +5,13 @@ import map from "../../assets/img/Footer/map.svg";
 import wish from "../../assets/img/Footer/wish.svg";
 import my from "../../assets/img/Footer/my.svg";
 import styled from "styled-components";
-import { useNavigate } from "react-router";
-import { useAppDispatch } from "../../lib/hooks/reduxHooks";
-import { setSearch } from "../../store/reducers/Drink/search";
+import { useNavigate } from "react-router-dom";
 
 const FooterContainer = styled.div`
   position: fixed;
   bottom: 0;
   width: 100%;
+  height: 10vh;
   background-color: #fff;
   border-top: solid 1px #e8e8e8;
 `;
@@ -32,19 +31,20 @@ const FooterItem = styled.div`
   justify-content: center;
   align-items: center;
   width: 40px;
-  gap: 6px;
+  gap: 2px;
   cursor: pointer;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 `;
 
 const FooterItemImg = styled.img`
-  width: 26px;
-  height: 26px;
+  width: 7vw;
+  height: 5vh;
 `;
 
 const FooterItemTxt = styled.div`
-  font-size: 10px;
+  font-size: 1.8vh;
   text-align: center;
+  color: rgba(0, 0, 0, 0.5);
 `;
 
 function FooterItemComponent(props: { src: string; txt: string; url: string }) {

@@ -8,24 +8,19 @@ import InputContainer from "../../components/common/InputContainer";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useAppDispatch } from "../../lib/hooks/reduxHooks";
-import Drinks from '../../assets/img/Nav/drinks-icon.svg';
-import { alreadyEmail, checkEmail, sendEmail, setUserEmail } from "../../store/reducers/Auth/email";
+import Drinks from "../../assets/img/Nav/drinks-icon.svg";
+import {
+  alreadyEmail,
+  checkEmail,
+  sendEmail,
+  setUserEmail,
+} from "../../store/reducers/Auth/email";
 import { RootState } from "../../store/store";
 import { userSignup } from "../../store/reducers/Auth/user";
-
-const SignupBody = styled.div`
-  background-color: #ebdcdc;
-  height: calc(100vh - 62px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 48px;
-  padding-top: 90px;
-  overflow-y: hidden;
-`;
+import { SignupBody, ToLogin } from "./nonLoginLogIn";
 
 const MainFont = styled(Text)`
-  font-size: 20px;
+  font-size: 1rem;
 `;
 
 const HelloBox = styled.div`
@@ -46,11 +41,6 @@ const ButtonBox = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 15px;
-`;
-
-const ToLogin = styled(Link)`
-  text-decoration: none;
-  color: #717171;
 `;
 
 export default function NonLoginSignUp() {
@@ -79,42 +69,44 @@ export default function NonLoginSignUp() {
   );
 
   function checkAlreadyEmail(email: string) {
-    dispatch(alreadyEmail(email))
-      .then((res) => {
-        console.log('이미 있는지', res.payload)
-        if (res.payload.result === true) {
-          navigate('/signup')
-          setIsAlready(true);
-        } else {
-          setIsClick(true)
-          console.log('email', email)
-          dispatch(setUserEmail(email))
-          dispatch(sendEmail(email))
-        }
-      })
+    dispatch(alreadyEmail(email)).then((res) => {
+      console.log("이미 있는지", res.payload);
+      if (res.payload.result === true) {
+        navigate("/signup");
+        setIsAlready(true);
+      } else {
+        setIsClick(true);
+        console.log("email", email);
+        dispatch(setUserEmail(email));
+        dispatch(sendEmail(email));
+      }
+    });
   }
   const [isClick, setIsClick] = useState<boolean>(false);
 
-  const onSubmitSignup = useCallback((email: string, nickname: string, password: string) => {
-    const data = { 
-      "email": email, 
-      "password": password,
-      "name": nickname
-    };
-    dispatch(userSignup(data)).then((res: any) => {
-      if (res.result && res.result === false) {
-        navigate('/signup');
-      } else {
-        navigate('/login');
-      }
-    });
-  }, []);
-  
+  const onSubmitSignup = useCallback(
+    (email: string, nickname: string, password: string) => {
+      const data = {
+        email: email,
+        password: password,
+        name: nickname,
+      };
+      dispatch(userSignup(data)).then((res: any) => {
+        if (res.result && res.result === false) {
+          navigate("/signup");
+        } else {
+          navigate("/login");
+        }
+      });
+    },
+    []
+  );
+
   return (
     <SignupBody>
       <HelloBox>
         <MainFont>함께 하실래요?</MainFont>
-        <img src={Logo} alt="" style={{ width: "105px" }} />
+        <img src={Logo} alt="" style={{ width: "30vw" }} />
       </HelloBox>
       {!isEmail ? (
         <>
@@ -127,7 +119,11 @@ export default function NonLoginSignUp() {
                 onInputChange(e.target.value, setEmail);
               }}
             />
-            {isAlready && <div style={{ color: 'red', fontSize: '12px', paddingLeft: 12 }}>이미 존재하는 이메일입니다.</div>}
+            {isAlready && (
+              <div style={{ color: "red", fontSize: "12px", paddingLeft: 12 }}>
+                이미 존재하는 이메일입니다.
+              </div>
+            )}
             {isClick && (
               <InputContainer
                 value={authNum}
@@ -144,7 +140,7 @@ export default function NonLoginSignUp() {
               <CommonButton
                 text="인증번호 요청"
                 onClick={() => {
-                  checkAlreadyEmail(email)
+                  checkAlreadyEmail(email);
                 }}
                 status={email ? "active" : "disabled"}
               />
@@ -152,7 +148,7 @@ export default function NonLoginSignUp() {
               <CommonButton
                 text="이메일 인증"
                 onClick={() => {
-                  dispatch(checkEmail(authNum))
+                  dispatch(checkEmail(authNum));
                 }}
                 status={authNum ? "active" : "disabled"}
               />
@@ -203,7 +199,6 @@ export default function NonLoginSignUp() {
           </ButtonBox>
         </>
       )}
-      <img src={Drinks} alt="" style={{ position: 'fixed', bottom: '0' }} />
     </SignupBody>
   );
 }
