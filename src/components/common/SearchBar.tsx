@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Input,MantineThemeProvider, createTheme} from '@mantine/core';
 import classes from '../../styles/Navbar.module.css';
 import search from '../../assets/img/SearchBar/search.png';
 import styled from 'styled-components';
-import { listUp } from '../../lib/api/drinks';
+import { listUp, searchDrink } from '../../lib/api/drinks';
 import { useAppDispatch, useAppSelector } from '../../lib/hooks/reduxHooks';
 import { setSearch } from '../../store/reducers/Drink/search';
 import { useLocation } from "react-router-dom";
@@ -63,28 +63,45 @@ export default function SearchBar({setResult, placeHolder}:TSearch) {
 
     const onSubmitSearch = (e:React.FormEvent<HTMLFormElement>)=>{
       e.preventDefault();
-      listUp().then(data=>{
-        setResult(data.data);
-      })
+      if(location.pathname === '/search'){
+        searchDrink(null,Number(searchWord),null).then(data=>{
+          if(data !== undefined){setResult(data.data);}
+          else(setResult([]))
+        })
+      }else{
+        searchDrink(null,null,searchWord).then(data=>{
+          if(data !== undefined){
+            setResult(data.data);}
+          else(setResult([]))
+      })}
     }
 
     const onChangeSearch = (e:React.ChangeEvent<HTMLInputElement>)=>{
       dispatch(setSearch(e.target.value));
-      listUp().then(data=>{
-        setResult(data.data);
+      if(location.pathname === '/search'){
+        searchDrink(null,Number(e.target.value),null).then(data=>{
+          if(data !== undefined){setResult(data.data);}
+          else(setResult([]))
+        })
+      }else{
+        searchDrink(null,null,e.target.value).then(data=>{
+          if(data !== undefined){setResult(data.data);console.log(data.data);}
+          else(setResult([]))
       })
-    }
+    }}
 
   useEffect(()=>{
-    if(location.state){
+    if(location.state !== null && location.state !== ''){
       dispatch(setSearch(location.state['tag']));
-      listUp().then(data=>{
-        setResult(data.data);
+      searchDrink(location.state['tag'].split('#')[1],null,null).then(data=>{
+        if(data !== undefined){setResult(data.data);}
+        location.state = '';
       })
-    }else{
+    }else if(location.state === null ){
       dispatch(setSearch(''));
+      location.state = '';
     }
-  },[])
+  },[searchWord])
 
   return (
     <MantineThemeProvider theme={theme}>

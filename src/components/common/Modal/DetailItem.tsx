@@ -13,6 +13,7 @@ import OtherReview from "../Review/OtherReview";
 import SubmitButton from '../../../assets/img/Modal/submit.svg';
 import { getWish, updateWish } from "../../../store/reducers/Review/myReview";
 import { setDrinkDetail } from "../../../store/reducers/Drink/drinkDetail";
+import { setSearch } from "../../../store/reducers/Drink/search";
 
 export type DetailType = {
   _id: string,
@@ -163,6 +164,7 @@ export default function DetailItem({ detail }: DetailProps) {
     }, []
   )
 
+
   useEffect(() => {
     dispatch(getAllWish(_id))
     const data = {
@@ -228,7 +230,7 @@ export default function DetailItem({ detail }: DetailProps) {
               
               <TagDiv>
                 {tags.map((tag, idx) => 
-                  <TagButton text={tag} onClick={() => console.log("태그 클릭")} />
+                  <TagButton text={tag} onClick={() =>{}} />
                 )}
               </TagDiv>
             </Content>

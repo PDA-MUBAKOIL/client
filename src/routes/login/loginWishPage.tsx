@@ -24,10 +24,11 @@ export default function LoginWishPage() {
   const token = cookies['authToken'];
 
   useEffect(()=>{
-    getMyWishes(user.user.id,null,token).then(data=>{
-      setResult(data.data.map((v)=>{
-        return v['drinkId']
-      }));
+    getMyWishes(null).then(data=>{
+      console.log(data);
+      // setResult(data.data.map((v:)=>{
+      //   return v['drinkId']
+      // }));
     })
   },[])
   return (

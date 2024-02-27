@@ -14,14 +14,11 @@ type TagProp = {
 export default function TagButton({ text, onClick }: TagProp) {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
 
   function onClickTag(){
     dispatch(setIsShow(false));
     dispatch(setSearch('#'+text))
-    if(location.pathname !== '/search'){
-      navigate('/search',{state:{tag:'#'+text}});
-    }
+    navigate('/search',{state:{tag:'#'+text}});
     onClick();
   }
 

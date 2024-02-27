@@ -8,7 +8,7 @@ import TagButton from "../../components/common/TagButton";
 import DrinkDetailCard from "../../components/common/DrinkDetailCard";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks/reduxHooks";
 import { setSearch } from "../../store/reducers/Drink/search";
-import { listUp } from "../../lib/api/drinks";
+import { searchDrink } from "../../lib/api/drinks";
 
 
 const LoginSearchPageContainer = styled.div`
@@ -40,7 +40,7 @@ export default function LoginSearchPage() {
     "과일/디저트",
     "찜/탕",
     "일식",
-    "견과류/마른 안주",
+    "견과류/마른안주",
   ];
 
   const [result, setResult] = useState<Array<TSearchResult>>([]);
@@ -49,14 +49,14 @@ export default function LoginSearchPage() {
 
 
   function onClickTag(tag: string) {
-    dispatch(setSearch(tag));
-    listUp().then((data) => {
-      setResult(data.data);
-    });
+    dispatch(setSearch('#'+tag));
+    searchDrink(tag,null,null).then(data=>{
+      if(data !== undefined){setResult(data.data);}
+    })
   }
 
   useEffect(() => {
-  }, [search]);
+  }, []);
   return (
     <LoginSearchPageContainer>
       <Flex h="110px" align="center" justify="center">
@@ -72,7 +72,7 @@ export default function LoginSearchPage() {
                   key={idx}
                   text={tag}
                   onClick={() => {
-                    onClickTag("#" + tag);
+                    onClickTag(tag);
                   }}
                 />
               );
