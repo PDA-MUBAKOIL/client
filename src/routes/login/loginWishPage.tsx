@@ -7,6 +7,7 @@ import { Flex } from "@mantine/core";
 import { useAppSelector } from "../../lib/hooks/reduxHooks";
 import { useCookies } from "react-cookie";
 import AlertHeart from "../../assets/img/Modal/alert-heart.png";
+import { RootState } from "../../store/store";
 
 export interface Drink {
   brewerId: string;
@@ -46,7 +47,7 @@ const ListItems = styled.div`
 
 export default function LoginWishPage() {
   const [result, setResult] = useState<Array<TSearchResult>>([]);
-  const user = useAppSelector((state) => state.user);
+  const user = useAppSelector((state: RootState) => state.user);
   const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
 
   // 토큰값 가져오기
@@ -66,28 +67,31 @@ export default function LoginWishPage() {
       <div style={{ width: "90vw", paddingTop: "30px", fontSize: "5vw" }}>
         <b>{user.user.name}</b>님의 무박오일 여행
       </div>
-      <div
-        style={{
-          width: "90vw",
-          height: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          borderRadius: "10px",
-          fontSize: "2.1vh",
-          gap: "3vh",
-          fontWeight: "bold",
-        }}
-      >
-        <img src={AlertHeart} alt="" style={{ width: "25vw" }} />
-        하트를 눌러 위시리스트에 추가해보세요!
-      </div>
-      <ListItems>
-        {result.map((item, idx) => (
-          <DrinkDetailCard key={idx} {...item} />
-        ))}
-      </ListItems>
+      {result ? (
+        <ListItems>
+          {result.map((item, idx) => (
+            <DrinkDetailCard key={idx} {...item} />
+          ))}
+        </ListItems>
+      ) : (
+        <div
+          style={{
+            width: "90vw",
+            height: "100vh",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            borderRadius: "10px",
+            fontSize: "2.1vh",
+            gap: "3vh",
+            fontWeight: "bold",
+          }}
+        >
+          <img src={AlertHeart} alt="" style={{ width: "25vw" }} />
+          하트를 눌러 위시리스트에 추가해보세요!
+        </div>
+      )}
     </Flex>
   );
 }

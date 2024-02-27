@@ -8,9 +8,9 @@ import searchReducer from "./reducers/Drink/search";
 import userReducer from "./reducers/Auth/user";
 import emailReducer from "./reducers/Auth/email";
 import drinkListReducer from "./reducers/Drink/allDrink";
-import modalReducer from './reducers/Modal/page';
-import myReviewReducer from './reducers/Review/myReview';
-import allReviewReducer from './reducers/Review/allReview';
+import modalReducer from "./reducers/Modal/page";
+import myReviewReducer from "./reducers/Review/myReview";
+import allReviewReducer from "./reducers/Review/allReview";
 
 import storage from "redux-persist/lib/storage";
 import {
@@ -28,7 +28,7 @@ import logger from "redux-logger";
 const rootPersistConfig = {
   key: "root",
   storage: storage,
-  whitelist: ['user', 'email'],
+  whitelist: ["user", "email", "drinkDetail"],
 };
 
 const myMiddlewares = [logger];

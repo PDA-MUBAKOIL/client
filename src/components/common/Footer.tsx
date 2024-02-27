@@ -21,7 +21,7 @@ const FooterItems = styled.div`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;
-  height: 71px;
+  height: 100%;
   width: 100%;
 `;
 
