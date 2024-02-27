@@ -177,16 +177,11 @@ export default function LoginMapPage() {
 
   useEffect(()=>{
     getMyRegionWishCnt(token).then((data)=>{
-      console.log(data)
       setCnt(data.data.regionCount)
     })
     setMap(defaultMap);
-    console.log(HEIGHT)
-    console.log(WIDTH)
     setMapw(document.getElementsByClassName('map')[0].clientWidth-65);
     setMaph(document.getElementsByClassName('map')[0].clientHeight-97.5);
-    console.log(document.getElementsByClassName('map')[0].clientWidth);
-    console.log(document.getElementsByClassName('map')[0].clientHeight);
   },[isCity])
 
   return (
