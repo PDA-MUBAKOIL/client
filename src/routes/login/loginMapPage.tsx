@@ -25,6 +25,8 @@ import daegu from '../../assets/img/Map/대구.png';
 import busan from '../../assets/img/Map/부산.png';
 import ulsan from '../../assets/img/Map/울산.png';
 import gwangju from '../../assets/img/Map/광주.png';
+import axios from 'axios';
+import { listUp } from '../../lib/api/drinks';
 
 
 type PinType ={
@@ -91,25 +93,24 @@ function MarkerComponent(props:{region:string, fullName:string, left:number, top
   var clickState = false;
 
   const onClickMarker = () => {
-    if(clickState){
-      getMyWishes(user.id, props.region).then(data=>{
-        const action = setCardList({
-          title: props.fullName,
-          list: data.data.map((v,idx)=>{return{...v,drinkId:`drinkId${idx}`}})
-        })
-        dispatch(action);
-        dispatch(setIsDetail(false));
-        dispatch(setIsShow(true));
-      })}else{
-        props.setMap(props.img);
-        clickState = true;
-      }
+    // if(clickState){
+    //   getMyWishes(props.region).then(data=>{
+    //     const action = setCardList({
+    //       title: props.fullName,
+    //       list: data.data.map((v,idx)=>{return{...v,drinkId:`drinkId${idx}`}})
+    //     })
+    //     dispatch(action);
+    //     dispatch(setIsDetail(false));
+    //     dispatch(setIsShow(true));
+    //   })}else{
+    //     props.setMap(props.img);
+    //     clickState = true;
+    //   }
   }
 
 
 
   useEffect(()=>{
-
   
   },[])
 
@@ -151,8 +152,9 @@ export default function LoginMapPage() {
 
 
   useEffect(()=>{
-    getMyRegionWishCnt(user.id).then((data)=>{
+    getMyRegionWishCnt().then((data)=>{
       setCnt(data.data)
+      console.log(data)
     })
     setMap(defaultMap);
 

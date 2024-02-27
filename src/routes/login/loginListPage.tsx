@@ -5,13 +5,12 @@ import { Flex} from '@mantine/core';
 import styled from 'styled-components';
 import DrinkCard from "../../components/common/DrinkCard";
 import { Text } from "@mantine/core";
-import { useLocation } from 'react-router';
+import { listUp } from '../../lib/api/drinks';
 
 const LoginSearchPageContainer = styled.div`
   display:flex;
   flex-direction: column;
   overflow: hidden;
-  height: calc(100vh - 134px)
 
 `
 
@@ -20,7 +19,6 @@ const ListItems = styled.div`
   flex-wrap: wrap;
   padding: 0 18px;
   gap: 12px;
-  height: calc(100vh - 274px);
   overflow-y:scroll;
 `;
 
@@ -30,79 +28,13 @@ const MainText = styled(Text)`
 `;
 
 export default function LoginListPage() {
-    // 임시데이터
-  const temp = {      
-    _id: "65dc134f16170b4ea7a12928",
-    percent: "12%",
-    spercent: [
-        12
-    ],
-    tags: [
-        "양식",
-        "기름진음식"
-    ],
-    description: "오크에 숙성했기 때문에 깊은 향과 맛을 가지고 있답니다.색은 루비처럼 붉은빛을 띠며 약간의 단맛이 입안을 감싼 후에 상큼한 신맛으로 마무리됩니다.",
-    brewerId: {
-        "_id": "65dc134f16170b4ea7a1276a",
-        "name": "갈기산포도농원",
-        "link": "https://smartstore.naver.com/galgisanwine",
-        "tel": "01047153100",
-        "__v": 0,
-        "id": "65dc134f16170b4ea7a1276a"
-    },
-    region: "충북",
-    material: "머루, 포도, 백설탕, 효모, 메타중아황산칼륨, 아황산함유",
-    capacity: "750ml",
-    __v: 0,
-    id: "65dc134f16170b4ea7a12928"
-}
 
-  const data:Array<TSearchResult> = [
-    {
-      imgUrl: "https://thesool.com/common/imageView.do?targetId=PR00001095&targetNm=PRODUCT",
-      name: "이천미 예술",
-      ...temp
-    },
-    {
-      imgUrl: "https://thesool.com/common/imageView.do?targetId=PR00001220&targetNm=PRODUCT",
-      name: "우곡소주",
-      ...temp
-    },
-    {
-      imgUrl: "https://thesool.com/common/imageView.do?targetId=PR00001218&targetNm=PRODUCT",
-      name: "맵시 막걸리 블랙라벨",
-      ...temp
-    },
-    {
-      imgUrl: "https://thesool.com/common/imageView.do?targetId=PR00001212&targetNm=PRODUCT",
-      name: "조오탁",
-      ...temp
-    },
-    {
-      imgUrl: "https://thesool.com/common/imageView.do?targetId=PR00001197&targetNm=PRODUCT",
-      name: "무박이일",
-      ...temp
-    },
-    {
-      imgUrl: "https://thesool.com/common/imageView.do?targetId=PR00001190&targetNm=PRODUCT",
-      name: "탱자C",
-      ...temp
-    },
-    {
-      imgUrl: "https://thesool.com/common/imageView.do?targetId=PR00001187&targetNm=PRODUCT",
-      name: "BURNT 번트",
-      ...temp
-    },
-    {
-      imgUrl: "https://thesool.com/common/imageView.do?targetId=PR00001218&targetNm=PRODUCT",
-      name: "맵시 막걸리 블랙라벨",
-      ...temp
-    },
-  ];
-
-
-  const [result, setResult] = useState(data.concat(data));
-
+  const [result, setResult] = useState<Array<TSearchResult>>([]);
+  useEffect(()=>{
+    listUp().then((data)=>{
+      setResult(data.data)
+    });
+  },[])
 
   return (
     <LoginSearchPageContainer>

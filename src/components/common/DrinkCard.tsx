@@ -15,8 +15,8 @@ const DrinkContainer = styled(Container)`
   width: 110px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  height:144px;
   gap: 8px;
   padding: 0;
   margin: 8px 0;
@@ -47,10 +47,8 @@ export default function DrinkCard({ id, url, name }: DrinkProp) {
   const dispatch = useAppDispatch();
 
   function onDrinkDetailClick() {
-    console.log('아이디', id)
-    dispatch(setDrinkDetail({ drinkId: id }))
-      .then((res) => console.log('데이터어', res))
-
+    const action = setDrinkDetail({ drinkId: id });
+    dispatch(action);
     dispatch(setIsDetail(true));
     dispatch(setIsShow(true));
   }
