@@ -30,6 +30,7 @@ pipeline {
         echo 'copy configuration files'
         // no config files yet
         sh 'pwd'
+        sh 'cp /var/jenkins_home/workspace/config/.env.react .env'
       }
     }
     stage('build-react') {
