@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../lib/hooks/reduxHooks";
 import styled from "styled-components";
 import FillHeart from "../../assets/img/Modal/fill-heart.svg";
@@ -9,6 +9,7 @@ import { useNavigate } from "react-router";
 import { useCookies } from "react-cookie";
 import { Button } from "@mantine/core";
 import { RootState } from "../../store/store";
+import { getMyWishes } from "../../lib/api/wish";
 
 const MyContainer = styled.div`
   height: 78vh;
@@ -69,9 +70,17 @@ export default function LoginMyPage() {
   const userState = useAppSelector((state: RootState) => state.user);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const [wishCnt,setWishCnt] = useState(0);
   const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
 
+  // 토큰값 가져오기
+  const token = cookies["authToken"];
+
+  useEffect(()=>{
+    getMyWishes(null,token).then(data=>{
+      setWishCnt(data.data.length);
+    })
+  })
   return (
     <MyContainer>
       <div>
@@ -87,7 +96,7 @@ export default function LoginMyPage() {
           <WishButton>
             <span>위시리스트</span>
             <img src={FillHeart} alt="" style={{ width: "6vw" }} />
-            <span>127</span>
+            <span>{wishCnt}</span>
           </WishButton>
         </WishContainer>
       </div>
