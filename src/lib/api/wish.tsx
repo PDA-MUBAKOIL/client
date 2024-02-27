@@ -18,8 +18,8 @@ export async function getMyWish(drinkId: string, userId: string, token: string) 
   });
 }
 
-export async function deleteMyWish(drinkId: string, userId: string, token: string) {
-  return await wishInstance.delete(`/${drinkId}/${userId}`, {
+export async function deleteMyWish(drinkId: string, token: string) {
+  return await wishInstance.delete(`/${drinkId}`, {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -40,7 +40,7 @@ export async function updateMyWish(
 
 export async function writeMyWish(
   drinkId: string,
-  item: { userId: string, review: string; imgUrl: string; isPublic: boolean },
+  item: { review: string; imgUrl: string; isPublic: boolean },
   token: string
 ) {
   return await wishInstance.post(`/${drinkId}`, { item }, {
@@ -51,7 +51,11 @@ export async function writeMyWish(
 }
 
 export async function getMyWishes(region: string | null, token: string) {
-  if(region === null)  return await wishInstance.get(`/`);
+  if(region === null)  return await wishInstance.get(`/`,{
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
   else return await wishInstance.get(`/`,{
     headers: {
       Authorization: `Bearer ${token}`
@@ -64,6 +68,14 @@ export async function getMyWishes(region: string | null, token: string) {
 
 export async function getMyRegionWishCnt(token: string) {
   return await wishInstance.get(`/regioncnt`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
+}
+
+export async function isWish(token:string,drinkId:string){
+  return await wishInstance.get(`/iswish/${drinkId}`, {
     headers: {
       Authorization: `Bearer ${token}`
     }

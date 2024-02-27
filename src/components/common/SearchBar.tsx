@@ -105,7 +105,7 @@ export default function SearchBar({setResult, placeHolder}:TSearch) {
 
   return (
     <MantineThemeProvider theme={theme}>
-      <Box maw={350} mx="auto">
+      <Box  mx="auto">
         <form onSubmit={onSubmitSearch}>
               <Input placeholder={placeHolder}
                   classNames={classes}

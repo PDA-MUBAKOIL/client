@@ -63,9 +63,9 @@ export default function LoginSearchPage() {
         <SearchBar setResult={setResult} placeHolder="술의 도수를 검색해보세요. ex) 5, 7"/>
       </Flex>
       {search === "" ? (
-        <Flex direction="column" w="350px">
-          <div style={{color:'rgb(0,0,0,0.3)', padding:'5px'}}>태그를 눌러보세요</div>
-          <Flex wrap="wrap" gap="5px">
+        <Flex direction="column" w="90vw">
+          <div style={{color:'rgb(0,0,0,0.3)', width:'90vw', padding:'5px'}}>태그를 눌러보세요</div>
+          <Flex wrap="wrap" gap="5px" w="90vw">
             {TagContent.map((tag, idx) => {
               return (
                 <TagButton

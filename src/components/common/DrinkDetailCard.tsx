@@ -10,6 +10,8 @@ import { setIsDetail, setIsShow } from "../../store/reducers/Drink/showModal";
 import { setDrinkDetail } from "../../store/reducers/Drink/drinkDetail";
 import { useNavigate } from "react-router-dom";
 import { setSearch } from "../../store/reducers/Drink/search";
+import { deleteMyWish, isWish, writeMyWish } from "../../lib/api/wish";
+import { useCookies } from "react-cookie";
 
 type TagProp = {
   text: string;
@@ -19,11 +21,11 @@ type TagProp = {
 const Card = styled.div`
   display: flex;
   flex-direction: row;
-  width: 321px;
+  width: 90vw;
   justify-content: space-between;
   align-items: flex-end;
   border-radius: 10px;
-  padding: 10px;
+  padding: 2vw;
   box-shadow: 0px 3px 10px 0 rgba(0, 0, 0, 0.25);
 `;
 
@@ -32,7 +34,7 @@ const CardContent = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 8px;
-  width: 280px;
+  width: 80vw;
 `;
 
 function TagButton({ text, onClick }: TagProp) {
@@ -44,7 +46,7 @@ function TagButton({ text, onClick }: TagProp) {
         height: rem("18px"),
         backgroundColor: "#DFBBBB",
         color: "#000",
-        fontSize: rem("8px"),
+        fontSize: '2.5vw',
         fontWeight: rem(400),
         borderRadius: rem("5px"),
         border: "solid 1px #C17878",
@@ -60,6 +62,9 @@ function TagButton({ text, onClick }: TagProp) {
 export default function DrinkDetailCard(item: TSearchResult) {
   const [isLike, setIsLike] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
+  // 토큰값 가져오기
+  const token = cookies['authToken'];
 
   function onCardClick() {
     dispatch(setDrinkDetail({drinkId: item.id}))
@@ -75,15 +80,36 @@ export default function DrinkDetailCard(item: TSearchResult) {
     navigate('/search',{state:{tag:'#'+text}});
   }
 
+
+  function addWish(){
+    writeMyWish(item.id,{review:'', imgUrl:'', isPublic:true},token )
+    .then((data)=>{
+      setIsLike(true);
+    })
+  }
+
+  function deleteWish(){
+    deleteMyWish(item.id,token).then((data)=>{
+      setIsLike(false);
+    });
+  }
+
+  useEffect(()=>{
+    isWish(token,item.id).then((data)=>{
+      setIsLike(data.data.result);
+    })
+
+  })
+
   return (
     <Card>
       <CardContent >
         <img onClick={onCardClick}
           src={item.imgUrl}
           alt={item.name}
-          style={{ width: "80px", height: "100px", objectFit: "contain" }}
+          style={{ width:'25vw', height: '10vh', objectFit: "contain" }}
         />
-        <Flex  gap="14px" direction="column" style={{ width: "100%" }}>
+        <Flex  gap="14px" direction="column" style={{ width: '60vw' }}>
           <Flex onClick={onCardClick} gap="7px" direction="column">
             <div style={{ fontSize: "14px" }}>{item.name}</div>
             <Flex gap="4px" direction="column">
@@ -112,7 +138,7 @@ export default function DrinkDetailCard(item: TSearchResult) {
               </Flex>
             </Flex>
           </Flex>
-          <div style={{width:'200px', display:"block"}}>
+          <div style={{width:'60vw', display:"block"}}>
             {item.tags.map((tag, idx) => {
               return <TagButton key={idx} text={tag} onClick={() => {onClickTag(tag)}} />;
             })}
@@ -124,14 +150,14 @@ export default function DrinkDetailCard(item: TSearchResult) {
           src={FillHeart}
           alt=""
           style={{ width: "20px" }}
-          onClick={() => setIsLike(false)}
+          onClick={deleteWish}
         />
       ) : (
         <img
           src={EmptyHeart}
           alt=""
           style={{ width: "20px" }}
-          onClick={() => setIsLike(true)}
+          onClick={addWish}
         />
       )}
     </Card>

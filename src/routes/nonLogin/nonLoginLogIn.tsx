@@ -87,7 +87,7 @@ export default function NonLoginLogIn() {
   const onSubmitLogin = useCallback((email: string, password: string) => {
     const data = { email, password };
     dispatch(userLogin(data)).then((res: any) => {
-      setCookie('authToken', res.payload.token);
+      setCookie('authToken', res.payload.user.token);
       console.log('로그인', res);
       if (res.type === "auth/userLogin/rejected") {
         navigate("/login");
