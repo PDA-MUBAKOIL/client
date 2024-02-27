@@ -7,26 +7,26 @@ import { logout } from "../../lib/api/users";
 import { userLogout } from "../../store/reducers/Auth/user";
 import { useNavigate } from "react-router";
 import { useCookies } from "react-cookie";
+import { Button } from "@mantine/core";
 
 const MyContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 10px 30px;
-  gap: 300px;
+  padding: 1vh 10vw;
+  gap: 30vh;
 `;
 
 const UserFont = styled.p`
-  font-size: 24px;
+  font-size: 5vw;
 `;
 
 const SubFont = styled.p`
-  font-size: 14px;
-  padding: 0 5px;
+  font-size: 3.5vw;
 `;
 
 const WishContainer = styled.div`
-  width: 332px;
-  padding: 15px 0;
+  width: 80vw;
+  padding: 1vh 0;
   background-color: #f0e9e9;
   border-radius: 20px;
   display: flex;
@@ -34,7 +34,7 @@ const WishContainer = styled.div`
 `;
 
 const WishButton = styled.div`
-  width: 72px;
+  width: 60vw;
   padding: 0 10px;
   display: flex;
   flex-direction: column;
@@ -42,23 +42,24 @@ const WishButton = styled.div`
   align-items: center;
   gap: 10px;
   color: #747474;
-  font-size: 12px;
+  font-size: 3vw;
 `;
 
 const CallContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 3vw;
+  color: rgba(0, 0, 0, 0.3);
 `;
 
 const CallDiv = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  color: rgba(0, 0, 0, 0.3);
-  font-size: 12px;
-  gap: 8px 8px;
+  font-size: 70%;
+  gap: 1vw;
 `;
+
 
 export default function LoginMyPage() {
   const userState = useAppSelector((state) => state.user);
@@ -74,10 +75,10 @@ export default function LoginMyPage() {
           <b>{userState.user.name}</b>님
         </UserFont>
         <SubFont>이메일 &nbsp; | &nbsp; {userState.user.email}</SubFont>
-        <WishContainer>
+        <WishContainer onClick={()=>{navigate('/wish')}}>
           <WishButton>
             <span>위시리스트</span>
-            <img src={FillHeart} alt="" style={{ width: "24px" }} />
+            <img src={FillHeart} alt="" style={{ width: "6vw" }} />
             <span>127</span>
           </WishButton>
         </WishContainer>
@@ -87,7 +88,7 @@ export default function LoginMyPage() {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          gap: "20px",
+          gap: "2vh",
         }}
       >
         <CallContainer>
@@ -99,16 +100,25 @@ export default function LoginMyPage() {
             <span>이한슬 | gkstmf616@gmail.com</span>
           </CallDiv>
         </CallContainer>
-        <CommonButton
-          text="로그아웃"
-          onClick={() =>
-            dispatch(userLogout()).then((res) => {
-              removeCookie('authToken');
-              navigate("/");
-            })
-          }
-          status="active"
-        />
+            <Button
+                radius="xl"
+                size="md"
+                styles={{
+                  root: {
+                    backgroundColor: "#C17878",
+                    color: "#fff",
+                    width:'80vw',
+                    fontSize:'4vw'
+                  },
+                }}
+                onClick={() =>
+                  dispatch(userLogout()).then((res) => {
+                    removeCookie('authToken');
+                    navigate("/");
+                  })}
+              >
+                로그아웃
+              </Button>
       </div>
     </MyContainer>
   );
