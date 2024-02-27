@@ -33,8 +33,8 @@ type DrinkType = {
 const ListItems = styled.div`
   display: flex;
   flex-wrap: wrap;
-  padding: 0 18px;
-  gap: 12px;
+  // padding: 0 18px;
+  // gap: 12px;
 `;
 
 const MainText = styled(Text)`
