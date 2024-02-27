@@ -67,6 +67,11 @@ pipeline {
       }
     }
     stage('clean') {
+      when {
+        expression {
+          return REACT_IMAGE_ID != '';
+        }
+      }
       steps {
         echo "Clean react image ${REACT_IMAGE_ID}"
         sh "docker rmi ${REACT_IMAGE_ID}"
