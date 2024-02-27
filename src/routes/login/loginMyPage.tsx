@@ -71,7 +71,7 @@ export default function LoginMyPage() {
           <b>{userState.name}</b>님
         </UserFont>
         <SubFont>이메일 &nbsp; | &nbsp; {userState.email}</SubFont>
-        <WishContainer>
+        <WishContainer onClick={()=>{navigate('/wish')}}>
           <WishButton>
             <span>위시리스트</span>
             <img src={FillHeart} alt="" style={{ width: "24px" }} />
