@@ -161,7 +161,7 @@ export default function LoginMapPage() {
   const token = cookies['authToken'];
 
   useEffect(()=>{
-    getMyRegionWishCnt().then((data)=>{
+    getMyRegionWishCnt(token).then((data)=>{
       setCnt(data.data)
       console.log(data)
     })

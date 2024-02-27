@@ -24,7 +24,7 @@ export default function LoginWishPage() {
   const token = cookies['authToken'];
 
   useEffect(()=>{
-    getMyWishes(null).then(data=>{
+    getMyWishes(null, token).then(data=>{
       console.log(data);
       // setResult(data.data.map((v:)=>{
       //   return v['drinkId']

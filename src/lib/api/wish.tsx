@@ -50,12 +50,22 @@ export async function writeMyWish(
   });
 }
 
-export async function getMyWishes(region: string | null) {
+export async function getMyWishes(region: string | null, token: string) {
   if(region === null)  return await wishInstance.get(`/`);
-  else return await wishInstance.get(`/`,{params:{ region: region }});
+  else return await wishInstance.get(`/`,{
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    params:
+      { region: region }
+  });
   
 }
 
-export async function getMyRegionWishCnt() {
-  return await wishInstance.get(`/regioncnt`);
+export async function getMyRegionWishCnt(token: string) {
+  return await wishInstance.get(`/regioncnt`, {
+    headers: {
+      Authorization: `Bearer ${token}`
+    }
+  });
 }
