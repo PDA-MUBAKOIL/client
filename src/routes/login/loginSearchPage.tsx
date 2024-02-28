@@ -24,7 +24,7 @@ const ListItems = styled.div`
   align-items: center;
   padding: 5px 18px 20px 18px;
   gap: 14px;
-  height: calc(100vh - 272px);
+  height: 70vh;
   overflow-y: scroll;
 `;
 
@@ -79,13 +79,13 @@ export default function LoginSearchPage() {
   function onClickRegion(tag: string) {
     dispatch(setSearch("#" + tag));
     searchDrink(null, null, null, tag).then((data) => {
+      console.log('data: ', data)
       if (data !== undefined) {
         setResult(data.data);
       }
     });
   }
 
-  useEffect(() => {}, []);
   return (
     <LoginSearchPageContainer>
       <Flex h="16vh" align="center" justify="center">
@@ -95,7 +95,7 @@ export default function LoginSearchPage() {
         />
       </Flex>
       {search === "" ? (
-        <div style={{ height: "calc(100vh - 243px)", overflowY: "scroll" }}>
+        <div style={{ height: "65vh", overflowY: "scroll" }}>
           <Flex direction="column" w="90vw">
             <div
               style={{

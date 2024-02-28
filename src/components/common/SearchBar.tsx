@@ -109,6 +109,14 @@ export default function SearchBar({ setResult, placeHolder }: TSearch) {
           location.state = "";
         }
       );
+      searchDrink(null, null, null, location.state["tag"].split("#")[1]).then(
+        (data) => {
+          if (data !== undefined) {
+            setResult(data.data);
+          }
+          location.state = "";
+        }
+      );
     } else if (location.state === null) {
       dispatch(setSearch(""));
       location.state = "";
@@ -131,7 +139,7 @@ export default function SearchBar({ setResult, placeHolder }: TSearch) {
             rightSection={
               <SearchButton>
                 {" "}
-                <img src={search} alt="search" style={{ width: "6vw" }} />{" "}
+                <img src={search} alt="search" style={{ width: "6vw", zIndex: 0 }} />{" "}
               </SearchButton>
             }
             value={searchWord}
