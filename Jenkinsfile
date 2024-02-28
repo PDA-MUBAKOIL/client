@@ -38,7 +38,7 @@ pipeline {
     stage('build-react') {
       steps {
         script {
-          REACT_IMAGE_ID = sh(returnStdout: true, script: 'docker images | grep react | awk \'{print $3\'}').trim()
+          REACT_IMAGE_ID = sh(returnStdout: true, script: 'docker images | grep react-build | awk \'{print $3\'}').trim()
           echo "prev image id : ${REACT_IMAGE_ID}"
         }
         echo 'move directory'
@@ -65,7 +65,8 @@ pipeline {
     stage('deploy') {
       steps {
         echo 'run docker container'
-        sh 'docker run --name react -d -p 3000:3000 react'
+        // sh 'docker run --name react -d -v /usr/share/nginx/html:/output react'
+        sh 'docker-compose up -d'
       }
     }
     stage('clean') {
@@ -77,6 +78,8 @@ pipeline {
       steps {
         echo "Clean react image ${REACT_IMAGE_ID}"
         sh "docker rmi ${REACT_IMAGE_ID}"
+        // dangling images for multi stage build
+        sh "docker image prune --force"
       }
     }
   }
