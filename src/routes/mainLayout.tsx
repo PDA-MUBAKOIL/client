@@ -18,7 +18,7 @@ const OutletContainer = styled.div<{ isuser: string }>`
   ${(props) =>
     props.isuser === "true"
       ? `
-      padding: 10vh 0;
+      padding: 8vh 0 9vh 0;
     `
       : `
       padding: 10vh 0 0 0;

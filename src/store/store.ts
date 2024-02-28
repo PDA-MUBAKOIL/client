@@ -11,6 +11,7 @@ import drinkListReducer from "./reducers/Drink/allDrink";
 import modalReducer from "./reducers/Modal/page";
 import myReviewReducer from "./reducers/Review/myReview";
 import allReviewReducer from "./reducers/Review/allReview";
+import myWishAllReducer from './reducers/Review/myAllWish';
 
 import storage from "redux-persist/lib/storage";
 import {
@@ -46,6 +47,7 @@ export const rootReducer = persistReducer(
     modalPage: modalReducer,
     myReview: myReviewReducer,
     allReview: allReviewReducer,
+    myAllWish: myWishAllReducer,
   })
 );
 

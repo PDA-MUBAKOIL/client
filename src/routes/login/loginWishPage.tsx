@@ -4,10 +4,12 @@ import { TSearchResult } from "../../components/common/SearchBar";
 import styled from "styled-components";
 import { getMyWishes } from "../../lib/api/wish";
 import { Flex } from "@mantine/core";
-import { useAppSelector } from "../../lib/hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../lib/hooks/reduxHooks";
 import { useCookies } from "react-cookie";
 import AlertHeart from "../../assets/img/Modal/alert-heart.png";
 import { RootState } from "../../store/store";
+import { getWish } from "../../store/reducers/Review/myReview";
+import { getMyWishAll } from "../../store/reducers/Review/myAllWish";
 
 export interface Drink {
   brewerId: string;
@@ -39,37 +41,39 @@ export interface Review {
 const ListItems = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 5px 18px;
+  padding: 5px 18px 15px 18px;
   gap: 14px;
-  height: calc(100vh - 195px);
+  height: calc(100vh - 208px);
   overflow-y: scroll;
 `;
 
 export default function LoginWishPage() {
-  const [result, setResult] = useState<Array<TSearchResult>>([]);
   const user = useAppSelector((state: RootState) => state.user);
+  const myAllWish = useAppSelector((state: RootState) => state.myAllWish.myWishes);
+  const myWishLike = useAppSelector((state: RootState) => state.myAllWish.isLike);
   const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
 
   // 토큰값 가져오기
   const token = cookies["authToken"];
 
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    getMyWishes(null, token).then((data) => {
-      setResult(
-        data.data.map((data: Review) => {
-          return data["drinkId"];
-        })
-      );
-    });
-  }, []);
+    const data = {
+      region: null,
+      token: token
+    }
+    dispatch(getMyWishAll(data))
+  }, [dispatch, myWishLike]);
+
   return (
-    <Flex h="calc(100vh - 124px)" gap="25px" direction="column" align="center">
+    <Flex gap="25px" direction="column" align="center" style={{ overflow: 'hidden' }}>
       <div style={{ width: "90vw", paddingTop: "30px", fontSize: "5vw" }}>
         <b>{user.user.name}</b>님의 무박오일 여행
       </div>
-      {result ? (
+      {myAllWish ? (
         <ListItems>
-          {result.map((item, idx) => (
+          {myAllWish.map((item, idx) => (
             <DrinkDetailCard key={idx} {...item} />
           ))}
         </ListItems>
