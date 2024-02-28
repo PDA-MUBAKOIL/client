@@ -1,0 +1,12 @@
+version: '3.7'
+
+# sh 'docker run --name react -d -v /usr/share/nginx/html:/output react'
+services:
+  react:
+    container_name: react
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: react-build
+    volumes:
+      - /usr/share/nginx/html:/output
