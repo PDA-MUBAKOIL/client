@@ -20,12 +20,13 @@ export type User = {
 export const SignupBody = styled.div`
   background-color: #ebdcdc;
   // footer 없애고 디자인 수정하기
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6vh;
   overflow-y: hidden;
+  padding-top: 8vh;
 `;
 
 const MainFont = styled(Text)`

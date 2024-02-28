@@ -18,10 +18,10 @@ const OutletContainer = styled.div<{ isuser: string }>`
   ${(props) =>
     props.isuser === "true"
       ? `
-      padding: 8vh 0 9vh 0;
+      padding: 7.5vh 0 9vh 0;
     `
       : `
-      padding: 8vh 0 0 0;
+      padding: 7.5vh 0 0 0;
     `}
 `;
 
@@ -31,6 +31,7 @@ export default function MainLayout() {
   const isShow = useAppSelector((state) => state.showModal.isShow);
   const detail = useAppSelector((state) => state.drinkDetail.detail);
   const isUser = useAppSelector((state) => state.user.isUser);
+  console.log('isis', isUser)
 
   useEffect(() => {}, []);
   const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);

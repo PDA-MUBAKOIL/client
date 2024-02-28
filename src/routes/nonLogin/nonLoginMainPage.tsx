@@ -32,7 +32,7 @@ type DrinkType = {
 };
 
 const ListContainer = styled.div`
-  height: 90vh;
+  height: 100vh;
   overflow: hidden;
 `
 
