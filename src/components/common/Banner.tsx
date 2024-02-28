@@ -7,7 +7,7 @@ const BannerContainer = styled.div`
   // background-color: #ebdcdc;
   background: radial-gradient(#EBDCDC 30%, #FFFFFF 70%);
   width: 100%;
-  height: 260px;
+  height: 220px;
   display: flex;
   flex-direction: column;
   justify-content: center;
