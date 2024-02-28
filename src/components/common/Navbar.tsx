@@ -29,7 +29,7 @@ export default function Navbar() {
   return (
     <NavBarContainer>
       {user ? (
-        <Link to={"/map"} style={{ display: "flex", justifyContent: "center" }}>
+        <Link to={"/"} style={{ display: "flex", justifyContent: "center" }}>
           <NavLogo src={Logo} alt="navLogo"></NavLogo>
         </Link>
       ) : (

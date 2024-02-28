@@ -41,7 +41,7 @@ export const LoginRouter = [
     element: <MainLayout />,
     children: [
       {
-        path: "/map",
+        path: "",
         element: <LoginMapPage />,
         index: true,
       },
