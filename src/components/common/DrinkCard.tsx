@@ -43,7 +43,7 @@ const Image = styled.img`
 const NameFont = styled(Text)`
   word-break: keep-all;
   text-align: center;
-  font-size: 3vw;
+  font-size: 3.5vw;
 `;
 
 export default function DrinkCard({ drinkId, url, name }: DrinkProp) {
