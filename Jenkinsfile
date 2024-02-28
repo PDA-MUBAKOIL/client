@@ -77,6 +77,8 @@ pipeline {
       steps {
         echo "Clean react image ${REACT_IMAGE_ID}"
         sh "docker rmi ${REACT_IMAGE_ID}"
+        // dangling images for multi stage build
+        sh "docker image prune --force"
       }
     }
   }
