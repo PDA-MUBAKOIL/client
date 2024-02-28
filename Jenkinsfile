@@ -65,8 +65,8 @@ pipeline {
     stage('deploy') {
       steps {
         echo 'run docker container'
-        // sh 'docker run --name react -d -v /usr/share/nginx/html:/output react'
-        sh 'docker-compose up -d'
+        sh 'docker run --name react -d -v /usr/share/nginx/html:/output react'
+        // sh 'docker-compose up -d'
       }
     }
     stage('clean') {
