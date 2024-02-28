@@ -201,13 +201,7 @@ export default function DetailItem({ detail }: DetailProps) {
   function deleteWish() {
     const data = {
       drinkId: detail._id,
-      item: {
-        token: token,
-        userId: userId,
-        review,
-        imgUrl: "",
-        isPublic: true,
-      },
+      token: token,
     };
     dispatch(deletedWish(data)).then((data) => {
       setIsLike(false);

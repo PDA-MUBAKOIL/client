@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { setSearch } from "../../store/reducers/Drink/search";
 import { deleteMyWish, isWish, writeMyWish } from "../../lib/api/wish";
 import { useCookies } from "react-cookie";
+import { deletedWish, writeWish } from "../../store/reducers/Review/myReview";
+import { setLikeState } from "../../store/reducers/Review/myAllWish";
 
 type TagProp = {
   text: string;
@@ -81,20 +83,31 @@ export default function DrinkDetailCard(item: TSearchResult) {
   }
 
   function addWish() {
-    writeMyWish(item.id, {
-      review: "",
-      imgUrl: "",
-      isPublic: true,
-      token: token,
-    }).then((data) => {
-      setIsLike(true);
-    });
+    const data = {
+      drinkId: item.id,
+      item: {
+        review: "",
+        imgUrl: "",
+        isPublic: true,
+        token: token,
+      }
+    }
+
+    dispatch(writeWish(data))
+      .then((res) => {
+        setIsLike(true);
+      })
   }
 
   function deleteWish() {
-    deleteMyWish(item.id, token).then((data) => {
-      setIsLike(false);
-    });
+    const data = {
+      drinkId: item.id,
+      token,
+    }
+    dispatch(deletedWish(data))
+      .then((data) => {
+        setIsLike(false);
+      });
   }
 
   useEffect(() => {
@@ -103,6 +116,10 @@ export default function DrinkDetailCard(item: TSearchResult) {
     });
   });
 
+  useEffect(() => {
+    dispatch(setLikeState(isLike))
+  }, [isLike])
+
   return (
     <Card>
       <CardContent>
@@ -110,7 +127,7 @@ export default function DrinkDetailCard(item: TSearchResult) {
           onClick={onCardClick}
           src={item.imgUrl}
           alt={item.name}
-          style={{ width: "25vw", height: "10vh", objectFit: "contain" }}
+          style={{ width: "25%", height: "12vh", objectFit: "contain" }}
         />
         <Flex gap="14px" direction="column" style={{ width: "55vw" }}>
           <Flex onClick={onCardClick} gap="7px" direction="column">
@@ -161,14 +178,14 @@ export default function DrinkDetailCard(item: TSearchResult) {
           src={FillHeart}
           alt=""
           style={{ width: "20px" }}
-          onClick={deleteWish}
+          onClick={() => deleteWish()}
         />
       ) : (
         <img
           src={EmptyHeart}
           alt=""
           style={{ width: "20px" }}
-          onClick={addWish}
+          onClick={() => addWish()}
         />
       )}
     </Card>

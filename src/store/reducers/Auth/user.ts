@@ -4,13 +4,13 @@ import { User } from "../../../routes/nonLogin/nonLoginLogIn";
 
 const initialState = {
   user: {
-
     id: "",
     name: "",
     email: "",
+    token: "",
   },
-  token: "",
   isUser: false,
+  isError: false,
 };
 
 type SignupType = {
@@ -53,14 +53,17 @@ const userSlice = createSlice({
       state.user.id = action.payload.user._id;
       state.user.name = action.payload.user.name;
       state.user.email = action.payload.user.email;
-      state.token = action.payload.token;
+      state.user.token = action.payload.user.token;
       state.isUser = true;
+    });
+    builder.addCase(userLogin.rejected, (state, action) => {
+      state.isError = true;
     });
     builder.addCase(userLogout.fulfilled, (state, action) => {
       state.user.id = "";
       state.user.name = "";
       state.user.email = "";
-      state.token ="";
+      state.user.token ="";
       state.isUser = false;
     });
   },

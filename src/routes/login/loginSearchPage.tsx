@@ -21,9 +21,9 @@ const LoginSearchPageContainer = styled.div`
 const ListItems = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 5px 18px;
+  padding: 5px 18px 20px 18px;
   gap: 14px;
-  height: calc(100vh - 277px);
+  height: calc(100vh - 297px);
   overflow-y: scroll;
 `;
 

@@ -58,17 +58,17 @@ export const ToLogin = styled(Link)`
   font-size: 90%;
 `;
 
-// const ErrorFont = styled.span`
-//   font-size: 13px;
-//   color: #871806;
-//   text-align: center;
-// `;
+const ErrorFont = styled.span`
+  font-size: 13px;
+  color: #871806;
+  text-align: center;
+`;
 
 export default function NonLoginLogIn() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isActive, setIsActive] = useState<boolean>(false);
-  // const [isError, setIsError] = useState<boolean>(false);
+  const [isError, setIsError] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -87,11 +87,10 @@ export default function NonLoginLogIn() {
   const onSubmitLogin = useCallback((email: string, password: string) => {
     const data = { email, password };
     dispatch(userLogin(data)).then((res: any) => {
-      setCookie("authToken", res.payload.user.token);
-      console.log("로그인", res);
       if (res.type === "auth/userLogin/rejected") {
-        navigate("/login");
+        setIsError(true);
       } else {
+        setCookie("authToken", res.payload.user.token);
         navigate("/map");
       }
     });
@@ -129,16 +128,14 @@ export default function NonLoginLogIn() {
             onInputChange(e.target.value, setPassword);
           }}
         />
-        {/* {isError && <ErrorFont>이메일/비밀번호가 일치하지 않습니다.</ErrorFont>} */}
+        {isError && <ErrorFont>이메일/비밀번호가 일치하지 않습니다.</ErrorFont>}
       </InputBox>
       <ButtonBox>
-        <Link to={"/map"}>
-          <CommonButton
-            text="로그인"
-            onClick={() => onSubmitLogin(email, password)}
-            status={isActive ? "active" : "disabled"}
-          />
-        </Link>
+        <CommonButton
+          text="로그인"
+          onClick={() => onSubmitLogin(email, password)}
+          status={isActive ? "active" : "disabled"}
+        />
         <ToLogin to={"/signup"}>회원가입</ToLogin>
       </ButtonBox>
       {/* <img src={Drinks} alt="" style={{ position: 'fixed', bottom: '0' }} /> */}

@@ -38,8 +38,14 @@ export default function MyReviewContainer() {
     <ReviewDiv>
       <MainFont>✨</MainFont>
       <Content>
-        <MainFont>나의 리뷰</MainFont>
-        <SubFont>{myReview?.review}</SubFont>
+        {myReview?.review ? (
+          <>
+            <MainFont>나의 리뷰</MainFont>
+            <SubFont>{myReview?.review}</SubFont>
+          </>
+        ) : (
+          <SubFont>리뷰를 작성해보세요!</SubFont>
+        )}
       </Content>
     </ReviewDiv>
   )

@@ -15,7 +15,7 @@ const NavBarContainer = styled.div`
   padding: 0px 15px;
   background-color: #ebdcdc;
   width: 100vw;
-  height: 10vh;
+  height: 8vh;
   z-index: 1;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 `;

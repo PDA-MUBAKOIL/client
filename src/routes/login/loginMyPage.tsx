@@ -11,7 +11,7 @@ import { Button } from "@mantine/core";
 import { RootState } from "../../store/store";
 
 const MyContainer = styled.div`
-  height: 78vh;
+  height: 82vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

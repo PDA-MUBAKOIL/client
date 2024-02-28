@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { deleteMyWish, getMyWish, updateMyWish, writeMyWish } from "../../../lib/api/wish";
-import { useCookies } from "react-cookie";
+import { deleteMyWish, getMyWish, getMyWishes, updateMyWish, writeMyWish } from "../../../lib/api/wish";
 
 const initialState = {
   _id: "",
@@ -15,7 +14,6 @@ type DataProp = {
   drinkId: string;
   item : {
     token: string;
-    userId: string;
     review: string;
     imgUrl: string;
     isPublic: boolean;
@@ -38,9 +36,9 @@ export const writeWish = createAsyncThunk(
 
 export const deletedWish = createAsyncThunk(
   "review/deleteWish",
-  async (data: DataProp, thunkAPI) => {
-    const { drinkId, item } = data;
-    const response = await deleteMyWish(drinkId, item.token);
+  async (data: GetProp, thunkAPI) => {
+    const { drinkId, token } = data;
+    const response = await deleteMyWish(drinkId, token);
     return response.data;
   }
 );
