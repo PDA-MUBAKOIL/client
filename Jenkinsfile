@@ -65,7 +65,7 @@ pipeline {
     stage('deploy') {
       steps {
         echo 'run docker container'
-        sh 'docker run --name react -d -p 3000:3000 react'
+        sh 'docker run --name react -d -v /usr/share/nginx/html:/output react'
       }
     }
     stage('clean') {
@@ -77,6 +77,8 @@ pipeline {
       steps {
         echo "Clean react image ${REACT_IMAGE_ID}"
         sh "docker rmi ${REACT_IMAGE_ID}"
+        // dangling images for multi stage build
+        sh "docker image prune --force"
       }
     }
   }
