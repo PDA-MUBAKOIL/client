@@ -80,6 +80,7 @@ export default function LoginMyPage() {
     getMyWishes(null,token).then(data=>{
       setWishCnt(data.data.length);
     })
+    
   })
   return (
     <MyContainer>
