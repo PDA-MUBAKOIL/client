@@ -4,7 +4,7 @@ export async function searchDrink(tag:string|null, percent:number|null, name:str
   if(tag){ return await drinkInstance.get(`/search?tag=${tag}`)}
   else if(percent){ return await drinkInstance.get(`/search?percent=${percent}`)}
   else if(name) {return await drinkInstance.get(`/search?name=${name}`)}
-  if(region) {return await drinkInstance.get(`/search?region=${region}`)}
+  else if(region) {return await drinkInstance.get(`/search?region=${region}`)}
 }
 
 export async function listUp() {
