@@ -43,7 +43,7 @@ pipeline {
         }
         echo 'move directory'
         sh 'pwd'
-        sh 'docker build -t react .'
+        sh 'docker build -t react-build .'
       }
     }
     stage('down') {
