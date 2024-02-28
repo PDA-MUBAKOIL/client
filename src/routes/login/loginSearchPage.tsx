@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SearchBar from "../../components/common/SearchBar";
 import { TSearchResult } from "../../components/common/SearchBar";
 import { Flex } from "@mantine/core";
@@ -21,9 +21,10 @@ const LoginSearchPageContainer = styled.div`
 const ListItems = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 5px 18px 20px 18px;
   gap: 14px;
-  height: calc(100vh - 297px);
+  height: calc(100vh - 272px);
   overflow-y: scroll;
 `;
 

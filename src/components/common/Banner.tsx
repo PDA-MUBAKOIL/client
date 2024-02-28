@@ -7,7 +7,7 @@ const BannerContainer = styled.div`
   // background-color: #ebdcdc;
   background: radial-gradient(#EBDCDC 30%, #FFFFFF 70%);
   width: 100%;
-  height: 260px;
+  height: 220px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -15,7 +15,7 @@ const BannerContainer = styled.div`
 `;
 
 const BannerFont = styled(Text)`
-  font-size: 17px;
+  font-size: 15px;
 `;
 
 const LinkButton = styled(Link)`
@@ -24,11 +24,12 @@ const LinkButton = styled(Link)`
 
 const LoginButton = styled.div`
   background-color: #c17878;
-  padding: 10px 35px;
-  max-width: 115px;
+  padding: 10px 25px;
+  max-width: 105px;
   border-radius: 99px;
   color: #fff;
   margin-top: 15px;
+  font-size: 14px;
 `;
 
 export default function Banner() {
