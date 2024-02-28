@@ -64,6 +64,7 @@ export default function LoginWishPage() {
       token: token
     }
     dispatch(getMyWishAll(data))
+    console.log(myAllWish.length);
   }, [dispatch, myWishLike]);
 
   return (
@@ -71,7 +72,7 @@ export default function LoginWishPage() {
       <div style={{ width: "90vw", paddingTop: "30px", fontSize: "5vw" }}>
         <b>{user.user.name}</b>님의 무박오일 여행
       </div>
-      {myAllWish ? (
+      {myAllWish.length > 0 ? (
         <ListItems>
           {myAllWish.map((item, idx) => (
             <DrinkDetailCard key={idx} {...item} />
@@ -81,7 +82,7 @@ export default function LoginWishPage() {
         <div
           style={{
             width: "90vw",
-            height: "100vh",
+            height: "50vh",
             display: "flex",
             flexDirection: "column",
             justifyContent: "center",
@@ -90,6 +91,7 @@ export default function LoginWishPage() {
             fontSize: "2.1vh",
             gap: "3vh",
             fontWeight: "bold",
+            color: 'rgba(0, 0, 0, 0.7)'
           }}
         >
           <img src={AlertHeart} alt="" style={{ width: "25vw" }} />

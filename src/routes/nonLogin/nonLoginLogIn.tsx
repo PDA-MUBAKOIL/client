@@ -91,7 +91,7 @@ export default function NonLoginLogIn() {
         setIsError(true);
       } else {
         setCookie("authToken", res.payload.user.token);
-        navigate("/map");
+        navigate("/");
       }
     });
   }, []);

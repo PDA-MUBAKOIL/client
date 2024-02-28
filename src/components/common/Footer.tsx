@@ -68,7 +68,7 @@ export default function Footer() {
       <FooterItems>
         <FooterItemComponent src={all} txt="전체" url="/list" />
         <FooterItemComponent src={search} txt="검색" url="/search" />
-        <FooterItemComponent src={map} txt="지도" url="/map" />
+        <FooterItemComponent src={map} txt="지도" url="/" />
         <FooterItemComponent src={wish} txt="위시" url="/wish" />
         <FooterItemComponent src={my} txt="마이" url="/mypage" />
       </FooterItems>
