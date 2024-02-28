@@ -36,7 +36,7 @@ const CardContent = styled.div`
   flex-direction: row;
   align-items: center;
   gap: 6vw;
-  width: 80vw;
+  width: 100vw;
 `;
 
 function TagButton({ text, onClick }: TagProp) {
@@ -129,9 +129,26 @@ export default function DrinkDetailCard(item: TSearchResult) {
           alt={item.name}
           style={{ width: "25%", height: "12vh", objectFit: "contain" }}
         />
-        <Flex gap="14px" direction="column" style={{ width: "55vw" }}>
+        <Flex gap="14px" direction="column" style={{ width: "60vw" }}>
           <Flex onClick={onCardClick} gap="7px" direction="column">
-            <div style={{ fontSize: "14px" }}>{item.name}</div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div style={{ fontSize: "14px" }}>{item.name}</div>
+              {isLike ? (
+                <img
+                  src={FillHeart}
+                  alt=""
+                  style={{ width: "20px" }}
+                  onClick={() => deleteWish()}
+                />
+              ) : (
+                <img
+                  src={EmptyHeart}
+                  alt=""
+                  style={{ width: "20px" }}
+                  onClick={() => addWish()}
+                />
+              )}
+            </div>
             <Flex gap="4px" direction="column">
               <Flex gap="8px">
                 <div style={{ fontSize: "10px" }}>도수</div>
@@ -158,7 +175,7 @@ export default function DrinkDetailCard(item: TSearchResult) {
               </Flex>
             </Flex>
           </Flex>
-          <div style={{ width: "60vw", display: "block" }}>
+          <div style={{ width: "100%", display: 'flex', flexWrap: 'wrap' }}>
             {item.tags.map((tag, idx) => {
               return (
                 <TagButton
@@ -173,7 +190,7 @@ export default function DrinkDetailCard(item: TSearchResult) {
           </div>
         </Flex>
       </CardContent>
-      {isLike ? (
+      {/* {isLike ? (
         <img
           src={FillHeart}
           alt=""
@@ -187,7 +204,7 @@ export default function DrinkDetailCard(item: TSearchResult) {
           style={{ width: "20px" }}
           onClick={() => addWish()}
         />
-      )}
+      )} */}
     </Card>
   );
 }

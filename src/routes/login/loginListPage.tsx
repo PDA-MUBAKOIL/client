@@ -6,6 +6,8 @@ import styled from "styled-components";
 import DrinkCard from "../../components/common/DrinkCard";
 import { Text } from "@mantine/core";
 import { listUp } from "../../lib/api/drinks";
+import { useAppSelector } from "../../lib/hooks/reduxHooks";
+import { RootState } from "../../store/store";
 
 const LoginSearchPageContainer = styled.div`
   display: flex;
@@ -27,13 +29,16 @@ const MainText = styled(Text)`
 
 export default function LoginListPage() {
   const [result, setResult] = useState<Array<TSearchResult>>([]);
+  const [searchResult, setSearchResult] = useState<Array<TSearchResult>>([]);
   const [itemsToShow, setItemsToShow] = useState<Array<TSearchResult>>([]);
   const [itemsToShowCount, setItemsToShowCount] = useState(0);
   const observerRef = useRef<HTMLDivElement | null>(null);
+  const isSearch = useAppSelector((state: RootState) => state.search.isSearch);
 
   useEffect(() => {
     listUp().then((data) => {
       setResult(data.data);
+      setSearchResult(data.data);
       // setItemsToShow(data.data.slice(0, itemsToShowCount));
     });
   }, []);
@@ -69,20 +74,31 @@ export default function LoginListPage() {
     <LoginSearchPageContainer>
       <Flex h="15vh" align="center" justify="center">
         <SearchBar
-          setResult={setResult}
+          setResult={setSearchResult}
           placeHolder="술의 이름을 검색해보세요."
         />
       </Flex>
       <MainText>술 리스트</MainText>
       <ListItems>
-        {itemsToShow?.map((item, idx) => (
-          <DrinkCard
-            url={item.imgUrl}
-            name={item.name}
-            drinkId={item.id}
-            key={idx}
-          />
-        ))}
+        {!isSearch ? (
+          itemsToShow?.map((item, idx) => (
+            <DrinkCard
+              url={item.imgUrl}
+              name={item.name}
+              drinkId={item.id}
+              key={idx}
+            />
+          ))
+        ) : (
+          searchResult?.map((item, idx) => (
+            <DrinkCard
+              url={item.imgUrl}
+              name={item.name}
+              drinkId={item.id}
+              key={idx}
+            />
+          ))
+        )}
         <div ref={observerRef} style={{ height: "10px", width: '100vw' }}></div>
       </ListItems>
     </LoginSearchPageContainer>
