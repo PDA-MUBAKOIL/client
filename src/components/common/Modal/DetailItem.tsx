@@ -58,6 +58,7 @@ const ImageDiv = styled.img`
 const Content = styled.div`
   width: 100%;
   padding: 10px 3px;
+  min-height: fit-content;
 `;
 
 const ContentItem = styled(Group)`
