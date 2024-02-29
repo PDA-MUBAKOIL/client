@@ -48,7 +48,7 @@ pipeline {
     }
     stage('down') {
       environment {
-        REACT_CONTAINER_ID = sh(returnStdout: true, script: 'docker ps -a | grep react | awk \'{print $1\'}').trim()
+        REACT_CONTAINER_ID = sh(returnStdout: true, script: 'docker ps -a | grep react-build | awk \'{print $1\'}').trim()
       }
       steps {
         script {
