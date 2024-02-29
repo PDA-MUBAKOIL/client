@@ -43,12 +43,12 @@ pipeline {
         }
         echo 'move directory'
         sh 'pwd'
-        sh 'docker build -t react .'
+        sh 'docker build -t react-build .'
       }
     }
     stage('down') {
       environment {
-        REACT_CONTAINER_ID = sh(returnStdout: true, script: 'docker ps -a | grep react | awk \'{print $1\'}').trim()
+        REACT_CONTAINER_ID = sh(returnStdout: true, script: 'docker ps -a | grep react-build | awk \'{print $1\'}').trim()
       }
       steps {
         script {
@@ -65,7 +65,7 @@ pipeline {
     stage('deploy') {
       steps {
         echo 'run docker container'
-        sh 'docker run --name react -d -v /usr/share/nginx/html:/output react'
+        sh 'docker run --name react-build -d -v /usr/share/nginx/html:/output react-build'
         // sh 'docker-compose up -d'
       }
     }
