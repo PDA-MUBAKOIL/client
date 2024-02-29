@@ -86,8 +86,10 @@ export default function NonLoginSignUp() {
   }
 
   function checkIsAuth(authNum: string) {
+    console.log('authnum', typeof(authNum))
     dispatch(checkEmail(authNum))
       .then((res) => {
+        console.log(authNum)
         console.log(res.payload)
         if (res.payload.result === false) {
           setIsAuth(false);
