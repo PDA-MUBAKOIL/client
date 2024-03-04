@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Container, Text } from "@mantine/core";
 import styled from "styled-components";
-import { useAppDispatch } from "../../lib/hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../lib/hooks/reduxHooks";
 import { setIsDetail, setIsShow } from "../../store/reducers/Drink/showModal";
 import { setDrinkDetail } from "../../store/reducers/Drink/drinkDetail";
 import { getWish } from "../../store/reducers/Review/myReview";
 import { getAllWish } from "../../store/reducers/Review/allReview";
 import { useCookies } from "react-cookie";
+import { RootState } from "../../store/store";
 
 export type DrinkProp = {
   drinkId: string;
@@ -48,10 +49,7 @@ const NameFont = styled(Text)`
 
 export default function DrinkCard({ drinkId, url, name }: DrinkProp) {
   const dispatch = useAppDispatch();
-  const [cookies, setCookie, removeCookie] = useCookies(['authToken']);
-
-    // 토큰값 가져오기
-  const token = cookies['authToken'];
+  const token = useAppSelector((state: RootState) => state.user.user.token);
 
   function onDrinkDetailClick(drinkId: string) {
     const action = setDrinkDetail({ drinkId: drinkId });

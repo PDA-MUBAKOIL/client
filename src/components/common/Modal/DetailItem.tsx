@@ -170,9 +170,7 @@ export default function DetailItem({ detail }: DetailProps) {
   const userId = useAppSelector((state: RootState) => state.user.user.id);
   const isUser = useAppSelector((state: RootState) => state.user.isUser);
 
-  const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
-  // 토큰값 가져오기
-  const token = cookies["authToken"];
+  const token = useAppSelector((state: RootState) => state.user.user.token);
 
   const [review, setReview] = useState<string>("");
 

@@ -73,8 +73,7 @@ export default function LoginMyPage() {
   const [wishCnt,setWishCnt] = useState(0);
   const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
 
-  // 토큰값 가져오기
-  const token = cookies["authToken"];
+  const token = useAppSelector((state: RootState) => state.user.user.token);
 
   useEffect(()=>{
     getMyWishes(null,token).then(data=>{

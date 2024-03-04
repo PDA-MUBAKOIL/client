@@ -38,7 +38,7 @@ export default function OtherReview() {
     <>
       {reviewList?.map(
         (review, idx) =>
-          myReview.userId !== review.userId?._id && review.review && (
+          myReview.userId !== review.userId?._id && review.review && review.userId && (
             <ReviewDiv key={review._id}>
               <MainFont>✨</MainFont>
               <Content>

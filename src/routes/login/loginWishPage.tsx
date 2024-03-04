@@ -41,7 +41,7 @@ export interface Review {
 const ListItems = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 5px 18px 15px 18px;
+  padding: 5px 18px 30px 18px;
   gap: 14px;
   height: calc(100vh - 208px);
   overflow-y: scroll;
@@ -51,10 +51,7 @@ export default function LoginWishPage() {
   const user = useAppSelector((state: RootState) => state.user);
   const myAllWish = useAppSelector((state: RootState) => state.myAllWish.myWishes);
   const myWishLike = useAppSelector((state: RootState) => state.myAllWish.isLike);
-  const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
-
-  // 토큰값 가져오기
-  const token = cookies["authToken"];
+  const token = useAppSelector((state: RootState) => state.user.user.token);
 
   const dispatch = useAppDispatch();
 

@@ -5,15 +5,17 @@ import FillHeart from "../../assets/img/Modal/fill-heart.svg";
 import EmptyHeart from "../../assets/img/Modal/empty-heart.svg";
 import { Flex } from "@mantine/core";
 import { Button, rem } from "@mantine/core";
-import { useAppDispatch } from "../../lib/hooks/reduxHooks";
+import { useAppDispatch, useAppSelector } from "../../lib/hooks/reduxHooks";
 import { setIsDetail, setIsShow } from "../../store/reducers/Drink/showModal";
 import { setDrinkDetail } from "../../store/reducers/Drink/drinkDetail";
 import { useNavigate } from "react-router-dom";
 import { setSearch } from "../../store/reducers/Drink/search";
 import { deleteMyWish, isWish, writeMyWish } from "../../lib/api/wish";
 import { useCookies } from "react-cookie";
-import { deletedWish, writeWish } from "../../store/reducers/Review/myReview";
+import { deletedWish, getWish, writeWish } from "../../store/reducers/Review/myReview";
 import { setLikeState } from "../../store/reducers/Review/myAllWish";
+import { getAllWish } from "../../store/reducers/Review/allReview";
+import { RootState } from "../../store/store";
 
 type TagProp = {
   text: string;
@@ -64,14 +66,21 @@ function TagButton({ text, onClick }: TagProp) {
 export default function DrinkDetailCard(item: TSearchResult) {
   const [isLike, setIsLike] = useState<boolean>(false);
   const dispatch = useAppDispatch();
-  const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
-  // 토큰값 가져오기
-  const token = cookies["authToken"];
+  const token = useAppSelector((state: RootState) => state.user.user.token);
 
   function onCardClick() {
     dispatch(setDrinkDetail({ drinkId: item.id }));
     dispatch(setIsShow(true));
     dispatch(setIsDetail(true));
+
+    const data = {
+      drinkId: item.id,
+      token: token,
+    }
+
+    console.log(item.id)
+    dispatch(getAllWish(data))
+    dispatch(getWish(data))
   }
 
   const navigate = useNavigate();

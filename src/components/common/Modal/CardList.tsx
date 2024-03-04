@@ -5,6 +5,9 @@ import { Flex, Grid } from '@mantine/core';
 import { setIsDetail } from '../../../store/reducers/Drink/showModal';
 import { setDrinkDetail } from '../../../store/reducers/Drink/drinkDetail';
 import { setPage } from '../../../store/reducers/Modal/page';
+import { RootState } from '../../../store/store';
+import { getAllWish } from '../../../store/reducers/Review/allReview';
+import { getWish } from '../../../store/reducers/Review/myReview';
 
 export type ICard = {
         _id: string,
@@ -51,6 +54,7 @@ const Name = styled.div`
 export default function CardList() {
   const cardList = useAppSelector(state=>state.cardList);
   const modalPage = useAppSelector(state=>state.modalPage.page);
+  const token = useAppSelector((state: RootState) => state.user.user.token);
   const dispatch = useAppDispatch();
 
 
@@ -58,6 +62,15 @@ export default function CardList() {
     dispatch(setDrinkDetail({drinkId:drinkId}))
     dispatch(setIsDetail(true))
     dispatch(setPage(1))
+
+    const data = {
+      drinkId: drinkId,
+      token: token,
+    }
+
+    console.log(drinkId)
+    dispatch(getAllWish(data))
+    dispatch(getWish(data))
   }
 
   useEffect(()=>{
