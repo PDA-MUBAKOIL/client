@@ -28,6 +28,7 @@ import { useCookies } from "react-cookie";
 import { setIsDetail, setIsShow } from "../../store/reducers/Drink/showModal";
 import { setCardList } from "../../store/reducers/Drink/cardList";
 import { Drink, Review } from "./loginWishPage";
+import { RootState } from "../../store/store";
 
 type PinType = {
   top: number;
@@ -87,10 +88,7 @@ function MarkerComponent(props: {
   const user = useAppSelector((state) => state.user);
   var clickState = false;
 
-  const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
-
-  // 토큰값 가져오기
-  const token = cookies["authToken"];
+  const token = useAppSelector((state: RootState) => state.user.user.token);
 
   const onClickMarker = () => {
     if (clickState) {
@@ -176,10 +174,7 @@ export default function LoginMapPage() {
     제주: 0,
   });
 
-  const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
-
-  // 토큰값 가져오기
-  const token = cookies["authToken"];
+  const token = useAppSelector((state: RootState) => state.user.user.token);
 
   useEffect(() => {
     getMyRegionWishCnt(token).then((data) => {

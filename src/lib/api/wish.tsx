@@ -11,6 +11,7 @@ export async function getAllWishes(drinkId: string, token: string) {
 
 export async function getMyWish(drinkId: string, token: string) {
   console.log("api drinkId: ", drinkId);
+  console.log("api token: ", token);
   return await wishInstance.get(`/${drinkId}`, {
     headers: {
       Authorization: `Bearer ${token}`

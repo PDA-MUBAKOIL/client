@@ -12,6 +12,7 @@ import CardList from "../components/common/Modal/CardList";
 
 import { useAppSelector } from "../lib/hooks/reduxHooks";
 import { useCookies } from "react-cookie";
+import { RootState } from "../store/store";
 
 const OutletContainer = styled.div<{ isuser: string }>`
   height: 100vh;
@@ -34,10 +35,7 @@ export default function MainLayout() {
   console.log('isis', isUser)
 
   useEffect(() => {}, []);
-  const [cookies, setCookie, removeCookie] = useCookies(["authToken"]);
-
-  // 토큰값 가져오기
-  const token = cookies["authToken"];
+  const token = useAppSelector((state: RootState) => state.user.user.token);
 
   return (
     <>

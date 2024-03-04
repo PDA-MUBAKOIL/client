@@ -8,7 +8,6 @@ import InputContainer from "../../components/common/InputContainer";
 import { Link, useNavigate } from "react-router-dom";
 import { userLogin } from "../../store/reducers/Auth/user";
 import { useAppDispatch } from "../../lib/hooks/reduxHooks";
-import Drinks from "../../assets/img/Nav/drinks-icon.svg";
 
 import { useCookies } from "react-cookie";
 
@@ -19,7 +18,6 @@ export type User = {
 
 export const SignupBody = styled.div`
   background-color: #ebdcdc;
-  // footer 없애고 디자인 수정하기
   height: 100vh;
   display: flex;
   flex-direction: column;

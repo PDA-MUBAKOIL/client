@@ -72,25 +72,23 @@ export default function NonLoginSignUp() {
 
   function checkAlreadyEmail(email: string) {
     dispatch(alreadyEmail(email)).then((res) => {
-      console.log("이미 있는지", res.payload);
+      // 이미 존재하는 이메일이라면,
       if (res.payload.result === true) {
         navigate("/signup");
         setIsAlready(true);
       } else {
+        // 처음 가입하는 이메일이라면,
         setIsClick(true);
-        console.log("email", email);
         dispatch(setUserEmail(email));
         dispatch(sendEmail(email));
+        setIsAlready(false);
       }
     });
   }
 
   function checkIsAuth(authNum: string) {
-    console.log('authnum', typeof(authNum))
     dispatch(checkEmail(authNum))
       .then((res) => {
-        console.log(authNum)
-        console.log(res.payload)
         if (res.payload.result === false) {
           setIsAuth(false);
         } else {
@@ -173,7 +171,14 @@ export default function NonLoginSignUp() {
                 status={authNum ? "active" : "disabled"}
               />
             )}
-            <ToLogin to={"/login"}>로그인</ToLogin>
+            <div>
+              <ToLogin to={"/signup"} onClick={() => {
+                  dispatch(setUserEmail(""))
+                  setIsClick(false)
+                  setEmail("")
+                } }>메일 재인증 |</ToLogin>
+              <ToLogin to={"/login"}> 로그인</ToLogin>
+            </div>
           </ButtonBox>
         </>
       ) : (
@@ -215,7 +220,14 @@ export default function NonLoginSignUp() {
               onClick={() => onSubmitSignup(userEmail, nickname, password)}
               status={isActive ? "active" : "disabled"}
             />
-            <ToLogin to={"/login"}>로그인</ToLogin>
+            <div>
+              <ToLogin to={"/signup"} onClick={() => {
+                  dispatch(setUserEmail(""))
+                  setIsClick(false)
+                  setEmail("")
+                } }>메일 재인증 |</ToLogin>
+              <ToLogin to={"/login"}> 로그인</ToLogin>
+            </div>
           </ButtonBox>
         </>
       )}
