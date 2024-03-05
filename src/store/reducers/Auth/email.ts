@@ -7,6 +7,11 @@ const initialState = {
   email: "",
 };
 
+type MailData = {
+  mail: string;
+  authcode: string;
+};
+
 export const alreadyEmail = createAsyncThunk(
   "mail/alreadyEmail",
   async (data: string, thunkAPI) => {
@@ -25,8 +30,9 @@ export const sendEmail = createAsyncThunk(
 
 export const checkEmail = createAsyncThunk(
   "mail/checkEmail",
-  async (data: string, thunkAPI) => {
-    const response = await confirmAuthNumber(data);
+  async (data: MailData, thunkAPI) => {
+    const { mail, authcode } = data;
+    const response = await confirmAuthNumber(mail, authcode);
     return response.data;
   }
 );
@@ -35,12 +41,12 @@ const emailSlice = createSlice({
   name: "email",
   initialState: initialState,
   reducers: {
-    setUserEmail(state, action){
-      console.log('액션 페이로드', action.payload)
+    setUserEmail(state, action) {
+      console.log("액션 페이로드", action.payload);
       state.email = action.payload;
     },
-    setIsEmail(state, action){
-      console.log('액션 페이로드', action.payload)
+    setIsEmail(state, action) {
+      console.log("액션 페이로드", action.payload);
       state.isEmail = action.payload;
     },
   },
