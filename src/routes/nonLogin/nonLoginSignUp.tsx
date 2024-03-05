@@ -184,6 +184,7 @@ export default function NonLoginSignUp() {
                 to={"/signup"}
                 onClick={() => {
                   dispatch(setUserEmail(""));
+                  dispatch(setIsEmail(false));
                   setIsClick(false);
                   setEmail("");
                 }}
@@ -238,6 +239,7 @@ export default function NonLoginSignUp() {
                 to={"/signup"}
                 onClick={() => {
                   dispatch(setUserEmail(""));
+                  dispatch(setIsEmail(false));
                   setIsClick(false);
                   setEmail("");
                 }}
