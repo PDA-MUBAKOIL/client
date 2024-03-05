@@ -6,8 +6,9 @@ export async function sendEmailAuthNumber(mail: string) {
   });
 }
 
-export async function confirmAuthNumber(authcode: string) {
+export async function confirmAuthNumber(mail: string, authcode: string) {
   return await mailInstance.post("/cert", {
     authcode: authcode,
+    mail: mail,
   });
 }

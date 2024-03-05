@@ -86,15 +86,18 @@ export default function NonLoginSignUp() {
     });
   }
 
-  function checkIsAuth(authNum: string) {
-    dispatch(checkEmail(authNum))
-      .then((res) => {
-        if (res.payload.result === false) {
-          setIsAuth(false);
-        } else {
-          dispatch(setIsEmail(true))
-        }
-      })
+  function checkIsAuth(mail: string, authcode: string) {
+    const data = {
+      mail,
+      authcode,
+    };
+    dispatch(checkEmail(data)).then((res) => {
+      if (res.payload.result === false) {
+        setIsAuth(false);
+      } else {
+        dispatch(setIsEmail(true));
+      }
+    });
   }
 
   const [isClick, setIsClick] = useState<boolean>(false);
@@ -121,7 +124,12 @@ export default function NonLoginSignUp() {
     <SignupBody>
       <HelloBox>
         <MainFont>함께 하실래요?</MainFont>
-        <img src={Logo} alt="" style={{ width: "30vw" }} onClick={() => dispatch(setIsEmail(false))} />
+        <img
+          src={Logo}
+          alt=""
+          style={{ width: "30vw" }}
+          onClick={() => dispatch(setIsEmail(false))}
+        />
       </HelloBox>
       {!isEmail ? (
         <>
@@ -167,16 +175,21 @@ export default function NonLoginSignUp() {
             ) : (
               <CommonButton
                 text="이메일 인증"
-                onClick={() => checkIsAuth(authNum)}
+                onClick={() => checkIsAuth(userEmail, authNum)}
                 status={authNum ? "active" : "disabled"}
               />
             )}
             <div>
-              <ToLogin to={"/signup"} onClick={() => {
-                  dispatch(setUserEmail(""))
-                  setIsClick(false)
-                  setEmail("")
-                } }>메일 재인증 |</ToLogin>
+              <ToLogin
+                to={"/signup"}
+                onClick={() => {
+                  dispatch(setUserEmail(""));
+                  setIsClick(false);
+                  setEmail("");
+                }}
+              >
+                메일 재인증 |
+              </ToLogin>
               <ToLogin to={"/login"}> 로그인</ToLogin>
             </div>
           </ButtonBox>
@@ -221,11 +234,16 @@ export default function NonLoginSignUp() {
               status={isActive ? "active" : "disabled"}
             />
             <div>
-              <ToLogin to={"/signup"} onClick={() => {
-                  dispatch(setUserEmail(""))
-                  setIsClick(false)
-                  setEmail("")
-                } }>메일 재인증 |</ToLogin>
+              <ToLogin
+                to={"/signup"}
+                onClick={() => {
+                  dispatch(setUserEmail(""));
+                  setIsClick(false);
+                  setEmail("");
+                }}
+              >
+                메일 재인증 |
+              </ToLogin>
               <ToLogin to={"/login"}> 로그인</ToLogin>
             </div>
           </ButtonBox>
