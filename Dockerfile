@@ -9,4 +9,4 @@ FROM alpine
 RUN mkdir -p /output
 COPY --from=build /app/build/ /build/
 
-CMD ["cp", "-rfT", "build/", "/output/"]
+ENTRYPOINT ["cp", "-rfT", "build/", "/output/"]
